@@ -36,7 +36,6 @@ public class ApplicationTypeDAO extends DBcontext{
         return applicationTypes;
     }
 
-    // Lấy loại ứng dụng theo ID
     public ApplicationType getApplicationTypeById(int id) {
         ApplicationType applicationType = null;
         String query = "SELECT * FROM application_type WHERE id = ?";
@@ -56,7 +55,6 @@ public class ApplicationTypeDAO extends DBcontext{
         return applicationType;
     }
 
-    // Thêm loại ứng dụng mới
     public void insertApplicationType(ApplicationType applicationType) {
         String query = "INSERT INTO application_type (id, type_name) VALUES (?, ?)";
 
@@ -70,7 +68,6 @@ public class ApplicationTypeDAO extends DBcontext{
         }
     }
 
-    // Cập nhật loại ứng dụng
     public void updateApplicationType(ApplicationType applicationType) {
         String query = "UPDATE application_type SET type_name = ? WHERE id = ?";
 
@@ -84,7 +81,6 @@ public class ApplicationTypeDAO extends DBcontext{
         }
     }
 
-    // Xóa loại ứng dụng theo ID
     public void deleteApplicationType(int id) {
         String query = "DELETE FROM application_type WHERE id = ?";
 
@@ -97,7 +93,6 @@ public class ApplicationTypeDAO extends DBcontext{
         }
     }
 
-    // Hàm main để kiểm tra việc lấy dữ liệu từ cơ sở dữ liệu
     public static void main(String[] args) {
         ApplicationTypeDAO dao = new ApplicationTypeDAO();
         List<ApplicationType> applicationTypes = dao.getAllApplicationTypes();
@@ -130,4 +125,19 @@ public class ApplicationTypeDAO extends DBcontext{
 
         return maxID + 1; // Trả về ID lớn nhất + 1
     }
+    public boolean isApplicationTypeExists(String typeName) {
+    String query = "SELECT COUNT(*) FROM ApplicationType WHERE type_name = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, typeName);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0; // Trả về true nếu đã tồn tại
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false; // Không tồn tại
+}
+
 }

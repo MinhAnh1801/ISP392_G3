@@ -53,14 +53,9 @@ public class DeleteApplicationType extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
- // Lấy ID của loại ứng dụng cần xóa từ URL
         int id = Integer.parseInt(request.getParameter("id"));
-
-        // Gọi DAO để xóa loại ứng dụng theo ID
         ApplicationTypeDAO dao = new ApplicationTypeDAO();
         dao.deleteApplicationType(id);
-
-        // Sau khi xóa xong, chuyển hướng về trang danh sách loại ứng dụng
         response.sendRedirect("ViewListApplicationType.jsp");
     }    
 

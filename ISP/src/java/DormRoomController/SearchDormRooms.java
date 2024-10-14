@@ -13,12 +13,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
  * @author Dell
  */
-public class AddDormRoom extends HttpServlet {
+public class SearchDormRooms extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,10 +36,10 @@ public class AddDormRoom extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddDormRoom</title>");  
+            out.println("<title>Servlet SearchDormRooms</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddDormRoom at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet SearchDormRooms at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,10 +54,24 @@ public class AddDormRoom extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String keyword = request.getParameter("keyword");
+    DormRoomsDAO dao = new DormRoomsDAO();
+    List<DormRooms> dormRooms;
+
+    if (keyword == null || keyword.isBlank()) {
+        // Nếu không có từ khóa tìm kiếm, trả về danh sách đầy đủ các phòng
+        dormRooms = dao.getAllDormRooms();
+    } else {
+        // Nếu có từ khóa tìm kiếm, thực hiện tìm kiếm
+        dormRooms = dao.searchDormRooms(keyword);
+    }
+
+    request.setAttribute("dormRooms", dormRooms);
+    request.setAttribute("keyword", keyword);
+    request.getRequestDispatcher("ViewListDormRoom.jsp").forward(request, response);
+}
+
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -66,32 +81,10 @@ public class AddDormRoom extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        // Retrieve form parameters
-        String roomNumber = request.getParameter("roomNumber");
-        int capacity = Integer.parseInt(request.getParameter("capacity"));
-        int availableCapacity = Integer.parseInt(request.getParameter("availableCapacity"));
-        String building = request.getParameter("building");
-        String roomType = request.getParameter("roomType");
-        String detail = request.getParameter("detail");
-        int price = (int)Double.parseDouble(request.getParameter("price"));
-        DormRoomsDAO dao = new DormRoomsDAO();
-        if (dao.isRoomNumberExists(roomNumber)) {
-            request.setAttribute("error", "Room number already exists.");
-            request.getRequestDispatcher("AddDormRoom.jsp").forward(request, response);
-            return;
-        }
-
-        if (capacity < availableCapacity) {
-            request.setAttribute("error", "Capacity must be greater than or equal to available capacity.");
-            request.getRequestDispatcher("AddDormRoom.jsp").forward(request, response);
-            return;
-        }
-        DormRooms dormRoom = new DormRooms(0, roomNumber, capacity, availableCapacity, building, roomType, detail, price);
-        dao.insertDormRoom(dormRoom);
-        response.sendRedirect("ViewListDormRoom.jsp");
-    }
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+     doGet(request, response);
+}
 
 
     /** 

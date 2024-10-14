@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
 /**
@@ -15,21 +11,22 @@ public class DormRooms {
     private int availableCapacity;
     private String building;
     private String roomType;
+    private String detail; 
+    private int price; 
 
-    // Constructor không tham số
     public DormRooms() {}
 
-    // Constructor với tất cả các tham số
-    public DormRooms(int id, String roomNumber, int capacity, int availableCapacity, String building, String roomType) {
+    public DormRooms(int id, String roomNumber, int capacity, int availableCapacity, String building, String roomType, String detail, int price) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.capacity = capacity;
         this.availableCapacity = availableCapacity;
         this.building = building;
         this.roomType = roomType;
+        this.detail = detail;
+        this.price = price;
     }
 
-    // Getter và Setter cho các thuộc tính
     public int getId() {
         return id;
     }
@@ -78,16 +75,26 @@ public class DormRooms {
         this.roomType = roomType;
     }
 
-    // Phương thức toString để in thông tin đối tượng
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
-        return "DormRoom{" +
-                "id=" + id +
-                ", roomNumber='" + roomNumber + '\'' +
-                ", capacity=" + capacity +
-                ", availableCapacity=" + availableCapacity +
-                ", building='" + building + '\'' +
-                ", roomType='" + roomType + '\'' +
-                '}';
+        return "DormRooms{" + "id=" + id + ", roomNumber=" + roomNumber + ", capacity=" + capacity + ", availableCapacity=" + availableCapacity + ", building=" + building + ", roomType=" + roomType + ", detail=" + detail + ", price=" + price + '}';
     }
+
+    
 }

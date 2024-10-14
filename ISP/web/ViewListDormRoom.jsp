@@ -9,10 +9,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>List of Dorm Rooms</title>
-        
+
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-        
+
         <!-- Custom styles for this page -->
         <style>
             body {
@@ -30,16 +30,14 @@
                 color: white;
             }
         </style>
-        
+
         <!-- JavaScript để xác nhận việc xóa -->
         <script type="text/javascript">
             function confirmDelete(id) {
                 var result = confirm("Are you sure you want to delete this dorm room?");
                 if (result) {
-                    // Nếu người dùng chọn "OK", điều hướng tới URL để xóa
                     window.location.href = 'deletedorm?id=' + id;
                 } else {
-                    // Nếu người dùng chọn "Cancel", không làm gì cả
                     return false;
                 }
             }
@@ -68,7 +66,13 @@
                 </div>
                 <div class="card-body">
                     <a href="AddDormRoom.jsp" class="btn btn-custom mb-3">Add New Dorm Room</a>
-                    
+                    <div class="card-header bg-warning text-white text-center">
+                        <form action="searchDorm" method="post" class="d-flex mt-3">
+                            <input type="text" name="keyword" class="form-control me-2" placeholder="Enter room number or building" required>
+                            <button type="submit" class="btn btn-custom">Search</button>
+                        </form>
+                    </div>
+
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -77,16 +81,21 @@
                                 <th>Available Capacity</th>
                                 <th>Building</th>
                                 <th>Room Type</th>
+                                <th>Price</th> 
+                                <th>Detail</th> 
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <%
-                                // Lấy dữ liệu từ DAO
-                                DormRoomsDAO dao = new DormRoomsDAO();
-                                List<DormRooms> dormRooms = dao.getAllDormRooms();
-                                request.setAttribute("dormRooms", dormRooms);
+                           <%
+                        String keyword = request.getParameter("keyword");
+                        if (keyword == null ) {
+                            DormRoomsDAO dao = new DormRoomsDAO();
+                            List<DormRooms> dormRooms = dao.getAllDormRooms();
+                            request.setAttribute("dormRooms", dormRooms);
+                        }
                             %>
+
 
                             <c:forEach var="dormRoom" items="${dormRooms}">
                                 <tr>
@@ -95,9 +104,10 @@
                                     <td>${dormRoom.availableCapacity}</td>
                                     <td>${dormRoom.building}</td>
                                     <td>${dormRoom.roomType}</td>
+                                    <td>${dormRoom.price}</td> 
+                                    <td>${dormRoom.detail}</td> 
                                     <td>
                                         <a href="editdorm?id=${dormRoom.id}" class="btn btn-primary btn-sm">Edit</a>
-                                        <!-- Nút xóa với xác nhận -->
                                         <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="return confirmDelete(${dormRoom.id})">Delete</a>
                                     </td>
                                 </tr>
