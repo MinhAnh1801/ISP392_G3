@@ -8,9 +8,6 @@ import java.text.Normalizer;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import java.util.Date;
-
-
 /**
  *
  * @author khucx
@@ -41,34 +38,6 @@ public class Profile {
     }
 
     public void setUser_id(int user_id) {
-    private User user_id;
-    private String full_name;
-    private Date date_of_birth;
-    private  String phone_number;
-    private String address;
-    private String gender;
-    private String profile_picture;
-    private String bio;
-
-    public Profile() {
-    }
-
-    public Profile(User user_id, String full_name, Date date_of_birth, String phone_number, String address, String gender, String profile_picture, String bio) {
-        this.user_id = user_id;
-        this.full_name = full_name;
-        this.date_of_birth = date_of_birth;
-        this.phone_number = phone_number;
-        this.address = address;
-        this.gender = gender;
-        this.profile_picture = profile_picture;
-        this.bio = bio;
-    }
-
-    public User getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
 
@@ -78,15 +47,6 @@ public class Profile {
 
     public void setFull_name(String full_name) {
         this.full_name = full_name;
-    }
-
-
-    public Date getDate_of_birth() {
-        return date_of_birth;
-    }
-
-    public void setDate_of_birth(Date date_of_birth) {
-        this.date_of_birth = date_of_birth;
     }
 
     public String getPhone_number() {
@@ -103,7 +63,6 @@ public class Profile {
 
     public void setAddess(String addess) {
         this.addess = addess;
-
     }
 
     public String getGender() {
@@ -130,7 +89,6 @@ public class Profile {
         this.bio = bio;
     }
 
-
     public Date getDate_of_birth() {
         return date_of_birth;
     }
@@ -146,7 +104,6 @@ public class Profile {
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(normalized).replaceAll("").replaceAll("đ", "d").replaceAll("Đ", "D");
     }
-
     
     public String generateLecturerFormattedId() {
         // Tách tên thành các từ dựa trên dấu cách
