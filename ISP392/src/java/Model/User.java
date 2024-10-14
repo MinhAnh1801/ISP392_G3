@@ -35,9 +35,6 @@ public class User {
     }
     
 
-    public User() {
-    }
-
     public User(int id, String username, String email, String password, String role, String status) {
         this.id = id;
         this.username = username;

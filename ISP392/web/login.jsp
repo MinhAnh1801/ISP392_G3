@@ -58,7 +58,7 @@
                             <input class="pl-2 text-field2" type="password" name="password">
                         </div>
                     </div>
-                    <a href="forgotpassword.jsp" class="property-1have-an-account-log">
+                    <a href="" class="property-1have-an-account-log">
                         <div class="forgot-password hover:underline">Forgot password?</div>
                     </a>                   
                     <button type="submit" class="border-2 bg-[#4294d8] w-[138px] h-[40px] absolute mt-[248px] ml-[149px] rounded-xl text-white text-center leading-[36px] hover:bg-white hover:text-[#4294d8] duration-200 cursor-pointer">
