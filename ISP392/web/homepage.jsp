@@ -321,7 +321,7 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses hover:underline"><a href="">Upload materials / Tải lên tài liệu</a></li>
-                            <li><a class="hover:underline" href="">View materials / Xem tài liệu</a></li>
+                            <li><a class="hover:underline" href="lecturer/materials">View materials / Xem tài liệu</a></li>
                         </ul>
                     </div>
                 </div>

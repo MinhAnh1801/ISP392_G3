@@ -5,8 +5,10 @@
 package DAO;
 
 import Context.DBContext;
+import Model.Materials;
 import Model.News;
 import Model.Notifications;
+import Model.Subjects;
 import Model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -178,12 +180,69 @@ public class DAO {
         return newsList;
     }
 
+    // Method to retrieve materials uploaded by a specific lecturer (based on lecturer_id)
+    public List<Materials> getMaterialsByLecturerId(int lecturerId) {
+        List<Materials> materialsList = new ArrayList<>();
+        String query = "SELECT m.id, s.code AS subject_code, m.material_name, m.material_file, m.uploaded_at, m.description "
+                + "FROM Materials m "
+                + "JOIN Subjects s ON m.subject_id = s.subject_id "
+                + "JOIN Lecturer_Profile lp ON m.uploaded_by = lp.lecturer_id "
+                + "WHERE m.uploaded_by = ?";
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+
+            // Set the lecturer_id as the parameter
+            ps.setInt(1, lecturerId);
+            ResultSet rs = ps.executeQuery();
+
+            // Process the result set
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String subjectCode = rs.getString("subject_code");
+                String materialName = rs.getString("material_name");
+                String materialFile = rs.getString("material_file");
+                String uploadedAt = rs.getString("uploaded_at");
+                String description = rs.getString("description");
+
+                // Create a new Material object and add it to the list
+                Materials material = new Materials(id, subjectCode, materialName, materialFile, uploadedAt, description);
+                materialsList.add(material);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return materialsList;
+    }
+
+    public List<Subjects> getAllSubjectCodes() {
+        List<Subjects> subjectList = new ArrayList<>();
+        String query = "SELECT id, code FROM Subjects";
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+
+            // Process the result set
+            while (rs.next()) {
+                int subjectId = rs.getInt("id");
+                String code = rs.getString("code");
+                
+                // Create a new Subject object and add it to the list
+                Subjects subject = new Subjects(subjectId, code);
+                subjectList.add(subject);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return subjectList;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         // Lấy thông báo cho vai trò "admin"
-        List<News> adminNotifications = dao.getAllNews();
+        List<Subjects> adminNotifications = dao.getAllSubjectCodes();
         // In ra danh sách thông báo
-        for (News notification : adminNotifications) {
+        for (Subjects notification : adminNotifications) {
             System.out.println(notification);
         }
     }
