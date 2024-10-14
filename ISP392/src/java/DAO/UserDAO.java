@@ -55,7 +55,7 @@ public class UserDAO extends DBContext {
 
         // khởi tạo db lấy dữ liệu từ sql 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
-         
+
             // lấy userid truyền vào dấu ? thứ nhất trong sql 
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
@@ -105,6 +105,34 @@ public class UserDAO extends DBContext {
         return studentProfile;
     }
 
-   
+    public boolean checkCurrentPassword(int userId, String currentPassword) {
+        String sql = "SELECT [password] FROM [dbo].[Users] WHERE [id] = ?";
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String storedPassword = rs.getString("password");
+                return storedPassword.equals(currentPassword); // So sánh mật khẩu
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updatePassword(int id, String newPassword) {
+        String sql = "UPDATE [dbo].[Users] SET [password] = ? WHERE [id] = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, newPassword);
+            ps.setInt(2, id);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

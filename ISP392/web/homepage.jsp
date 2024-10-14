@@ -59,7 +59,7 @@
                     </c:if>
                     <img class="photo-4-1682302453807184190466-icon" alt="" src="photo-4-1682302453807184190466 1.png">
                 </div>
-                <a href="" class="profile-detail">
+                <a href="profile" class="profile-detail">
                     <div class="profile-detail-child">
                     </div>
                     <svg class="hs-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

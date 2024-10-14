@@ -2,11 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.profile;
+package Controller;
 
 import DAO.UserDAO;
-import Model.Profile;
-import Model.Student_Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +18,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author trung
  */
-@WebServlet(name = "ProfileController", urlPatterns = {"/profile"})
-public class ProfileController extends HttpServlet {
+@WebServlet(name = "ChangePassword", urlPatterns = {"/changepassword"})
+public class ChangePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +38,10 @@ public class ProfileController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProfileController</title>");
+            out.println("<title>Servlet ChangePassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,32 +59,7 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // lấy thông tin user 
-
-        HttpSession session = request.getSession();
-        int id = (int) session.getAttribute("user");
-
-
-        int user_id = id;
-        // khởi tạo 
-        UserDAO uDao = new UserDAO();
-        // lấy profile gọi hàm getprofileById 
-        Profile profile = uDao.getProfileById(user_id);
-        request.setAttribute("profile", profile);
-
-        if (profile.getUser_id().getRole().equals("student")) {
-
-            Student_Profile studentProfile = uDao.getStudentProfile(user_id);
-            request.setAttribute("studentProfile", studentProfile);
-
-            request.getRequestDispatcher("/profile/viewStudentProfile.jsp").forward(request, response);
-
-        } else if (profile.getUser_id().getRole().equals("lecturer")) {
-
-            request.getRequestDispatcher("/profile/viewLecturerProfile.jsp").forward(request, response);
-
-        }
-
+        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
     }
 
     /**
@@ -100,7 +73,37 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String currentPassword = request.getParameter("currentPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
+
+        UserDAO udao = new UserDAO();
+        HttpSession session = request.getSession();
+        int id = (int) session.getAttribute("user");
+        boolean isCurrentPasswordValid = udao.checkCurrentPassword(id, currentPassword);
+
+        if (!isCurrentPasswordValid) {
+            request.getSession().setAttribute("changepassfail", "Current password is incorrect.");
+            response.sendRedirect("changePassword.jsp"); // Trở lại trang thay đổi mật khẩu
+            return;
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            request.getSession().setAttribute("changepassfail", "New password and confirmation do not match.");
+            response.sendRedirect("changePassword.jsp");
+            return;
+        }
+
+        // Cập nhật mật khẩu mới cho người dùng
+        boolean isUpdated = udao.updatePassword(id, newPassword); 
+
+        if (isUpdated) {
+            request.getSession().setAttribute("changepasssuccess", "Password changed successfully.");
+        } else {
+            request.getSession().setAttribute("changepassfail", "Failed to change password.");
+        }
+
+        response.sendRedirect("home");
     }
 
     /**

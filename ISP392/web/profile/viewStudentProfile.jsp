@@ -113,11 +113,11 @@
                                 <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>${profile.address}</a></li>
                             </ul>
                             <ul class="social-icon-style2 ps-0">
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-linkedin-in"></i></a></li>
+                                <a href="changepassword">
+                                    <button>Change password</button>
+                                </a>
                             </ul>
+
                         </div>
                     </div>
                 </div>
