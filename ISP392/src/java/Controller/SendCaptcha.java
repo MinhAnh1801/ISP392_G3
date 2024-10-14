@@ -40,7 +40,7 @@ public class SendCaptcha extends HttpServlet {
 
             // Send the CAPTCHA via email
             try {
-                sendEmail(email, "Your CAPTCHA Code", "Your CAPTCHA code is: " + captcha);
+                sendEmail(email, "Your CAPTCHA Code to reset password", captcha);
                 response.sendRedirect("verifycaptcha.jsp");
             } catch (MessagingException e) {
                 e.printStackTrace();
@@ -70,7 +70,7 @@ public class SendCaptcha extends HttpServlet {
 
             // Send the CAPTCHA via email
             try {
-                sendEmail(email, "Your CAPTCHA Code", "Your CAPTCHA code is: " + captcha);
+                sendEmail(email, "Your CAPTCHA Code to reset password", captcha);
                 response.sendRedirect("verifycaptcha.jsp");
             } catch (MessagingException e) {
                 e.printStackTrace();
@@ -92,7 +92,7 @@ public class SendCaptcha extends HttpServlet {
     }
 
     // Method to send an email (simplified)
-    private void sendEmail(String toEmail, String subject, String messageContent) throws MessagingException {
+    private void sendEmail(String toEmail, String subject, String captchaCode) throws MessagingException {
         final String fromEmail = "khucxuanhoa6a@gmail.com"; // Your Gmail address
         final String password = "qymnaiapswmxnoem"; // Your Gmail password or App Password
 
@@ -115,8 +115,26 @@ public class SendCaptcha extends HttpServlet {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-            message.setSubject(subject);
-            message.setText(messageContent);
+            message.setSubject("Your CAPTCHA Code");
+
+            // HTML content for the email body
+            String htmlMessage = "<html>"
+                    + "<body style='font-family: Arial, sans-serif; font-size: 14px;'>"
+                    + "<h2 style='color: #2e6c80;'>Your CAPTCHA Code</h2>"
+                    + "<p>Hello,</p>"
+                    + "<p>To complete your password reset process, please use the following CAPTCHA code:</p>"
+                    + "<p style='font-size: 40px; font-weight: bold; color: #4CAF50;'>" + captchaCode + "</p>"
+                    + "<p>This code will expire in 10 minutes. If you did not request this, please ignore this email.</p>"
+                    + "<br>"
+                    + "<p>Best regards,</p>"
+                    + "<p>Uni Portal</p>"
+                    + "<br>"
+                    + "<img src='https://your-website.com/logo.png' alt='Website Logo' style='width:100px;'>"
+                    + "</body>"
+                    + "</html>";
+
+            // Set the content of the email as HTML
+            message.setContent(htmlMessage, "text/html; charset=utf-8");
 
             // Send the email
             Transport.send(message);

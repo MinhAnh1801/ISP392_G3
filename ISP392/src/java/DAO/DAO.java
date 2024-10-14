@@ -5,6 +5,7 @@
 package DAO;
 
 import Context.DBContext;
+import Model.News;
 import Model.Notifications;
 import Model.User;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import java.sql.Blob;
 
 /**
  *
@@ -147,6 +149,40 @@ public class DAO {
         return false;  // Return false if the update failed
     }
 
+    public List<News> getAllNews() {
+        List<News> newsList = new ArrayList<>();
+        String query = "SELECT TOP 3 id, title, img, content, upload_date FROM News ORDER BY upload_date DESC";
+        
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            // Loop through each result in the ResultSet
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+
+                // Retrieve image as byte array from Blob
+                Blob blob = rs.getBlob("img");
+                byte[] imgData = blob != null ? blob.getBytes(1, (int) blob.length()) : null;
+
+                String content = rs.getString("content");
+                String uploadDate = rs.getString("upload_date");
+
+                // Create a new News object
+                News news = new News(id, title, imgData, content, uploadDate);
+
+                // Add the News object to the list
+                newsList.add(news);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return newsList;
+    }
+    
     public static void main(String[] args) {
         DAO dao = new DAO();
         // Lấy thông báo cho vai trò "admin"
