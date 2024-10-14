@@ -152,25 +152,20 @@ public class DAO {
     public List<News> getAllNews() {
         List<News> newsList = new ArrayList<>();
         String query = "SELECT TOP 3 id, title, img, content, upload_date FROM News ORDER BY upload_date DESC";
-        
-        try (Connection conn = new DBContext().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
             // Loop through each result in the ResultSet
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String title = rs.getString("title");
-
-                // Retrieve image as byte array from Blob
-                Blob blob = rs.getBlob("img");
-                byte[] imgData = blob != null ? blob.getBytes(1, (int) blob.length()) : null;
-
+                String img = rs.getString("img");   // File name of the image
                 String content = rs.getString("content");
-                String uploadDate = rs.getString("upload_date");
-
+                Timestamp uploadTime = rs.getTimestamp("upload_date");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String formattedUploadTime = sdf.format(uploadTime);
                 // Create a new News object
-                News news = new News(id, title, imgData, content, uploadDate);
+                News news = new News(id, title, img, content, formattedUploadTime);
 
                 // Add the News object to the list
                 newsList.add(news);
@@ -182,13 +177,13 @@ public class DAO {
 
         return newsList;
     }
-    
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         // Lấy thông báo cho vai trò "admin"
-        List<Notifications> adminNotifications = dao.getNotificationsByRole("lecturer");
+        List<News> adminNotifications = dao.getAllNews();
         // In ra danh sách thông báo
-        for (Notifications notification : adminNotifications) {
+        for (News notification : adminNotifications) {
             System.out.println(notification);
         }
     }

@@ -113,11 +113,47 @@
                 <div class="view-news-upload-container">
                     <ul class="view-notifications-upload-noti list-disc text-left">
                         <li class="view-notifications hover:underline">
-                            <a href="">View news</a> 
+                            <a href="newsAdmin">View news</a> 
                         </li>
                         <li class="hover:underline"> 
-                            <a href="">Upload news</a> 
+                            <button id="openModalBtn" class="cursor-pointer hover:underline">Upload news</button> 
                         </li>
+                        <div class="hidden absolute w-[800px] top-[-100px] left-[100px] bg-white shadow-md rounded-lg z-10" id="modal">
+                            <div class="h-[74px] w-full bg-slate-100 rounded-t-lg flex justify-items-center">
+                                <p class="w-full text-center text-[26px] font-semibold m-auto leading-none">Upload new news</p>
+                                <button id="close" class="absolute w-[32px] h-[32px] left-[740px] top-[24px]"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#ff5900" stroke-width="1.5"></circle> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ff5900" stroke-width="1.5" stroke-linecap="round"></path> </g></svg></button>
+                            </div>     
+                            <form action="insertNews" method="post" enctype="multipart/form-data">
+                                <div class=" flex h-[74px] w-full m-auto flex ">
+                                    <p class="m-auto w-[50px]">Title<span class="text-red-500"> *</span></p>
+                                    <input type="text" id="title" name="title" required class="w-[700px] h-[60px] outline-none border-b-2 mr-2 mt-2">
+                                </div>
+                                <button class="ml-[21px] mt-5 mb-2" id="content_btn"> <p>Click to add Content</p></button>
+                                <div class="hidden flex h-[74px] w-full m-auto flex " id="content_input">
+                                    <p class="m-auto w-[50px]">Content</p>
+                                    <textarea id="content" name="content" rows="6" class="w-[700px] h-[60px] outline-none border-b-2 mr-2 mt-2"></textarea>
+                                </div>
+                                <div class="ml-[21px] mt-5 mb-2">
+                                    <p class="">Upload file<span class="text-red-500"> *</span></p>
+                                </div>
+                                <div class="mt-4 flex items-center space-x-6 ml-[32px] pb-6 border-b-2">
+                                    <label class="block">
+                                        <input type="file" id="img" name="img" accept="image/*" required class="block w-full text-sm text-slate-500
+                                               file:mr-4 file:py-2 file:px-4
+                                               file:rounded-full file:border-0
+                                               file:text-sm file:font-semibold
+                                               file:bg-violet-50 file:text-violet-700
+                                               hover:file:bg-violet-100
+                                               "/>
+                                    </label>
+                                </div>
+                                <div class="flex justify-center">
+                                    <button type="submit" class="mt-3 ml-auto text-white bg-green-700 hover:bg-green-800 focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                        Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </ul>
                 </div>
             </c:if>        
@@ -343,5 +379,32 @@
                 </div>
             </c:if>
         </div>
+        <script>
+            // Get modal element
+            var modal = document.getElementById("modal");
+
+            // Get button that opens the modal
+            var btn = document.getElementById("openModalBtn");
+
+            // Get the <span> element that closes the modal
+            var close = document.getElementById("close");
+
+            var content = document.getElementById("content_btn");
+            var content_input = document.getElementById("content_input");
+            // When the user clicks the button, open the modal
+
+            btn.onclick = function () {
+                modal.classList.remove("hidden");
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            close.onclick = function () {
+                modal.classList.add("hidden");
+            }
+            content.onclick = function () {
+                content_input.classList.remove("hidden");
+                content.classList.add("hidden");
+            }
+        </script>
     </body>
 </html>

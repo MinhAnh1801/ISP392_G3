@@ -6,10 +6,6 @@
         <servlet-class>Controller.LoginControl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>imgHandler</servlet-name>
-        <servlet-class>Controller.imgHandler</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ImportControl</servlet-name>
         <servlet-class>Controller.ImportControl</servlet-class>
     </servlet>
@@ -51,10 +47,6 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>imgHandler</servlet-name>
-        <url-pattern>/image</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ImportControl</servlet-name>

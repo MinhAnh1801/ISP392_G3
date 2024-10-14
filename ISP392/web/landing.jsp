@@ -22,21 +22,45 @@
     </head>
     <body>
         <div class="landing-page">
-            <c:forEach var="news" items="${latestNews}">
                 <a href="#" class="product-info-card hover:shadow-md duration-500">
-                    <img class="image-2-icon" alt="" src="data:image/jpg;base64,${fn:escapeXml(news.img)}">
+                    <img class="image-2-icon" alt="" src="image?name=${news1.img}">
                     <div class="body">
                         <div class="text">
-                            <div class="text1">${news.title}</div>
+                            <div class="text1">${news1.title}</div>
                         </div>
                         <div class="text-strong">
                         </div>
                         <div class="text-small">
-                            <div class="text-small1">${news.uploadDate}</div>
+                            <div class="text-small1">${news1.uploadDate}</div>
                         </div>
                     </div>
                 </a>
-            </c:forEach>
+                <a href="#" class="product-info-card1 hover:shadow-md duration-500">
+                    <img class="image-2-icon" alt="" src="image?name=${news2.img}">
+                    <div class="body">
+                        <div class="text">
+                            <div class="text1">${news2.title}</div>
+                        </div>
+                        <div class="text-strong">
+                        </div>
+                        <div class="text-small">
+                            <div class="text-small1">${news2.uploadDate}</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="product-info-card2 hover:shadow-md duration-500">
+                    <img class="image-2-icon" alt="" src="image?name=${news3.img}">
+                    <div class="body">
+                        <div class="text">
+                            <div class="text1">${news3.title}</div>
+                        </div>
+                        <div class="text-strong">
+                        </div>
+                        <div class="text-small">
+                            <div class="text-small1">${news3.uploadDate}</div>
+                        </div>
+                    </div>
+                </a>
             <div class="landing-page-child">
             </div>
             <a class="landing-page-item flex bg-white hover:bg-slate-200 duration-200" href="login">

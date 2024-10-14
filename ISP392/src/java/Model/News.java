@@ -11,11 +11,11 @@ package Model;
 public class News {
     private int id;
     private String title;
-    private byte[] img; // Store image as byte array
+    private String img; // Store image as byte array
     private String content;
     private String uploadDate;
 
-    public News(int id, String title, byte[] img, String content, String uploadDate) {
+    public News(int id, String title, String img, String content, String uploadDate) {
         this.id = id;
         this.title = title;
         this.img = img;
@@ -39,11 +39,11 @@ public class News {
         this.title = title;
     }
 
-    public byte[] getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -61,6 +61,11 @@ public class News {
 
     public void setUploadDate(String uploadDate) {
         this.uploadDate = uploadDate;
+    }
+
+    @Override
+    public String toString() {
+        return "News{" + "id=" + id + ", title=" + title + ", img=" + img + ", content=" + content + ", uploadDate=" + uploadDate + '}';
     }
     
 }

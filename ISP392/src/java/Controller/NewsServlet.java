@@ -13,14 +13,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  *
  * @author khucx
  */
-@WebServlet(name = "LandingServlet", urlPatterns = {"/landing"})
-public class LandingServlet extends HttpServlet {
+@WebServlet(name = "NewsServlet", urlPatterns = {"/newsAdmin"})
+public class NewsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,16 +35,19 @@ public class LandingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAO dao = new DAO();
-        // Get the list of all news from the database
-        List<News> newsList = dao.getAllNews();
-        
-        // Set the list of news as an attribute in the request
-        request.setAttribute("news1", newsList.get(0));
-        request.setAttribute("news2", newsList.get(1));
-        request.setAttribute("news3", newsList.get(2));
-        // Forward the request to the JSP page for displaying the news
-        request.getRequestDispatcher("landing.jsp").forward(request, response);
+        DAO newsDAO = new DAO();
+        List<News> newsList = newsDAO.getAllNews();
+        HttpSession session = request.getSession(false);
+        // Set the news list in the request attribute
+        request.setAttribute("newsList", newsList);
+        if (session == null || session.getAttribute("role") == null) {
+            response.sendRedirect("login");
+            return;
+        } else if ((int) session.getAttribute("role") != 0) {
+            response.sendRedirect("login");
+            return;
+        }else
+        request.getRequestDispatcher("news.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
