@@ -61,6 +61,7 @@ public class DAO {
         }
         return list;
     }
+
     public User checkLogin(String username, String password) {
         List<User> list = getAllUser();
         for (User u : list) {
@@ -70,6 +71,7 @@ public class DAO {
         }
         return null;
     }
+
     public List<Notifications> getNotificationsByRole(String role) {
         List<Notifications> notifications = new ArrayList<>();
 
@@ -105,8 +107,45 @@ public class DAO {
 
         return notifications;
     }
-    
-    
+
+    public boolean checkEmailExists(String email) {
+        String sql = "SELECT COUNT(*) FROM Users WHERE email = ?";
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;  // Return true if count > 0, i.e., email exists
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;  // Return false if email is not found or an exception occurs
+    }
+
+    public boolean resetPassword(String email, String newPassword) {
+        // Check if the new password meets the 8-character limit
+        if (newPassword == null || newPassword.length() < 8) {
+            // If password is shorter than 8 characters, return false or handle error
+            System.err.println("Password must be at least 8 characters long.");
+            return false;
+        }
+
+        String sql = "UPDATE Users SET password = ? WHERE email = ?";
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            // Set the new password and the corresponding email
+            ps.setString(1, newPassword);  // You may also hash the password here before storing
+            ps.setString(2, email);
+
+            // Execute the update
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;  // Return true if the password was updated successfully
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;  // Return false if the update failed
+    }
 
     public static void main(String[] args) {
         DAO dao = new DAO();
@@ -117,4 +156,5 @@ public class DAO {
             System.out.println(notification);
         }
     }
+
 }
