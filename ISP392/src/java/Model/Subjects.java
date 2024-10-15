@@ -1,34 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
-/**
- *
- * @author khucx
- */
 public class Subjects {
-    private int id,credits;
-    private String code, name, description,semester;
+    private int id; 
+    private String code; 
+    private String name;
+    private int credits; 
+    private String description; 
+    private int semester; 
+    private int lecturerId;
 
-    @Override
-    public String toString() {
-        return "Subjects{" + "id=" + id + ", credits=" + credits + ", code=" + code + ", name=" + name + ", description=" + description + ", semester=" + semester + '}';
+    // Constructor
+    public Subjects() {
     }
 
-    public Subjects(int id, String code) {
+    public Subjects(int id, String code, String name, int credits, String description, int semester, int lecturerId) {
         this.id = id;
-        this.code = code;
-    }
-
-    public Subjects(int id, int credits, String code, String name, String description, String semester) {
-        this.id = id;
-        this.credits = credits;
         this.code = code;
         this.name = name;
+        this.credits = credits;
         this.description = description;
         this.semester = semester;
+        this.lecturerId = lecturerId;
     }
 
     public int getId() {
@@ -37,14 +29,6 @@ public class Subjects {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCredits() {
-        return credits;
-    }
-
-    public void setCredits(int credits) {
-        this.credits = credits;
     }
 
     public String getCode() {
@@ -63,6 +47,14 @@ public class Subjects {
         this.name = name;
     }
 
+    public int getCredits() {
+        return credits;
+    }
+
+    public void setCredits(int credits) {
+        this.credits = credits;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -71,12 +63,21 @@ public class Subjects {
         this.description = description;
     }
 
-    public String getSemester() {
+    public int getSemester() {
         return semester;
     }
 
-    public void setSemester(String semester) {
+    public void setSemester(int semester) {
         this.semester = semester;
     }
-    
+
+    public int getLecturerId() {
+        return lecturerId;
+    }
+
+    public void setLecturerId(int lecturerId) {
+        this.lecturerId = lecturerId;
+    }
+
+   
 }

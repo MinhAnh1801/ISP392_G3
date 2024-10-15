@@ -4,16 +4,35 @@
  */
 package Model;
 
+import java.util.Date;
+
 /**
  *
  * @author khucx
  */
 public class User {
-    int id;
-    String username,email,password,role,status;
+
+    private int id;
+    private String username;
+    private String email;
+    private String password;
+    private String role;
+    private String status;
+    private Date created_at;
 
     public User() {
     }
+
+    public User(int id, String username, String email, String password, String role, String status, Date created_at) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.status = status;
+        this.created_at = created_at;
+    }
+    
 
     public User(int id, String username, String email, String password, String role, String status) {
         this.id = id;
@@ -22,6 +41,14 @@ public class User {
         this.password = password;
         this.role = role;
         this.status = status;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 
     public int getId() {
@@ -76,4 +103,5 @@ public class User {
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role=" + role + ", status=" + status + '}';
     }
+
 }
