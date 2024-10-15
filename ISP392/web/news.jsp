@@ -6,11 +6,19 @@
         <meta charset="UTF-8">
         <title>News</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Avenir:wght@400&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" />
     </head>
     <body>
+        <script>
+            $(document).ready(function () {
+                $('#table').DataTable();
+            });
+        </script>
         <style>
             .back {
                 font-weight: 600;
@@ -174,6 +182,15 @@
                 width: 128px;
                 height: 52px;
             }
+            .dataTables_wrapper{
+                position: absolute !important;
+                top: 100px;
+                left: 450px;
+                width: 1100px;
+            }
+            .dataTables_length{
+                left: -800px;
+            }
         </style>
         <c:if test="${sessionScope.role==0}">
             <div class="login-child">
@@ -185,7 +202,7 @@
                 </svg>
                 <div class="back m-auto">Return</div>
             </a>
-            <button id="openModalBtn" class="flex absolute w-[135px] h-[36px] shadow-md bg-grey top-[200px] left-[300px] rounded-full bg-[#029F31]">
+            <button id="openModalBtn" class="flex absolute w-[135px] h-[36px] shadow-md bg-grey top-[100px] left-[250px] rounded-full bg-[#029F31]">
                 <p class="pl-2 m-auto font-semibold text-white leading-none">ADD NEW</p>
                 <div class="m-auto pr-1">
                     <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -193,25 +210,29 @@
                     </svg>
                 </div>
             </button>
-            <table class="absolute top-[250px] left-[300px] table-fixed border-collapse border-2 shadow-md">
-                <tr>
-                    <th class="border-y-2 w-[45px] h-[50px]">ID</th>
-                    <th class="border-y-2 w-[236px] h-[50px]">Title</th>
-                    <th class="border-y-2 w-[204px] h-[50px]">Image</th>
-                    <th class="border-y-2 w-[306px] h-[50px]">Content</th>
-                    <th class="border-y-2 w-[306px] h-[50px]">Upload Time</th>
-                    <th class="border-y-2 w-[116px] h-[50px]">Action</th>
-                </tr>
-                <c:forEach var="news" items="${newsList}">
+            <table id="table" class="pb-8 absolute left-[-200px] top-[100px] table-fixed border-collapse border-2 shadow-md">
+                <thead>
                     <tr>
-                        <th class="border-b-2 w-[45px] h-[50px] font-normal">${news.id}</th>
-                        <th class="border-b-2 w-[236px] h-[50px] font-normal">${news.title}</th>
-                        <th class="border-b-2 w-[204px] h-[50px] font-normal"><img src="image?name=${news.img}"></th>
-                        <th class="border-b-2 w-[306px] h-[50px] font-normal trumcate">${news.content}</th>
-                        <th class="border-b-2 w-[306px] h-[50px] font-normal">${news.uploadDate}</th>
-                        <th class="border-b-2 w-[116px] h-[50px] font-normal"><button>Action</button></th>
+                        <th class="border-y-2 w-[45px] h-[50px]">ID</th>
+                        <th class="border-y-2 w-[236px] h-[50px]">Title</th>
+                        <th class="border-y-2 w-[204px] h-[50px]">Image</th>
+                        <th class="border-y-2 w-[306px] h-[50px]">Content</th>
+                        <th class="border-y-2 w-[306px] h-[50px]">Upload Time</th>
+                        <th class="border-y-2 w-[116px] h-[50px]">Action</th>
                     </tr>
-                </c:forEach>
+                </thead>
+                <tbody>
+                    <c:forEach var="news" items="${newsList}">
+                        <tr>
+                            <th class="border-b-2 w-[45px] h-[50px] font-normal">${news.id}</th>
+                            <th class="border-b-2 w-[236px] h-[50px] font-normal">${news.title}</th>
+                            <th class="border-b-2 w-[204px] h-[50px] font-normal"><img src="image?name=${news.img}"></th>
+                            <th class="border-b-2 w-[306px] h-[50px] font-normal trumcate">${news.content}</th>
+                            <th class="border-b-2 w-[306px] h-[50px] font-normal">${news.uploadDate}</th>
+                            <th class="border-b-2 w-[116px] h-[50px] font-normal"><button>Action</button></th>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
             <div class="hidden absolute w-[800px] top-[200px] left-[600px] bg-white shadow-md rounded-lg" id="modal">
                 <div class="h-[74px] w-full bg-slate-100 rounded-t-lg flex justify-items-center">

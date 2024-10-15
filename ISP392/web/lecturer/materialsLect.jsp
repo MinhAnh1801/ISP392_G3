@@ -6,11 +6,21 @@
         <meta charset="UTF-8">
         <title>Materials</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script>-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Avenir:wght@400&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" />
+
     </head>
     <body>
+        <script>
+            $(document).ready(function () {
+                $('#mytable').DataTable();
+            });
+        </script>
         <style>
             .back {
                 font-weight: 600;
@@ -163,7 +173,7 @@
                 top: 0px;
                 left: 0px;
                 background-color: #d76325;
-                width: 1920px;
+                width: 100%;
                 height: 72px;
             }
             .login-item {
@@ -173,6 +183,35 @@
                 border-radius: 17px;
                 width: 128px;
                 height: 52px;
+            }
+            .notification {
+                display: none;
+                padding: 10px;
+                margin-top: 20px;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+            .notification.success {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+            .notification.error {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+            .dataTables_wrapper{
+                position: absolute !important;
+                top: 100px;
+                left: 500px;
+                width: 1100px;
+            }
+            .dataTables_length{
+                left: -800px;
+            }
+            body{
+                height: 1000px;
             }
         </style>
         <c:if test="${sessionScope.role==2}">
@@ -185,7 +224,7 @@
                 </svg>
                 <div class="back m-auto">Return</div>
             </a>
-            <button id="openModalBtn" class="flex absolute w-[135px] h-[36px] shadow-md bg-grey top-[200px] left-[300px] rounded-full bg-[#029F31]">
+            <button id="openModalBtn" class="flex absolute w-[135px] h-[36px] shadow-md bg-grey top-[100px] left-[300px] rounded-full bg-[#029F31]">
                 <p class="pl-2 m-auto font-semibold text-white leading-none">ADD NEW</p>
                 <div class="m-auto pr-1">
                     <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -193,37 +232,40 @@
                     </svg>
                 </div>
             </button>
-            <table class="absolute top-[250px] left-[300px] table-fixed border-collapse border-2 shadow-md">
-                <tr>
-                    <th class="border-y-2 w-[45px] h-[50px]">ID</th>
-                    <th class="border-y-2 w-[236px] h-[50px]">Subject</th>
-                    <th class="border-y-2 w-[204px] h-[50px]">Material Name</th>
-                    <th class="border-y-2 w-[116px] h-[50px]">Material File</th>
-                    <th class="border-y-2 w-[116px] h-[50px]">Upload Time</th>
-                    <th class="border-y-2 w-[300px] h-[50px]">Description</th>
-                    <th class="border-y-2 w-[116px] h-[50px]">Action</th>
-                </tr>
-                <c:forEach var="material" items="${materials}">
+            <table id="mytable" class="left-[-180px] top-[100px] absolute table-fixed border-collapse border-2 shadow-md ">
+                <thead>
                     <tr>
-                        <td>${material.id}</td>
-                        <td>${material.subjectCode}</td>
-                        <td>${material.materialName}</td>
-                        <td><a href="download?file=${material.materialFile}">${material.materialFile}</a></td>
-                        <td>${material.uploadedAt}</td>
-                        <td>${material.description}</td>
+                        <th class="border-y-2 w-[160px] h-[50px]">Subject</th>
+                        <th class="border-y-2 w-[200px] h-[50px]">Material Name</th>
+                        <th class="border-y-2 w-[240px] h-[50px] truncate">Material File</th>
+                        <th class="border-y-2 w-[130px] h-[50px]">Upload Time</th>
+                        <th class="border-y-2 w-[300px] h-[50px]">Description</th>
+                        <th class="border-y-2 w-[116px] h-[50px]">Action</th>
                     </tr>
-                </c:forEach>
+                </thead>
+                <tbody>
+                    <c:forEach var="material" items="${materials}">
+                        <tr class="text-center">
+                            <td class="border-y-2 w-[160px] h-[50px]"><div class="w-[160px]">${material.subjectCode}</div></td>
+                            <td class="border-y-2 h-[50px]"><div class="w-[200px] mx-2 truncate">${material.materialName}</div></td>
+                            <td class="border-y-2 w-[240px] h-[50px] text-[#0c59ff]"><div class="w-[240px] mx-2 truncate"><a class="hover:underline" href="download?file=${material.materialFile}">${material.materialFile}</a></div></td>
+                            <td class="border-y-2 w-[130px] h-[50px]">${material.uploadedAt}</td>
+                            <td class="border-y-2 w-[300px] h-[50px] truncate"><div class="w-[300px] mx-2 truncate">${material.description}</div></td>
+                            <th class="border-y-2 w-[116px] h-[50px]">Action</th>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
             <div class="hidden absolute w-[800px] top-[200px] left-[600px] bg-white shadow-md rounded-lg" id="modal">
                 <div class="h-[74px] w-full bg-slate-100 rounded-t-lg flex justify-items-center">
                     <p class="w-full text-center text-[26px] font-semibold m-auto leading-none">Upload new Material</p>
                     <button id="close" class="absolute w-[32px] h-[32px] left-[740px] top-[24px]"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#ff5900" stroke-width="1.5"></circle> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ff5900" stroke-width="1.5" stroke-linecap="round"></path> </g></svg></button>
                 </div>     
-                <form action="insertNews" method="post" enctype="multipart/form-data">
+                <form id="materialForm" method="post" enctype="multipart/form-data">
                     <div class="pl-[21px] pt-8 h-[74px] w-full max-w-sm min-w-[200px]">      
                         <div class="relative">
-                            <select
-                                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer">
+                            <select id="subject_id" name="subject_id" required
+                                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer">
                                 <option value="none">Choose Subject</option>
                                 <c:forEach var="subject" items="${subjectList}">
                                     <option value="${subject.id}"> ${subject.code}</option>
@@ -241,14 +283,14 @@
                     <button class="ml-[21px] mt-5 mb-2" id="content_btn"> <p>Click to add Content</p></button>
                     <div class="hidden flex h-[74px] w-full m-auto flex " id="content_input">
                         <p class="m-auto w-[50px]">Content</p>
-                        <textarea id="content" name="content" rows="6" class="w-[700px] h-[60px] outline-none border-b-2 mr-2 mt-2"></textarea>
+                        <textarea id="description" name="description" rows="3" class="w-[700px] h-[60px] outline-none border-b-2 mr-2 mt-2"></textarea>
                     </div>
                     <div class="ml-[21px] mt-5 mb-2">
                         <p class="">Upload file<span class="text-red-500"> *</span></p>
                     </div>
                     <div class="mt-4 flex items-center space-x-6 ml-[32px] pb-6 border-b-2">
                         <label class="block">
-                            <input type="file" id="img" name="img" accept="image/*" required class="block w-full text-sm text-slate-500
+                            <input type="file" id="material_file" name="material_file" required class="block w-full text-sm text-slate-500
                                    file:mr-4 file:py-2 file:px-4
                                    file:rounded-full file:border-0
                                    file:text-sm file:font-semibold
@@ -292,5 +334,37 @@
                 content.classList.add("hidden");
             }
         </script>
+        <script>
+            document.getElementById('materialForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const form = document.getElementById('materialForm');
+                const formData = new FormData(form); // Create FormData object for file upload
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'addMaterial', true);
+
+                xhr.onload = function () {
+                    const response = JSON.parse(xhr.responseText);
+
+                    // Show an alert message based on the response
+                    if (xhr.status === 200 && response.status === 'success') {
+                        alert(response.message); // Show success message
+                        // Refresh the page after the alert is closed
+                        window.location.reload();
+                    } else {
+                        alert(response.message); // Show error message
+                    }
+                };
+
+                xhr.onerror = function () {
+                    alert('An unexpected error occurred. Please try again.'); // Show error message on network failure
+                };
+
+                // Send the form data
+                xhr.send(formData);
+            });
+        </script>
+
     </body>
 </html>

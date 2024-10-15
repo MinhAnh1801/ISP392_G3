@@ -153,6 +153,34 @@ public class DAO {
 
     public List<News> getAllNews() {
         List<News> newsList = new ArrayList<>();
+        String query = "SELECT id, title, img, content, upload_date FROM News ORDER BY upload_date DESC";
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+
+            // Loop through each result in the ResultSet
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String img = rs.getString("img");   // File name of the image
+                String content = rs.getString("content");
+                Timestamp uploadTime = rs.getTimestamp("upload_date");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String formattedUploadTime = sdf.format(uploadTime);
+                // Create a new News object
+                News news = new News(id, title, img, content, formattedUploadTime);
+
+                // Add the News object to the list
+                newsList.add(news);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return newsList;
+    }
+    public List<News> getTop3News() {
+        List<News> newsList = new ArrayList<>();
         String query = "SELECT TOP 3 id, title, img, content, upload_date FROM News ORDER BY upload_date DESC";
 
         try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
@@ -185,9 +213,9 @@ public class DAO {
         List<Materials> materialsList = new ArrayList<>();
         String query = "SELECT m.id, s.code AS subject_code, m.material_name, m.material_file, m.uploaded_at, m.description "
                 + "FROM Materials m "
-                + "JOIN Subjects s ON m.subject_id = s.subject_id "
+                + "JOIN Subjects s ON m.subject_id = s.id "
                 + "JOIN Lecturer_Profile lp ON m.uploaded_by = lp.lecturer_id "
-                + "WHERE m.uploaded_by = ?";
+                + "WHERE m.uploaded_by = ? ORDER BY uploaded_at";
 
         try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -201,11 +229,12 @@ public class DAO {
                 String subjectCode = rs.getString("subject_code");
                 String materialName = rs.getString("material_name");
                 String materialFile = rs.getString("material_file");
-                String uploadedAt = rs.getString("uploaded_at");
                 String description = rs.getString("description");
-
+                Timestamp uploadTime = rs.getTimestamp("uploaded_at");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String formattedUploadTime = sdf.format(uploadTime);
                 // Create a new Material object and add it to the list
-                Materials material = new Materials(id, subjectCode, materialName, materialFile, uploadedAt, description);
+                Materials material = new Materials(id, subjectCode, materialName, materialFile, formattedUploadTime, description);
                 materialsList.add(material);
             }
         } catch (Exception e) {
@@ -225,7 +254,7 @@ public class DAO {
             while (rs.next()) {
                 int subjectId = rs.getInt("id");
                 String code = rs.getString("code");
-                
+
                 // Create a new Subject object and add it to the list
                 Subjects subject = new Subjects(subjectId, code);
                 subjectList.add(subject);
@@ -237,12 +266,37 @@ public class DAO {
         return subjectList;
     }
 
+    // Method to add a new material to the database
+    public boolean addMaterial(int subjectId, String materialName, String materialFile, Timestamp uploadedAt, int uploadedBy, String description) {
+        String query = "INSERT INTO Materials (subject_id, material_name, material_file, uploaded_at, uploaded_by, description) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, subjectId);
+            ps.setString(2, materialName);
+            ps.setString(3, materialFile);
+            ps.setTimestamp(4, uploadedAt);
+            ps.setInt(5, uploadedBy);
+            ps.setString(6, description);
+
+            // Execute the insert statement
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;  // Returns true if the insert was successful
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;  // Returns false if there was an error
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         // Lấy thông báo cho vai trò "admin"
-        List<Subjects> adminNotifications = dao.getAllSubjectCodes();
+        List<News> adminNotifications = dao.getTop3News();
         // In ra danh sách thông báo
-        for (Subjects notification : adminNotifications) {
+        for (News notification : adminNotifications) {
             System.out.println(notification);
         }
     }
