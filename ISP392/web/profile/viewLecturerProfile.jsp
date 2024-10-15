@@ -75,11 +75,76 @@
                 margin-bottom: 1.6rem;
             }
         </style>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     </head>
     <body>
+
+
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
+    <div id="toastMessage" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+        <div class="d-flex">
+            <div class="toast-body">
+                ${mess}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <div id="toastError" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+        <div class="d-flex">
+            <div class="toast-body">
+                ${error}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Lấy các biến mess và error (thay đổi tùy theo cách bạn lấy giá trị thực tế)
+    var mess = "${mess}"; // Giả định có giá trị nào đó
+    var error = "${error}"; // Giả định có giá trị nào đó
+
+    // Lấy các phần tử toast
+    var toastMessage = document.getElementById('toastMessage');
+    var toastError = document.getElementById('toastError');
+
+    if (mess) {
+        // Hiển thị thông báo thành công nếu có mess
+        toastMessage.querySelector('.toast-body').textContent = mess; // Cập nhật nội dung
+        toastMessage.style.display = 'block'; // Hiện toast
+        var bootstrapToastMessage = new bootstrap.Toast(toastMessage);
+        bootstrapToastMessage.show();
+
+        // Thiết lập ẩn toast sau 5 giây
+        setTimeout(function() {
+            bootstrapToastMessage.hide();
+        }, 5000);
+    }
+
+    if (error) {
+        // Hiển thị thông báo lỗi nếu có error
+        toastError.querySelector('.toast-body').textContent = error; // Cập nhật nội dung
+        toastError.style.display = 'block'; // Hiện toast
+        var bootstrapToastError = new bootstrap.Toast(toastError);
+        bootstrapToastError.show();
+
+        // Thiết lập ẩn toast sau 5 giây
+        setTimeout(function() {
+            bootstrapToastError.hide();
+        }, 5000);
+    }
+</script>
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
         <div class="container">
+
+
+
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
                     <div class="card border-0 shadow">
@@ -89,6 +154,10 @@
                                 <h3 class="h4 mb-0">${lecturerProfile.fullName}</h3>
                                 <span class="text-primary">Lecturer</span>
                             </div>
+
+
+
+
 
                             <ul class="list-unstyled mb-4">
                                 <li class="mb-3"><a href="mailto:${lecturerProfile.email}"><i class="far fa-envelope display-25 me-3 text-secondary"></i>${lecturerProfile.email}</a></li>
@@ -128,50 +197,55 @@
                                             <h5 class="modal-title" id="editProfileModalLabel">Cập nhật Hồ sơ Giảng viên</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
-                                            <form id="lecturerProfileForm">
+                                        <form id="lecturerProfileForm" action="profile" method="post">
+
+                                            <div class="modal-body">
                                                 <input type="hidden" id="lecturerId" value="${lecturerProfile.lecturerId}" />
                                                 <div class="mb-3">
                                                     <label for="fullName" class="form-label">Full Name</label>
-                                                    <input type="text" class="form-control" id="fullName" value="${lecturerProfile.fullName}" required />
+                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="${lecturerProfile.fullName}" required />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="email" value="${lecturerProfile.email}" required />
+                                                    <input name="email" type="email" class="form-control" id="email" value="${lecturerProfile.email}" required />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="phoneNumber" class="form-label">Phone Number</label>
-                                                    <input type="text" class="form-control" id="phoneNumber" value="${lecturerProfile.phoneNumber}" required />
+                                                    <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" value="${lecturerProfile.phoneNumber}" required />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="department" class="form-label">Department</label>
-                                                    <input type="text" class="form-control" id="department" value="${lecturerProfile.department}" required />
+                                                    <input name="department" type="text" class="form-control" id="department" value="${lecturerProfile.department}" required />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="expertise" class="form-label">Expertise</label>
-                                                    <input type="text" class="form-control" id="expertise" value="${lecturerProfile.expertise}" required />
+                                                    <input name="expertise" type="text" class="form-control" id="expertise" value="${lecturerProfile.expertise}" required />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="researchSkill" class="form-label">Research Skill</label>
-                                                    <input type="number" class="form-control" id="researchSkill" value="${lecturerProfile.researchSkill}" required />
+                                                    <input name="researchSkill" type="number" class="form-control" id="researchSkill" value="${lecturerProfile.researchSkill}" required />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="teachingSkill" class="form-label">Teaching Skill</label>
-                                                    <input type="number" class="form-control" id="teachingSkill" value="${lecturerProfile.teachingSkill}" required />
+                                                    <input name="teachingSkill" type="number" class="form-control" id="teachingSkill" value="${lecturerProfile.teachingSkill}" required />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="mentoringSkill" class="form-label">Mentoring Skill</label>
-                                                    <input type="number" class="form-control" id="mentoringSkill" value="${lecturerProfile.mentoringSkill}" required />
+                                                    <input name="mentoringSkill" type="number" class="form-control" id="mentoringSkill" value="${lecturerProfile.mentoringSkill}" required />
                                                 </div>
                                                 <!-- Add other fields if needed -->
-                                            </form>
-                                        </div>
+                                            </div>
 
 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                            <button type="button" class="btn btn-primary" id="saveChanges">Lưu thay đổi</button>
-                                        </div>
+                                            <input type="text" value="lecturer" name="action" hidden="">
+
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" id="saveChanges">Save</button>
+                                            </div>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>

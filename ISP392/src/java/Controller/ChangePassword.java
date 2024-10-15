@@ -98,12 +98,12 @@ public class ChangePassword extends HttpServlet {
         boolean isUpdated = udao.updatePassword(id, newPassword); 
 
         if (isUpdated) {
-            request.getSession().setAttribute("changepasssuccess", "Password changed successfully.");
+            request.getSession().setAttribute("mess", "Password changed successfully.");
         } else {
-            request.getSession().setAttribute("changepassfail", "Failed to change password.");
+            request.getSession().setAttribute("error", "Failed to change password.");
         }
 
-        response.sendRedirect("home");
+        response.sendRedirect("profile");
     }
 
     /**

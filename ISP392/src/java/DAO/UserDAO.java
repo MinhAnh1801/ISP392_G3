@@ -217,10 +217,67 @@ public class UserDAO extends DBContext {
         return lecturerProfile;
     }
 
+  
+
+    public boolean updateProfileLecturerById(Integer id, String fullName, String email, String phoneNumber, String department, String expertise, int researchSkill, int teachingSkill, int mentoringSkill) {
+        String sql = "UPDATE [dbo].[Lecturer_Profile] SET [full_name] = ?, [email] = ?, [phone_number] = ?,"
+                + " [department] = ?, [expertise] = ?, [researchSkill] = ?, [teachingSkill] = ?, [mentoringSkill] = ?, [updated_at] = GETDATE()"
+                + " WHERE [lecturer_id] = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, email);
+            ps.setString(3, phoneNumber);
+            ps.setString(4, department);
+            ps.setString(5, expertise);
+            ps.setInt(6, researchSkill);
+            ps.setInt(7, teachingSkill);
+            ps.setInt(8, mentoringSkill);
+            ps.setInt(9, id);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;  // Return true if the update was successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;  // Return false if the update failed
+    }
+
+   public boolean updateStudentProfile(int studentId, String phoneNumber, String address) {
+    String sql = "UPDATE [dbo].[Student_Profile] SET "
+            + "[phone_number] = ?, "
+            + "[address] = ? "
+            + "WHERE [student_id] = ?";
+
+    try (Connection connection = getConnection(); 
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+         
+        ps.setString(1, phoneNumber);
+        ps.setString(2, address);
+        ps.setInt(3, studentId); // Đảm bảo bạn truyền vào studentId
+
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;  // Trả về true nếu cập nhật thành công
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;  // Trả về false nếu cập nhật thất bại
+}
+
     public static void main(String[] args) {
-        UserDAO udao = new UserDAO();
-        Lecturer_Profile lecturerProfile = udao.getLecturerProfileById(5);
-        System.out.println(lecturerProfile.getLecturerId());
+          UserDAO userDAO = new UserDAO();
+
+    int studentId = 2; // Thay đổi ID sinh viên mà bạn muốn cập nhật
+    String newPhoneNumber = "0123456789";
+    String newAddress = "123 Đường ABC, Quận XYZ";
+
+    boolean isUpdated = userDAO.updateStudentProfile(studentId, newPhoneNumber, newAddress);
+
+    if (isUpdated) {
+        System.out.println("Cập nhật thông tin sinh viên thành công.");
+    } else {
+        System.out.println("Cập nhật thông tin sinh viên thất bại.");
+    }
     }
 
 }
