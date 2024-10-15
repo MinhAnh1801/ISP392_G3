@@ -60,7 +60,7 @@
     </head>
     <body>
 
-        <c:if test="${sessionScope.role == 2}">
+        <c:if test="${sessionScope.role == 0}">
             <div>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGuidelineModal">
                     Tạo mới hướng dẫn
@@ -88,8 +88,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="guidelineCategory" class="form-label">Thể loại</label>
-                                <input name="category" type="text" class="form-control" id="guidelineCategory" placeholder="Nhập danh mục">
+                                <select name="category" class="form-control" id="guidelineCategory">
+                                    <option value="" disabled selected>Chọn danh mục</option>
+                                    <option value="category1">Danh mục 1</option>
+                                    <option value="category2">Danh mục 2</option>
+                                    <option value="category3">Danh mục 3</option>
+                                </select>
                             </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -191,7 +197,7 @@
                                     Xem Chi tiết
                                 </button>
 
-                                <c:if test="${sessionScope.role == 2}">
+                                <c:if test="${sessionScope.role == 0}">
 
 
                                     <!-- button edit s -->
@@ -254,7 +260,7 @@
                                 <!-- Create New Button -->
                                 <!-- Button to Open the Modal -->
                                 <!-- Button to Open the Modal -->
-                                <c:if test="${sessionScope.role == 2}">
+                                <c:if test="${sessionScope.role == 0}">
 
 
                                     <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
@@ -322,7 +328,7 @@
                                     <p>${listGuideDetail.description}</p>
 
 
-                                    <c:if test="${sessionScope.role == 2}">
+                                    <c:if test="${sessionScope.role == 0}">
 
 
                                         <div class="d-flex align-items-center">
