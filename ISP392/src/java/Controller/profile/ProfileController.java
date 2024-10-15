@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Controller.profile;
 
-import DAO.DAO;
-import Model.Materials;
-import Model.Subjects;
+import DAO.UserDAO;
+import Model.Lecturer_Profile;
+import Model.Profile;
+import Model.Student_Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,14 +16,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
- * @author khucx
+ * @author trung
  */
-@WebServlet(name = "MaterialsController", urlPatterns = {"/lecturer/materials"})
-public class MaterialsController extends HttpServlet {
+@WebServlet(name = "ProfileController", urlPatterns = {"/profile"})
+public class ProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,6 +36,18 @@ public class MaterialsController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProfileController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,18 +62,26 @@ public class MaterialsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("role") == null) {
-            response.sendRedirect("/ISP392/login");
-            return;
-        }
-        int lecturerId = (Integer) session.getAttribute("user");
-        DAO dao = new DAO();
-        List<Materials> materials = dao.getMaterialsByLecturerId(lecturerId);
-        List<Subjects> subjectList = dao.getAllSubjectCodes();
-        request.setAttribute("subjectList", subjectList);
-        request.setAttribute("materials", materials);
-        request.getRequestDispatcher("materialsLect.jsp").forward(request, response);
+        // lấy thông tin user 
+
+        HttpSession session = request.getSession();
+        Integer id = (Integer) session.getAttribute("user");
+        Integer role = (Integer) session.getAttribute("role");
+
+        if (id == null) { // Kiểm tra null trước
+            response.sendRedirect("login");
+        } else {
+
+            int user_id = id;
+            // khởi tạo 
+            UserDAO uDao = new UserDAO();
+          
+            
+
+            if (role==1) {
+
+                Student_Profile studentProfile = uDao.getStudentProfile(user_id);
+                request.setAttribute("studentProfile", studentProfile);
 
                 request.getRequestDispatcher("/profile/viewStudentProfile.jsp").forward(request, response);
 
