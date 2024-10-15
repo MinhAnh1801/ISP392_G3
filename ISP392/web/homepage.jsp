@@ -282,7 +282,7 @@
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses hover:underline"><a href="">Attendance report / Báo cáo điểm danh</a></li>
                             <li class="register-courses hover:underline"><a href="">Mark report / Báo cáo điểm</a></li>
-                            <li><a href="" class="hover:underline">Curriculum / Khung chương trình</a></li>
+                            <li><a href="viewCurriculum" class="hover:underline">Curriculum / Khung chương trình</a></li>
                         </ul>
                     </div>
                 </div>
