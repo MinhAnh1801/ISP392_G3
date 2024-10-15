@@ -186,8 +186,7 @@
                     <div class="subject-settings">Guide settings</div>
                     <div class="view-list-of-container3">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="view-notifications hover:underline"><a href="guideline">View list of guides</a></li>
-                            <li class="hover:underline"><a href="guideline">Add new guide</a></li>
+                            <li class="hover:underline"><a href="guideline">Manager guide</a></li>
                         </ul>
                     </div>
                 </div>
