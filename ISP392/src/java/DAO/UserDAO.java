@@ -55,7 +55,7 @@ public class UserDAO extends DBContext {
 
         // khởi tạo db lấy dữ liệu từ sql 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
-         
+
             // lấy userid truyền vào dấu ? thứ nhất trong sql 
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
@@ -79,8 +79,36 @@ public class UserDAO extends DBContext {
         return profile;
     }
 
+//    public Student_Profile getStudentProfile(int userId) {
+//        String sql = "SELECT [student_id], [major_id], [year_of_study] FROM [dbo].[Student_Profile] WHERE [student_id] = ?";
+//        Student_Profile studentProfile = new Student_Profile();
+//
+//        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+//            ps.setInt(1, userId);
+//            ResultSet rs = ps.executeQuery();
+//
+//            if (rs.next()) {
+//                UserDAO uDao = new UserDAO();
+//                User user = uDao.getUserById(rs.getInt("student_id"));
+//                studentProfile.setStudent_id(user);
+//
+//                MajorDAO mDao = new MajorDAO();
+//                Major major = mDao.getMajorById(rs.getInt("major_id"));
+//                studentProfile.setMajor_id(major);
+//
+//                studentProfile.setYear_of_study(rs.getString("year_of_study"));
+//
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return studentProfile;
+//    }
     public Student_Profile getStudentProfile(int userId) {
-        String sql = "SELECT [student_id], [major_id], [year_of_study] FROM [dbo].[Student_Profile] WHERE [student_id] = ?";
+        String sql = "SELECT [student_id], [major_id], [year_of_study], [full_name], [date_of_birth], [phone_number], "
+                + "[email], [gender], [student_code], [address], [emergency_contact], [photo], [national_id], "
+                + "[class_id], [enrollment_year], [graduation_year], [gpa], [scholarship_status], [medical_conditions] "
+                + "FROM [dbo].[Student_Profile] WHERE [student_id] = ?";
         Student_Profile studentProfile = new Student_Profile();
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -97,7 +125,22 @@ public class UserDAO extends DBContext {
                 studentProfile.setMajor_id(major);
 
                 studentProfile.setYear_of_study(rs.getString("year_of_study"));
-
+                studentProfile.setFull_name(rs.getString("full_name"));
+                studentProfile.setDate_of_birth(rs.getDate("date_of_birth"));
+                studentProfile.setPhone_number(rs.getString("phone_number"));
+                studentProfile.setEmail(rs.getString("email"));
+                studentProfile.setGender(rs.getString("gender"));
+                studentProfile.setStudent_code(rs.getString("student_code"));
+                studentProfile.setAddress(rs.getString("address"));
+                studentProfile.setEmergency_contact(rs.getString("emergency_contact"));
+                studentProfile.setPhoto(rs.getString("photo"));
+                studentProfile.setNational_id(rs.getString("national_id"));
+                studentProfile.setClass_id(rs.getString("class_id"));
+                studentProfile.setEnrollment_year(rs.getInt("enrollment_year"));
+                studentProfile.setGraduation_year(rs.getInt("graduation_year"));
+                studentProfile.setGpa(rs.getDouble("gpa"));
+                studentProfile.setScholarship_status(rs.getBoolean("scholarship_status"));
+                studentProfile.setMedical_conditions(rs.getString("medical_conditions"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,6 +148,42 @@ public class UserDAO extends DBContext {
         return studentProfile;
     }
 
-   
+    public boolean checkCurrentPassword(int userId, String currentPassword) {
+        String sql = "SELECT [password] FROM [dbo].[Users] WHERE [id] = ?";
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
 
+            if (rs.next()) {
+                String storedPassword = rs.getString("password");
+                return storedPassword.equals(currentPassword); // So sánh mật khẩu
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updatePassword(int id, String newPassword) {
+        String sql = "UPDATE [dbo].[Users] SET [password] = ? WHERE [id] = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, newPassword);
+            ps.setInt(2, id);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    
+    public static void main(String[] args) {
+        UserDAO udao = new UserDAO();
+         Student_Profile studentProfile= udao.getStudentProfile(2);
+         System.out.println(studentProfile.getDate_of_birth());
+    }
+    
+    
 }

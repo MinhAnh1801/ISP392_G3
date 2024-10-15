@@ -12,7 +12,6 @@ import java.util.Date;
  */
 public class User {
 
-
     private int id;
     private String username;
     private String email;
@@ -104,4 +103,5 @@ public class User {
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role=" + role + ", status=" + status + '}';
     }
+
 }

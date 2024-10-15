@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -60,13 +61,13 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // lấy thông tin admin 
-//            HttpSession session = request.getSession();
-//            User user = (User) session.getAttribute("user");
+        // lấy thông tin user 
+
+        HttpSession session = request.getSession();
+        int id = (int) session.getAttribute("user");
 
 
-// lấy id từ link xuống /profile?id=1 
-        int user_id = Integer.parseInt(request.getParameter("id"));
+        int user_id = id;
         // khởi tạo 
         UserDAO uDao = new UserDAO();
         // lấy profile gọi hàm getprofileById 
@@ -74,19 +75,17 @@ public class ProfileController extends HttpServlet {
         request.setAttribute("profile", profile);
 
         if (profile.getUser_id().getRole().equals("student")) {
-            
+
             Student_Profile studentProfile = uDao.getStudentProfile(user_id);
             request.setAttribute("studentProfile", studentProfile);
-            
-            
+
             request.getRequestDispatcher("/profile/viewStudentProfile.jsp").forward(request, response);
 
         } else if (profile.getUser_id().getRole().equals("lecturer")) {
-            
-            
+
             request.getRequestDispatcher("/profile/viewLecturerProfile.jsp").forward(request, response);
 
-        } 
+        }
 
     }
 

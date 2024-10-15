@@ -113,11 +113,11 @@
                                 <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>${profile.address}</a></li>
                             </ul>
                             <ul class="social-icon-style2 ps-0">
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-linkedin-in"></i></a></li>
+                                <a href="changepassword">
+                                    <button>Change password</button>
+                                </a>
                             </ul>
+
                         </div>
                     </div>
                 </div>
@@ -143,61 +143,42 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-xl-4 mt-4">
-                                    <div class="card text-center border-0 rounded-3">
-                                        <div class="card-body">
-                                            <i class="ti-pencil-alt icon-box medium rounded-3 mb-4"></i>
-                                            <h3 class="h5 mb-3">Career Start</h3>
-                                            <p class="mb-0">After complete engineer join HU Signage Ltd as a project manager</p>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-6 col-xl-4 mt-4">
                                     <div class="card text-center border-0 rounded-3">
                                         <div class="card-body">
                                             <i class="ti-medall-alt icon-box medium rounded-3 mb-4"></i>
                                             <h3 class="h5 mb-3">Experience</h3>
-                                            <p class="mb-0">About 20 years of experience and professional in signage</p>
+                                            <p class="mb-0">${studentProfile.year_of_study}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="wow fadeIn">
+                        <div class="mb-5 wow fadeIn">
                             <div class="text-start mb-1-6 wow fadeIn">
-                                <h2 class="mb-0 text-primary">#Skills &amp; Experience</h2>
+                                <h2 class="mb-0 text-primary">#Profile Details</h2>
                             </div>
-                            <p class="mb-4">Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose.</p>
-                            <div class="progress-style1">
-                                <div class="progress-text">
-                                    <div class="row">
-                                        <div class="col-6 fw-bold">Wind Turbines</div>
-                                        <div class="col-6 text-end">70%</div>
-                                    </div>
-                                </div>
-                                <div class="custom-progress progress rounded-3 mb-4">
-                                    <div class="animated custom-bar progress-bar slideInLeft" style="width:70%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="10" role="progressbar"></div>
-                                </div>
-                                <div class="progress-text">
-                                    <div class="row">
-                                        <div class="col-6 fw-bold">Solar Panels</div>
-                                        <div class="col-6 text-end">90%</div>
-                                    </div>
-                                </div>
-                                <div class="custom-progress progress rounded-3 mb-4">
-                                    <div class="animated custom-bar progress-bar bg-secondary slideInLeft" style="width:90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
-                                </div>
-                                <div class="progress-text">
-                                    <div class="row">
-                                        <div class="col-6 fw-bold">Hybrid Energy</div>
-                                        <div class="col-6 text-end">80%</div>
-                                    </div>
-                                </div>
-                                <div class="custom-progress progress rounded-3">
-                                    <div class="animated custom-bar progress-bar bg-dark slideInLeft" style="width:80%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
-                                </div>
-                            </div>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-3"><i class="far fa-calendar-alt display-25 me-3 text-secondary"></i> Date of Birth: ${studentProfile.date_of_birth}</li>
+                                <li class="mb-3"><i class="fas fa-id-card-alt display-25 me-3 text-secondary"></i> Student Code: ${studentProfile.student_code}</li>
+                                <li class="mb-3"><i class="fas fa-graduation-cap display-25 me-3 text-secondary"></i> Enrollment Year: ${studentProfile.enrollment_year}</li>
+                                <li class="mb-3"><i class="fas fa-calendar-check display-25 me-3 text-secondary"></i> Graduation Year: ${studentProfile.graduation_year}</li>
+                                <li class="mb-3"><i class="fas fa-star display-25 me-3 text-secondary"></i> GPA: ${studentProfile.gpa}</li>
+                                <li class="mb-3"><i class="fas fa-award display-25 me-3 text-secondary"></i> Scholarship Status: 
+                                    <c:choose>
+                                        <c:when test="${studentProfile.scholarship_status}">
+                                            Yes
+                                        </c:when>
+                                        <c:otherwise>
+                                            No
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+                                <li class="mb-3"><i class="fas fa-notes-medical display-25 me-3 text-secondary"></i> Medical Conditions: ${studentProfile.medical_conditions}</li>
+                            </ul>
                         </div>
+
                     </div>
                 </div>
             </div>
