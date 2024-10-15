@@ -28,6 +28,35 @@
                 width: 300px;
             }
         </style>
+        <style>
+            body {
+                background-color: #ffffff; /* Màu nền trắng */
+                font-family: Arial, sans-serif; /* Font chữ */
+            }
+            h1 {
+                color: #ff5722; /* Màu cam cho tiêu đề */
+                text-align: center; /* Căn giữa tiêu đề */
+                margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+            }
+            .table {
+                width: 100%; /* Chiều rộng 100% */
+                margin-top: 20px; /* Khoảng cách trên bảng */
+                border-collapse: collapse; /* Kết hợp đường biên */
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho bảng */
+            }
+            .table th, .table td {
+                padding: 10px; /* Khoảng cách trong ô */
+                border: 1px solid #dee2e6; /* Đường biên cho ô */
+                text-align: center; /* Căn giữa nội dung */
+            }
+            .table th {
+                background-color: #ff9800; /* Màu cam cho tiêu đề bảng */
+                color: #ffffff; /* Màu chữ trắng cho tiêu đề bảng */
+            }
+            .table tbody tr:hover {
+                background-color: #ffe0b2; /* Màu nền sáng khi di chuột qua hàng */
+            }
+        </style>
     </head>
     <body>
 
