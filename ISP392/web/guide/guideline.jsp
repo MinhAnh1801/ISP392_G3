@@ -249,7 +249,7 @@
 
         <c:forEach items="${listGuideline}" var="listGuideline">
 
-            <!-- hiển thị ra detail  -->
+            <!-- Modal for Guide 1 -->
             <div class="modal fade" id="guideModalGuideDetail${listGuideline.id}" tabindex="-1" aria-labelledby="guideModalLabel1" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">

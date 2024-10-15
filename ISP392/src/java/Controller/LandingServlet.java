@@ -4,19 +4,23 @@
  */
 package Controller;
 
+import DAO.DAO;
+import Model.News;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
  * @author khucx
  */
-public class LogOutControl extends HttpServlet {
+@WebServlet(name = "LandingServlet", urlPatterns = {"/landing"})
+public class LandingServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,11 +34,16 @@ public class LogOutControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        session.removeAttribute("user");
-        session.removeAttribute("role");
-        session.removeAttribute("loginfail");
-        response.sendRedirect("landing");
+        DAO dao = new DAO();
+        // Get the list of all news from the database
+        List<News> newsList = dao.getTop3News();
+        
+        // Set the list of news as an attribute in the request
+        request.setAttribute("news1", newsList.get(0));
+        request.setAttribute("news2", newsList.get(1));
+        request.setAttribute("news3", newsList.get(2));
+        // Forward the request to the JSP page for displaying the news
+        request.getRequestDispatcher("landing.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

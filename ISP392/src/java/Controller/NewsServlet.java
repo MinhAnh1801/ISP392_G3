@@ -4,19 +4,24 @@
  */
 package Controller;
 
+import DAO.DAO;
+import Model.News;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
  * @author khucx
  */
-public class LogOutControl extends HttpServlet {
+@WebServlet(name = "NewsServlet", urlPatterns = {"/newsAdmin"})
+public class NewsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,11 +35,19 @@ public class LogOutControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        session.removeAttribute("user");
-        session.removeAttribute("role");
-        session.removeAttribute("loginfail");
-        response.sendRedirect("landing");
+        DAO newsDAO = new DAO();
+        List<News> newsList = newsDAO.getAllNews();
+        HttpSession session = request.getSession(false);
+        // Set the news list in the request attribute
+        request.setAttribute("newsList", newsList);
+        if (session == null || session.getAttribute("role") == null) {
+            response.sendRedirect("login");
+            return;
+        } else if ((int) session.getAttribute("role") != 0) {
+            response.sendRedirect("login");
+            return;
+        }else
+        request.getRequestDispatcher("news.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

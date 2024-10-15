@@ -4,8 +4,6 @@
  */
 package Model;
 
-import java.util.Date;
-
 /**
  *
  * @author khucx
@@ -41,14 +39,6 @@ public class User {
         this.password = password;
         this.role = role;
         this.status = status;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
     }
 
     public int getId() {
