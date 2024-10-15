@@ -5,6 +5,7 @@
 package Controller.profile;
 
 import DAO.UserDAO;
+import Model.Lecturer_Profile;
 import Model.Profile;
 import Model.Student_Profile;
 import java.io.IOException;
@@ -64,29 +65,35 @@ public class ProfileController extends HttpServlet {
         // lấy thông tin user 
 
         HttpSession session = request.getSession();
-        int id = (int) session.getAttribute("user");
+        Integer id = (Integer) session.getAttribute("user");
 
+        if (id == null) { // Kiểm tra null trước
+            response.sendRedirect("login");
+        } else {
 
-        int user_id = id;
-        // khởi tạo 
-        UserDAO uDao = new UserDAO();
-        // lấy profile gọi hàm getprofileById 
-        Profile profile = uDao.getProfileById(user_id);
-        request.setAttribute("profile", profile);
+            int user_id = id;
+            // khởi tạo 
+            UserDAO uDao = new UserDAO();
+            // lấy profile gọi hàm getprofileById 
+            Profile profile = uDao.getProfileById(user_id);
+            request.setAttribute("profile", profile);
 
-        if (profile.getUser_id().getRole().equals("student")) {
+            if (profile.getUser_id().getRole().equals("student")) {
 
-            Student_Profile studentProfile = uDao.getStudentProfile(user_id);
-            request.setAttribute("studentProfile", studentProfile);
+                Student_Profile studentProfile = uDao.getStudentProfile(user_id);
+                request.setAttribute("studentProfile", studentProfile);
 
-            request.getRequestDispatcher("/profile/viewStudentProfile.jsp").forward(request, response);
+                request.getRequestDispatcher("/profile/viewStudentProfile.jsp").forward(request, response);
 
-        } else if (profile.getUser_id().getRole().equals("lecturer")) {
+            } else if (profile.getUser_id().getRole().equals("lecturer")) {
 
-            request.getRequestDispatcher("/profile/viewLecturerProfile.jsp").forward(request, response);
+                Lecturer_Profile lecturer = uDao.getLecturerProfileById(user_id);
+                request.setAttribute("lecturerProfile", lecturer);
 
+                request.getRequestDispatcher("/profile/viewLecturerProfile.jsp").forward(request, response);
+
+            }
         }
-
     }
 
     /**

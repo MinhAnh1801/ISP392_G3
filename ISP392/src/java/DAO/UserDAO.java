@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Guidelines;
+import Model.Lecturer_Profile;
 import Model.Major;
 import Model.Profile;
 import Model.Student_Profile;
@@ -178,12 +179,48 @@ public class UserDAO extends DBContext {
         return false;
     }
 
-    
+    public Lecturer_Profile getLecturerProfileById(int lecturerId) {
+        Lecturer_Profile lecturerProfile = null;
+
+        String sql = "SELECT * FROM [dbo].[Lecturer_Profile] WHERE lecturer_id = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, lecturerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                lecturerProfile = new Lecturer_Profile();
+                lecturerProfile.setLecturerId(resultSet.getInt("lecturer_id"));
+                lecturerProfile.setExpertise(resultSet.getString("expertise"));
+                lecturerProfile.setOffice(resultSet.getString("office"));
+                lecturerProfile.setFullName(resultSet.getString("full_name"));
+                lecturerProfile.setEmail(resultSet.getString("email"));
+                lecturerProfile.setPhoneNumber(resultSet.getString("phone_number"));
+                lecturerProfile.setDepartment(resultSet.getString("department"));
+                lecturerProfile.setJoiningDate(resultSet.getDate("joining_date"));
+                lecturerProfile.setBio(resultSet.getString("bio"));
+                lecturerProfile.setPhotoUrl(resultSet.getString("photo_url"));
+                lecturerProfile.setResearchInterest(resultSet.getString("research_interest"));
+                lecturerProfile.setPublications(resultSet.getString("publications"));
+                lecturerProfile.setAwards(resultSet.getString("awards"));
+                lecturerProfile.setCreatedAt(resultSet.getTimestamp("created_at"));
+                lecturerProfile.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                lecturerProfile.setResearchSkill(resultSet.getInt("researchSkill"));
+                lecturerProfile.setTeachingSkill(resultSet.getInt("teachingSkill"));
+                lecturerProfile.setMentoringSkill(resultSet.getInt("mentoringSkill"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lecturerProfile;
+    }
+
     public static void main(String[] args) {
         UserDAO udao = new UserDAO();
-         Student_Profile studentProfile= udao.getStudentProfile(2);
-         System.out.println(studentProfile.getDate_of_birth());
+        Lecturer_Profile lecturerProfile = udao.getLecturerProfileById(5);
+        System.out.println(lecturerProfile.getLecturerId());
     }
-    
-    
+
 }
