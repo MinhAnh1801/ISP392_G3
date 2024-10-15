@@ -4,42 +4,81 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/HomeControl.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/import.jsp</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/importstudent.jsp</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/lecturer/materialsLect.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/LoginControl.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/nbproject/build-impl.xml~</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/UploadNews.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/MaterialsController.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/news.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/homepage.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/LogOutControl.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/DormRooms.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/guideline/GuidelineController.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/UserDAO.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/User.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/UploadServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Applications.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Profile.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/News.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/CSS/style.css</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/LandingServlet.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Context/DBContext.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/SendCaptcha.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/MaterialAddServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Student_Profile.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/Exams.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/viewCurriculum.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/dal/ApplicationDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/VerifyCaptcha.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ImgServlet.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/verifycaptcha.jsp</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/NewsServlet.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/login.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/controllers/SubjectsController.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/controllers/NotificationController.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Materials.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/dal/DBContext.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/ClassDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/forgotpassword.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/ViewNotification.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Notifications.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/ViewListDormRoom.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/Notification.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/importstudent.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/profile/viewStudentProfile.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/DownloadServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/lecturer/materialsLect.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/MajorDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/MaterialsController.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ResetPassword.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/ListSubjects.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/User.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/ExamsDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/controllers/ExamsController.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/SendCaptcha.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/WEB-INF/web.xml</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ImportServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/GuidelineDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/UpdateSubjects.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/controllers/ClassController.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/UploadNotification.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/dal/ApplicationTypeDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/Subjects.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/MaterialAddServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/ViewExams.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ViewCurriculumController.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/NewsServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/verifycaptcha.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DormRoomController/ViewListDormRoom.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Class.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/landing.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/resetpassword.jsp</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Materials.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/META-INF/context.xml</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Subjects.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/forgotpassword.jsp</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/EmailSender.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/dal/DormRoomsDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/changePassword.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/SubjectsDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/ViewListApplicationType.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Major.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/NotificationDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Curriculum.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/profile/ProfileController.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/guide/guideline.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/DAO.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/LoginController.java</file>
-            <file>file:/D:/koro/anh%20swp/test%203/ISP392_G3/ISP392/web/profile/viewStudentProfile.jsp</file>
-            <file>file:/D:/koro/anh%20swp/test%203/ISP392_G3/ISP392/src/java/Model/Lecturer_Profile.java</file>
-            <file>file:/D:/koro/anh%20swp/test%203/ISP392_G3/ISP392/web/profile/viewLecturerProfile.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/Classes.java</file>
         </group>
     </open-files>
 </project-private>

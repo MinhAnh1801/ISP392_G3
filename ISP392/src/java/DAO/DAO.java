@@ -5,6 +5,10 @@
 package DAO;
 
 import Context.DBContext;
+import Model.Materials;
+import Model.News;
+import Model.Notifications;
+import Model.Subjects;
 import Model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,29 +29,47 @@ import java.sql.Blob;
  * @author khucx
  */
 public class DAO {
-    Connection  conn = null;
+
+    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    
-    public List<User> getAllUser(){
+
+    public String getCellValue(Cell cell) {
+        if (cell == null) {
+            return "";
+        }
+
+        if (cell.getCellType() == CellType.NUMERIC) {
+            // Use DecimalFormat to format the number as a plain string (no scientific notation)
+            DecimalFormat df = new DecimalFormat("0"); // No decimals
+            return df.format(cell.getNumericCellValue());
+        } else if (cell.getCellType() == CellType.STRING) {
+            return cell.getStringCellValue();
+        } else {
+            return "";
+        }
+    }
+
+    public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
         String query = "select * from Users";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            while (rs.next()) {                
-                list.add( new User(rs.getInt(1), rs.getString(2),
+            while (rs.next()) {
+                list.add(new User(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
             }
         } catch (Exception e) {
         }
         return list;
     }
-    public User checkLogin(String username,String password){
+
+    public User checkLogin(String username, String password) {
         List<User> list = getAllUser();
-        for(User u : list){
-            if(u.getUsername().equals(username) && u.getPassword().equals(password)){
+        for (User u : list) {
+            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                 return u;
             }
         }
@@ -278,4 +300,5 @@ public class DAO {
             System.out.println(notification);
         }
     }
+
 }

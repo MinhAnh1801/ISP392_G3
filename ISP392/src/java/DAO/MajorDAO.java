@@ -58,7 +58,7 @@ public class MajorDAO extends DBContext {
 
     public List<Subjects> getSubjectByMajorId(int majorId) {
         List<Subjects> subjects = new ArrayList<>();
-        String sql = "SELECT s.id, s.code, s.name, s.credits, s.description, s.semester, s.lecturer_id "
+        String sql = "SELECT s.id, s.code, s.name, s.credits, s.description, s.semester "
                 + "FROM Subjects s "
                 + "JOIN Curriculum c ON s.id = c.subject_id "
                 + "WHERE c.major_id = ? ORDER BY s.semester ASC";
@@ -76,7 +76,6 @@ public class MajorDAO extends DBContext {
                 subject.setCredits(rs.getInt("credits"));
                 subject.setDescription(rs.getString("description"));
                 subject.setSemester(rs.getInt("semester"));
-                subject.setLecturerId(rs.getInt("lecturer_id"));
                 subjects.add(subject); // Thêm môn học vào danh sách
             }
         } catch (SQLException e) {
@@ -89,7 +88,7 @@ public class MajorDAO extends DBContext {
     
     public static void main(String[] args) {
         MajorDAO mdao = new MajorDAO();
-        List<Subjects> subjects = mdao.getListSubjectByUserId(2);
+        List<Subjects> subjects = mdao.getListSubjectByUserId(4);
         for(Subjects s : subjects){
             System.out.println(s.getId());
         }
