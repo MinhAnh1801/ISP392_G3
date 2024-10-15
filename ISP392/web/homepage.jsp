@@ -186,8 +186,7 @@
                     <div class="subject-settings">Guide settings</div>
                     <div class="view-list-of-container3">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="view-notifications hover:underline"><a href="">View list of guides</a></li>
-                            <li class="hover:underline"><a href="">Add new guide</a></li>
+                            <li class="hover:underline"><a href="guideline">Manager guide</a></li>
                         </ul>
                     </div>
                 </div>
@@ -233,7 +232,7 @@
                             <li class="register-courses hover:underline"><a href="">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
                             <li class="register-courses hover:underline"><a href="">Assignment / Bài tập</a></li>
                             <li class="register-courses hover:underline"><a href="">View exam schedule / Xem lịch thi</a></li>
-                            <li><a class="hover:underline" href="">Student guide / Hướng dẫn sinh viên</a></li>
+                            <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
                         </ul>
                     </div>
                 </div>
@@ -282,7 +281,7 @@
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses hover:underline"><a href="">Attendance report / Báo cáo điểm danh</a></li>
                             <li class="register-courses hover:underline"><a href="">Mark report / Báo cáo điểm</a></li>
-                            <li><a href="" class="hover:underline">Curriculum / Khung chương trình</a></li>
+                            <li><a href="viewCurriculum" class="hover:underline">Curriculum / Khung chương trình</a></li>
                         </ul>
                     </div>
                 </div>

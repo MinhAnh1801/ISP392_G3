@@ -66,6 +66,7 @@ public class ProfileController extends HttpServlet {
 
         HttpSession session = request.getSession();
         Integer id = (Integer) session.getAttribute("user");
+        Integer role = (Integer) session.getAttribute("role");
 
         if (id == null) { // Kiểm tra null trước
             response.sendRedirect("login");
@@ -74,18 +75,17 @@ public class ProfileController extends HttpServlet {
             int user_id = id;
             // khởi tạo 
             UserDAO uDao = new UserDAO();
-            // lấy profile gọi hàm getprofileById 
-            Profile profile = uDao.getProfileById(user_id);
-            request.setAttribute("profile", profile);
+          
+            
 
-            if (profile.getUser_id().getRole().equals("student")) {
+            if (role==1) {
 
                 Student_Profile studentProfile = uDao.getStudentProfile(user_id);
                 request.setAttribute("studentProfile", studentProfile);
 
                 request.getRequestDispatcher("/profile/viewStudentProfile.jsp").forward(request, response);
 
-            } else if (profile.getUser_id().getRole().equals("lecturer")) {
+            } else if (role ==2) {
 
                 Lecturer_Profile lecturer = uDao.getLecturerProfileById(user_id);
                 request.setAttribute("lecturerProfile", lecturer);
@@ -107,7 +107,50 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String action = request.getParameter("action");
+        HttpSession session = request.getSession();
+        Integer id = (Integer) session.getAttribute("user");
+        // check action null
+        if (action.isEmpty()) {
+            request.setAttribute("error", "action is empty");
+        } // check update profile lecturer
+        else if (action.equalsIgnoreCase("lecturer")) {
+
+            String fullName = request.getParameter("fullName");
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phoneNumber");
+            String department = request.getParameter("department");
+            String expertise = request.getParameter("expertise");
+            int researchSkill = Integer.parseInt(request.getParameter("researchSkill"));
+            int teachingSkill = Integer.parseInt(request.getParameter("teachingSkill"));
+            int mentoringSkill = Integer.parseInt(request.getParameter("mentoringSkill"));
+
+            UserDAO udao = new UserDAO();
+            boolean updateProfile = udao.updateProfileLecturerById(id, fullName, email, phoneNumber, department,
+                    expertise, researchSkill, teachingSkill, mentoringSkill);
+
+            if (updateProfile) {
+                request.setAttribute("mess", "Update Successes");
+            } else {
+                request.setAttribute("error", "Update False");
+            }
+        } else if (action.equalsIgnoreCase("student")) {
+            String phoneNumber = request.getParameter("phoneNumber");
+            String address = request.getParameter("address");
+
+            UserDAO udao = new UserDAO();
+            boolean updateProfile = udao.updateStudentProfile(id, phoneNumber, address);
+
+            if (updateProfile) {
+                request.setAttribute("mess", "Update Successes");
+            } else {
+                request.setAttribute("error", "Update False");
+            }
+        }
+
+        doGet(request, response);
+
     }
 
     /**

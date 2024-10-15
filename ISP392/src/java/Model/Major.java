@@ -15,6 +15,8 @@ public class Major {
     public Major() {
     }
 
+    
+
     public Major(int id, String name) {
         this.id = id;
         this.name = name;

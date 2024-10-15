@@ -28,16 +28,47 @@
                 width: 300px;
             }
         </style>
+        <style>
+            body {
+                background-color: #ffffff; /* Màu nền trắng */
+                font-family: Arial, sans-serif; /* Font chữ */
+            }
+            h1 {
+                color: #ff5722; /* Màu cam cho tiêu đề */
+                text-align: center; /* Căn giữa tiêu đề */
+                margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+            }
+            .table {
+                width: 100%; /* Chiều rộng 100% */
+                margin-top: 20px; /* Khoảng cách trên bảng */
+                border-collapse: collapse; /* Kết hợp đường biên */
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho bảng */
+            }
+            .table th, .table td {
+                padding: 10px; /* Khoảng cách trong ô */
+                border: 1px solid #dee2e6; /* Đường biên cho ô */
+                text-align: center; /* Căn giữa nội dung */
+            }
+            .table th {
+                background-color: #ff9800; /* Màu cam cho tiêu đề bảng */
+                color: #ffffff; /* Màu chữ trắng cho tiêu đề bảng */
+            }
+            .table tbody tr:hover {
+                background-color: #ffe0b2; /* Màu nền sáng khi di chuột qua hàng */
+            }
+        </style>
     </head>
     <body>
-        
-        
-         <!-- Button to trigger the modal -->
-        <div>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGuidelineModal">
-                Tạo mới hướng dẫn
-            </button>
-        </div>
+
+        <c:if test="${sessionScope.role == 0}">
+            <div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGuidelineModal">
+                    Tạo mới hướng dẫn
+                </button>
+            </div>
+        </c:if>
+        <!-- Button to trigger the modal -->
+
 
         <!-- Modal Structure -->
         <div class="modal fade" id="createGuidelineModal" tabindex="-1" aria-labelledby="createGuidelineLabel" aria-hidden="true">
@@ -57,8 +88,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="guidelineCategory" class="form-label">Thể loại</label>
-                                <input name="category" type="text" class="form-control" id="guidelineCategory" placeholder="Nhập danh mục">
+                                <select name="category" class="form-control" id="guidelineCategory">
+                                    <option value="" disabled selected>Chọn danh mục</option>
+                                    <option value="category1">Danh mục 1</option>
+                                    <option value="category2">Danh mục 2</option>
+                                    <option value="category3">Danh mục 3</option>
+                                </select>
                             </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -76,7 +113,7 @@
                 if (title && category) {
                     console.log('Title:', title);
                     console.log('Category:', category);
-                    $('#createGuidelineForm').submit(); 
+                    $('#createGuidelineForm').submit();
 
                     $('#createGuidelineModal').modal('hide');
                 } else {
@@ -84,12 +121,12 @@
                 }
             }
         </script>
-        
-        
-        
-        
+
+
+
+
         <!--Hiển thị thông báo lỗi hoặc mess -->
-         <div class="container mt-5 alert-container">
+        <div class="container mt-5 alert-container">
             <!-- Success Message -->
             <c:if test="${not empty mess}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
@@ -132,12 +169,12 @@
         </script>
         <!-- kết thúc Hiển thị thông báo lỗi hoặc mess -->
 
-        
-        
+
+
         <!-- in ra table -->
         <div class="container mt-5">
             <h2 class="text-center">Danh sách hướng dẫn </h2>
-            
+
             <table id="guideTable" class="table table-bordered mt-4">
                 <thead class="table-primary">
                     <tr>
@@ -159,24 +196,29 @@
                                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#guideModalGuideDetail${listGuideline.id}">
                                     Xem Chi tiết
                                 </button>
-                                <!-- button edit s -->
-                                <button class="btn btn-info"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editModalGuideline"
-                                        data-id="${listGuideline.id}"
-                                        data-title="${listGuideline.title}"
-                                        data-create-date="${listGuideline.create_date}"
-                                        data-category="${listGuideline.category}">
-                                    Sửa
-                                </button>
-                                <!-- Form for Deleting a Guideline -->
-                                <form id="deleteForm" action="guideline" method="post" class="d-inline">
-                                    <input name="action" value="delete" hidden>
-                                    <input name="id" value="${listGuideline.id}" hidden>
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalGuideline">
-                                        Xóa
+
+                                <c:if test="${sessionScope.role == 0}">
+
+
+                                    <!-- button edit s -->
+                                    <button class="btn btn-info"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editModalGuideline"
+                                            data-id="${listGuideline.id}"
+                                            data-title="${listGuideline.title}"
+                                            data-create-date="${listGuideline.create_date}"
+                                            data-category="${listGuideline.category}">
+                                        Sửa
                                     </button>
-                                </form>
+                                    <!-- Form for Deleting a Guideline -->
+                                    <form id="deleteForm" action="guideline" method="post" class="d-inline">
+                                        <input name="action" value="delete" hidden>
+                                        <input name="id" value="${listGuideline.id}" hidden>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalGuideline">
+                                            Xóa
+                                        </button>
+                                    </form>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
@@ -218,10 +260,13 @@
                                 <!-- Create New Button -->
                                 <!-- Button to Open the Modal -->
                                 <!-- Button to Open the Modal -->
-                                <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
-                                    Tạo thêm bước 
-                                </button>
+                                <c:if test="${sessionScope.role == 0}">
 
+
+                                    <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
+                                        Tạo thêm bước 
+                                    </button>
+                                </c:if>
                                 <!-- The Modal -->
                                 <div class="modal fade" id="CreatelGuidelineDetailStep${listGuideline.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -281,25 +326,32 @@
                                 <c:if test="${listGuideDetail.guideline_id.id == listGuideline.id}">
                                     <h3>${listGuideDetail.step_title}</h3>
                                     <p>${listGuideDetail.description}</p>
-                                    <div class="d-flex align-items-center">
-                                        <button type="button" 
-                                                class="btn btn-info me-2"  
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#editDetailModal"
-                                                data-id="${listGuideDetail.id}"
-                                                data-title="${listGuideDetail.step_title}"
-                                                data-description="${listGuideDetail.description}">
-                                            Edit
-                                        </button>
 
-                                        <form action="guideline" method="post" onsubmit="return confirmDelete()">
-                                            <input value="deleteDetail" name="action" hidden="">
-                                            <input value="${listGuideDetail.id}" name="id" hidden="">
-                                            <button type="submit" class="btn btn-danger">
-                                                Delete
+
+                                    <c:if test="${sessionScope.role == 0}">
+
+
+                                        <div class="d-flex align-items-center">
+                                            <button type="button" 
+                                                    class="btn btn-info me-2"  
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#editDetailModal"
+                                                    data-id="${listGuideDetail.id}"
+                                                    data-title="${listGuideDetail.step_title}"
+                                                    data-description="${listGuideDetail.description}">
+                                                Edit
                                             </button>
-                                        </form>
-                                    </div>
+
+                                            <form action="guideline" method="post" onsubmit="return confirmDelete()">
+                                                <input value="deleteDetail" name="action" hidden="">
+                                                <input value="${listGuideDetail.id}" name="id" hidden="">
+                                                <button type="submit" class="btn btn-danger">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                    </c:if>
 
                                     <script>
                                         // Function to display a confirmation dialog
@@ -424,10 +476,10 @@
             </div>
         </div>
         <!-- kết thúc   form xác nhận xóa  -->
-        
-        
+
+
         <!--Edit step in guideline detail-->
-         <!-- Edit Detail Modal -->
+        <!-- Edit Detail Modal -->
         <div class="modal fade" id="editDetailModal" tabindex="-1" aria-labelledby="editDetailModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

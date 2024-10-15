@@ -4,7 +4,9 @@
  */
 package Controller;
 
-import DAO.UserDAO;
+import DAO.MajorDAO;
+import Model.Major;
+import Model.Subjects;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,13 +15,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import javax.security.auth.Subject;
 
 /**
  *
  * @author trung
  */
-@WebServlet(name = "ChangePassword", urlPatterns = {"/changepassword"})
-public class ChangePassword extends HttpServlet {
+@WebServlet(name = "ViewCurriculum", urlPatterns = {"/viewCurriculum"})
+public class ViewCurriculumController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +42,10 @@ public class ChangePassword extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePassword</title>");
+            out.println("<title>Servlet ViewCurriculum</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewCurriculum at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +63,14 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Integer id = (Integer) session.getAttribute("user");
+        
+        
+        MajorDAO mdao = new MajorDAO();
+        List<Subjects> listSubject = mdao.getListSubjectByUserId(id);    
+        request.setAttribute("listSubject", listSubject);
+        request.getRequestDispatcher("viewCurriculum.jsp").forward(request, response);
     }
 
     /**
@@ -73,37 +84,7 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String currentPassword = request.getParameter("currentPassword");
-        String newPassword = request.getParameter("newPassword");
-        String confirmPassword = request.getParameter("confirmPassword");
-
-        UserDAO udao = new UserDAO();
-        HttpSession session = request.getSession();
-        int id = (int) session.getAttribute("user");
-        boolean isCurrentPasswordValid = udao.checkCurrentPassword(id, currentPassword);
-
-        if (!isCurrentPasswordValid) {
-            request.getSession().setAttribute("changepassfail", "Current password is incorrect.");
-            response.sendRedirect("changePassword.jsp"); // Trở lại trang thay đổi mật khẩu
-            return;
-        }
-
-        if (!newPassword.equals(confirmPassword)) {
-            request.getSession().setAttribute("changepassfail", "New password and confirmation do not match.");
-            response.sendRedirect("changePassword.jsp");
-            return;
-        }
-
-        // Cập nhật mật khẩu mới cho người dùng
-        boolean isUpdated = udao.updatePassword(id, newPassword); 
-
-        if (isUpdated) {
-            request.getSession().setAttribute("mess", "Password changed successfully.");
-        } else {
-            request.getSession().setAttribute("error", "Failed to change password.");
-        }
-
-        response.sendRedirect("profile");
+        processRequest(request, response);
     }
 
     /**

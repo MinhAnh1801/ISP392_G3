@@ -93,42 +93,137 @@
                 margin-bottom: 1.6rem;
             }
         </style>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     </head>
     <body>
+
+
+
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
+            <div id="toastMessage" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${mess}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+
+            <div id="toastError" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${error}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Lấy các biến mess và error (thay đổi tùy theo cách bạn lấy giá trị thực tế)
+            var mess = "${mess}"; // Giả định có giá trị nào đó
+            var error = "${error}"; // Giả định có giá trị nào đó
+
+            // Lấy các phần tử toast
+            var toastMessage = document.getElementById('toastMessage');
+            var toastError = document.getElementById('toastError');
+
+            if (mess) {
+                // Hiển thị thông báo thành công nếu có mess
+                toastMessage.querySelector('.toast-body').textContent = mess; // Cập nhật nội dung
+                toastMessage.style.display = 'block'; // Hiện toast
+                var bootstrapToastMessage = new bootstrap.Toast(toastMessage);
+                bootstrapToastMessage.show();
+
+                // Thiết lập ẩn toast sau 5 giây
+                setTimeout(function () {
+                    bootstrapToastMessage.hide();
+                }, 5000);
+            }
+
+            if (error) {
+                // Hiển thị thông báo lỗi nếu có error
+                toastError.querySelector('.toast-body').textContent = error; // Cập nhật nội dung
+                toastError.style.display = 'block'; // Hiện toast
+                var bootstrapToastError = new bootstrap.Toast(toastError);
+                bootstrapToastError.show();
+
+                // Thiết lập ẩn toast sau 5 giây
+                setTimeout(function () {
+                    bootstrapToastError.hide();
+                }, 5000);
+            }
+        </script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
                     <div class="card border-0 shadow">
-                        <img src="${profile.profile_picture}" alt="${profile.profile_picture}">
+                        <img src="${studentProfile.photo}" alt="${studentProfile.photo}">
                         <div class="card-body p-1-9 p-xl-5">
                             <div class="mb-4">
-                                <h3 class="h4 mb-0">${profile.full_name}</h3>
-                                <span class="text-primary">${profile.user_id.role}</span>
+                                <h3 class="h4 mb-0">${studentProfile.full_name}</h3>
+                                <span class="text-primary">Student</span>
                             </div>
                             <ul class="list-unstyled mb-4">
                                 <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i><span class="__cf_email__" data-cfemail="0165606a6e756041666c60686d2f626e6c">[email&#160;protected]</span></a></li>
-                                <li class="mb-3"><a href="#!"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i>${profile.phone_number}</a></li>
-                                <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>${profile.address}</a></li>
+                                <li class="mb-3"><a href="#!"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i>${studentProfile.phone_number}</a></li>
+                                <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>${studentProfile.address}</a></li>
                             </ul>
                             <ul class="social-icon-style2 ps-0">
                                 <a href="changepassword">
-                                    <button>Change password</button>
+                                    <button>
+                                        Change password
+                                    </button>
                                 </a>
+
                             </ul>
+                            <ul class="social-icon-style2 ps-0">
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
+                                    Update profile
+                                </button>
+                            </ul>
+
+
+                            <!-- Modal Update Profile -->
+                            <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="updateProfileForm" action="profile" method="post">
+                                                <input type="text" value="student" name="action" hidden="">
+
+                                                <div class="mb-3">
+                                                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                                                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="${studentProfile.phone_number}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="address" class="form-label">Address</label>
+                                                    <input type="text" class="form-control" id="address" name="address" value="${studentProfile.address}" required>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-8">
                     <div class="ps-lg-1-6 ps-xl-5">
-                        <div class="mb-5 wow fadeIn">
-                            <div class="text-start mb-1-6 wow fadeIn">
-                                <h2 class="h1 mb-0 text-primary">#About Me</h2>
-                            </div>
-                            <p>${profile.bio}</p>
-                        </div>
+
                         <div class="mb-5 wow fadeIn">
                             <div class="text-start mb-1-6 wow fadeIn">
                                 <h2 class="mb-0 text-primary">#Education</h2>
