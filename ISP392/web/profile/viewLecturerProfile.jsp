@@ -288,8 +288,8 @@
                                     <div class="card text-center border-0 rounded-3">
                                         <div class="card-body">
                                             <i class="ti-medall-alt icon-box medium rounded-3 mb-4"></i>
-                                            <h3 class="h5 mb-3">Experience</h3>
-                                            <p class="mb-0">Over 20 years of professional experience in academia.</p>
+                                            <h3 class="h5 mb-3">Expertise</h3>
+                                            <p class="mb-0">${lecturerProfile.expertise}</p>
                                         </div>
                                     </div>
                                 </div>
