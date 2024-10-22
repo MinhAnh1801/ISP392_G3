@@ -65,10 +65,14 @@ public class ViewCurriculumController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Integer id = (Integer) session.getAttribute("user");
-        
-        
+        if (id == null) {
+            response.sendRedirect("login");
+            return;
+
+        }
+
         MajorDAO mdao = new MajorDAO();
-        List<Subjects> listSubject = mdao.getListSubjectByUserId(id);    
+        List<Subjects> listSubject = mdao.getListSubjectByUserId(id);
         request.setAttribute("listSubject", listSubject);
         request.getRequestDispatcher("viewCurriculum.jsp").forward(request, response);
     }

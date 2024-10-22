@@ -8,8 +8,11 @@ public class Subjects {
     private String description; 
     private int semester; 
     private int lecturerId;
+    
+    private Subjects conditionSubject1;
+    private Subjects conditionSubject2;
 
-    // Constructor
+
     public Subjects() {
     }
 
@@ -22,6 +25,35 @@ public class Subjects {
         this.semester = semester;
         this.lecturerId = lecturerId;
     }
+
+    public Subjects(int id, String code, String name, int credits, String description, int semester, int lecturerId, Subjects conditionSubject1, Subjects conditionSubject2) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.credits = credits;
+        this.description = description;
+        this.semester = semester;
+        this.lecturerId = lecturerId;
+        this.conditionSubject1 = conditionSubject1;
+        this.conditionSubject2 = conditionSubject2;
+    }
+
+    public Subjects getConditionSubject1() {
+        return conditionSubject1;
+    }
+
+    public void setConditionSubject1(Subjects conditionSubject1) {
+        this.conditionSubject1 = conditionSubject1;
+    }
+
+    public Subjects getConditionSubject2() {
+        return conditionSubject2;
+    }
+
+    public void setConditionSubject2(Subjects conditionSubject2) {
+        this.conditionSubject2 = conditionSubject2;
+    }
+    
 
     public int getId() {
         return id;

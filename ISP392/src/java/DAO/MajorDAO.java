@@ -58,14 +58,15 @@ public class MajorDAO extends DBContext {
 
     public List<Subjects> getSubjectByMajorId(int majorId) {
         List<Subjects> subjects = new ArrayList<>();
-        String sql = "SELECT s.id, s.code, s.name, s.credits, s.description, s.semester, s.lecturer_id "
+        // Ensure the SQL query includes condition_subject_1 and condition_subject_2
+        String sql = "SELECT s.id, s.code, s.name, s.credits, s.description, s.semester, s.lecturer_id, "
+                + "c.condition_subject_1, c.condition_subject_2 "
                 + "FROM Subjects s "
                 + "JOIN Curriculum c ON s.id = c.subject_id "
                 + "WHERE c.major_id = ? ORDER BY s.semester ASC";
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, majorId); // Đặt giá trị majorId vào câu lệnh SQL
+            ps.setInt(1, majorId);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -77,22 +78,67 @@ public class MajorDAO extends DBContext {
                 subject.setDescription(rs.getString("description"));
                 subject.setSemester(rs.getInt("semester"));
                 subject.setLecturerId(rs.getInt("lecturer_id"));
-                subjects.add(subject); // Thêm môn học vào danh sách
+
+                MajorDAO mdao = new MajorDAO();
+
+                // Retrieve condition_subject_1
+                int conditionSubject1Id = rs.getInt("condition_subject_1");
+                if (!rs.wasNull()) { // Check if the value is not null
+                    Subjects cs1 = mdao.getSubject(conditionSubject1Id);
+                    subject.setConditionSubject1(cs1);
+
+                }
+
+                // Retrieve condition_subject_2
+                int conditionSubject2Id = rs.getInt("condition_subject_2");
+                if (!rs.wasNull()) { // Check if the value is not null
+                    Subjects cs2 = mdao.getSubject(conditionSubject2Id);
+                    subject.setConditionSubject1(cs2);
+                }
+
+                subjects.add(subject); // Add the subject to the list
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle SQL exceptions
+        }
+
+        return subjects;
+    }
+
+    private Subjects getSubject(int id) {
+        Subjects subject = null;
+        String sql = "SELECT id, code, name, credits, description, semester, lecturer_id "
+                + "FROM Subjects "
+                + "WHERE id = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                subject = new Subjects();
+                subject.setId(rs.getInt("id"));
+                subject.setCode(rs.getString("code"));
+                subject.setName(rs.getString("name"));
+                subject.setCredits(rs.getInt("credits"));
+                subject.setDescription(rs.getString("description"));
+                subject.setSemester(rs.getInt("semester"));
+                subject.setLecturerId(rs.getInt("lecturer_id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return subjects; 
+        return subject;
     }
 
-    
     public static void main(String[] args) {
         MajorDAO mdao = new MajorDAO();
         List<Subjects> subjects = mdao.getListSubjectByUserId(2);
-        for(Subjects s : subjects){
+        for (Subjects s : subjects) {
             System.out.println(s.getId());
+            System.out.println(s.getConditionSubject1().getName());
         }
     }
-    
+
 }

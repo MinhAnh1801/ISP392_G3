@@ -83,6 +83,8 @@
                         <th>Name</th>
                         <th>Credits</th>
                         <th>Description</th>
+                        <th>Condition subject 1</th>
+                        <th>Condition subject 2</th>
                         <th>Semester</th>
                     </tr>
                 </thead>
@@ -95,6 +97,8 @@
                             <td>${subject.name}</td>
                             <td>${subject.credits}</td>
                             <td>${subject.description}</td>
+                            <td>${subject.conditionSubject1.getName()}</td>
+                            <td>${subject.conditionSubject2.getName()}</td>
                             <td>${subject.semester}</td>
                         </tr>
                         <c:set var="index" value="${index + 1}"/> <!-- Tăng biến đếm -->

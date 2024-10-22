@@ -92,6 +92,7 @@
             .mb-1-6, .my-1-6 {
                 margin-bottom: 1.6rem;
             }
+
         </style>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -190,11 +191,15 @@
                                 <li class="mb-3"><a href="#!"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i>${studentProfile.phone_number}</a></li>
                                 <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>${studentProfile.address}</a></li>
                             </ul>
+
+
+
+
                             <div>
                                 <!-- Change Password Button -->
                                 <ul class="social-icon-style2 ps-0">
                                     <li>
-                                        <a href="changepassword" class="btn btn-secondary" id="change-password-btn">
+                                        <a style="   text-decoration: none;" href="changepassword" class="change-password-btn" id="change-password-btn">
                                             Đổi mật khẩu
                                         </a>
 
@@ -212,29 +217,29 @@
                                 </ul>
                             </div>
                             <style>
-                                /* Reset some basic styles */
+                                /* Reset basic styles */
                                 ul {
                                     list-style-type: none;
                                     padding: 0;
                                     margin: 0;
-                                    display: inline-block; /* Để các <ul> nằm ngang */
+                                    display: inline-block; /* Giữ các ul nằm ngang */
                                 }
 
                                 li {
-                                    margin-bottom: 0; /* Không có khoảng cách dọc giữa các item */
+                                    margin-bottom: 0; /* Bỏ khoảng cách dọc giữa các item */
                                 }
 
-                                /* Button container: Dùng flexbox để các nút nằm ngang */
+                                /* Button container: Dùng flexbox để căn chỉnh các nút nằm ngang */
                                 .button-container {
                                     display: flex;
                                     justify-content: space-between; /* Tạo khoảng cách đều giữa các nút */
-                                    gap: 10px; /* Khoảng cách giữa các nút */
-                                    flex-wrap: wrap; /* Đảm bảo chúng sẽ xuống dòng khi không đủ chỗ */
+                                    gap: 15px; /* Khoảng cách giữa các nút */
+                                    flex-wrap: wrap; /* Đảm bảo các nút sẽ xuống dòng khi không đủ chỗ */
                                 }
 
                                 /* Base button styles */
-                                button {
-                                    padding: 10px 15px;
+                                button, .btn {
+                                    padding: 12px 20px;
                                     font-size: 16px;
                                     font-weight: 600;
                                     color: #fff;
@@ -242,25 +247,26 @@
                                     border: none;
                                     border-radius: 8px;
                                     cursor: pointer;
-                                    text-align: center;
                                     display: inline-block;
+                                    text-align: center;
                                     transition: background-color 0.3s ease, transform 0.2s ease;
                                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                                 }
 
                                 /* Hover effect for buttons */
-                                button:hover {
-                                    background-color: #0056b3;
+                                button:hover, .btn:hover {
                                     transform: scale(1.05);
                                 }
 
-                                /* Style for specific buttons */
+                                /* Specific styles for buttons */
                                 #change-password-btn {
                                     background-color: #28a745;
+                                    width: 120px;
                                 }
 
                                 #change-password-btn:hover {
                                     background-color: #218838;
+                                    text-decoration: none;
                                 }
 
                                 #update-profile-btn {
@@ -271,9 +277,17 @@
                                     background-color: #5a6268;
                                 }
 
+                                /* Align text inside buttons to the center */
+                                button, .btn {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    text-align: center;
+                                }
+
                                 /* Full width buttons on mobile */
                                 @media (max-width: 576px) {
-                                    button {
+                                    button, .btn {
                                         width: 100%;
                                     }
                                 }
