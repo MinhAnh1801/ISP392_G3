@@ -169,7 +169,7 @@
                                 <span class="text-primary">Student</span>
                             </div>
                             <ul class="list-unstyled mb-4">
-                                <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i><span class="__cf_email__" data-cfemail="0165606a6e756041666c60686d2f626e6c">${studentProfile.email}</span></a></li>
+                                <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i><span class="__cf_email__" data-cfemail="0165606a6e756041666c60686d2f626e6c">[email&#160;protected]</span></a></li>
                                 <li class="mb-3"><a href="#!"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i>${studentProfile.phone_number}</a></li>
                                 <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>${studentProfile.address}</a></li>
                             </ul>

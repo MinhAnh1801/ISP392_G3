@@ -4,10 +4,6 @@
  */
 package Controller;
 
-import DAO.DAO;
-import Model.Notifications;
-import Model.Profile;
-import Model.Student_Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,7 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
@@ -35,24 +30,10 @@ public class HomeControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         if (session.getAttribute("user") == null) {
             response.sendRedirect("login");
-            return;
         } else {
-            DAO dao = new DAO();
-            String role="";
-            if ((int) session.getAttribute("role") == 1) {
-                role = "student";
-            } else if ((int) session.getAttribute("role") == 2){
-                role = "lecturer";
-            }
-            
-            Student_Profile st_profile;
-            List<Notifications> notifications = dao.getNotificationsByRole(role); // Thay "admin" bằng role bạn muốn lấy
-            // Gán danh sách thông báo vào request
-            request.setAttribute("notifications", notifications);
-            //            
             request.getRequestDispatcher("homepage.jsp").forward(request, response);
         }
     }

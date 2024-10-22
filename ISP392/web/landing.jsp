@@ -4,14 +4,12 @@
     Author     : khucx
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Uni portal</title>
+        <title>JSP Page</title>
         <link rel="stylesheet" href="CSS/style.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
@@ -22,45 +20,46 @@
     </head>
     <body>
         <div class="landing-page">
-                <a href="#" class="product-info-card hover:shadow-md duration-500">
-                    <img class="image-2-icon" alt="" src="image?name=${news1.img}">
-                    <div class="body">
-                        <div class="text">
-                            <div class="text1">${news1.title}</div>
-                        </div>
-                        <div class="text-strong">
-                        </div>
-                        <div class="text-small">
-                            <div class="text-small1">${news1.uploadDate}</div>
-                        </div>
+            
+            <a href="#" class="product-info-card">
+                <img class="image-2-icon" alt="" src="img/image 2.png">
+                <div class="body">
+                    <div class="text">
+                        <div class="text1">Dự án gây quỹ của sinh viên giúp đỡ nạn nhân chất độc màu da cam</div>
                     </div>
-                </a>
-                <a href="#" class="product-info-card1 hover:shadow-md duration-500">
-                    <img class="image-2-icon" alt="" src="image?name=${news2.img}">
-                    <div class="body">
-                        <div class="text">
-                            <div class="text1">${news2.title}</div>
-                        </div>
-                        <div class="text-strong">
-                        </div>
-                        <div class="text-small">
-                            <div class="text-small1">${news2.uploadDate}</div>
-                        </div>
+                    <div class="text-strong">
                     </div>
-                </a>
-                <a href="#" class="product-info-card2 hover:shadow-md duration-500">
-                    <img class="image-2-icon" alt="" src="image?name=${news3.img}">
-                    <div class="body">
-                        <div class="text">
-                            <div class="text1">${news3.title}</div>
-                        </div>
-                        <div class="text-strong">
-                        </div>
-                        <div class="text-small">
-                            <div class="text-small1">${news3.uploadDate}</div>
-                        </div>
+                    <div class="text-small">
+                        <div class="text-small1">09/09/2024</div>
                     </div>
-                </a>
+                </div>
+            </a>
+            <a href="#" class="product-info-card1">
+                <img class="image-2-icon" alt="" src="img/image 2.png">
+                <div class="body">
+                    <div class="text">
+                        <div class="text1">Dự án gây quỹ của sinh viên giúp đỡ nạn nhân chất độc màu da cam</div>
+                    </div>
+                    <div class="text-strong">
+                    </div>
+                    <div class="text-small">
+                        <div class="text-small1">09/09/2024</div>
+                    </div>
+                </div>
+            </a>
+            <a href="" class="product-info-card2">
+                <img class="image-2-icon" alt="" src="img/image 2.png">
+                <div class="body">
+                    <div class="text">
+                        <div class="text1">Dự án gây quỹ của sinh viên giúp đỡ nạn nhân chất độc màu da cam</div>
+                    </div>
+                    <div class="text-strong">
+                    </div>
+                    <div class="text-small">
+                        <div class="text-small1">09/09/2024</div>
+                    </div>
+                </div>
+            </a>
             <div class="landing-page-child">
             </div>
             <a class="landing-page-item flex bg-white hover:bg-slate-200 duration-200" href="login">
@@ -70,7 +69,7 @@
                 <path d="M16.1088 12H2.75525" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
                 <path d="M11.3965 17.136L15.8006 12.7319C15.9935 12.5371 16.1017 12.2741 16.1017 12C16.1017 11.7259 15.9935 11.4629 15.8006 11.2681L11.3965 6.86401" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-
+                
             </a>
             <svg class="university-svgrepo-com-1-icon" width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="university-svgrepo-com 1">
@@ -143,9 +142,9 @@
                     <div class="swiper progress-slide-carousel swiper-container relative">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-
-                                <img class="rounded-2xl" src="img/image 1.png" alt="alt"/>
-
+                                
+                                    <img class="rounded-2xl" src="img/image 1.png" alt="alt"/>
+                                
                             </div>
                             <div class="swiper-slide">
                                 <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center">
@@ -158,7 +157,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-pagination !bottom-2 !top-auto !w-80 right-0 mx-auto bg-gray-100"></div>
+                        <div class="swiper-pagination bottom-2 top-auto w-80 right-0 mx-auto bg-gray-100"></div>
                     </div>
                 </div>
             </div>
@@ -174,7 +173,7 @@
             <div class="landing-page-inner hover:bg-[#d76325] duration-200 cursor-pointer">
                 <div class="text-center mt-[10px]" >Xem thêm</div>                
             </div>
-
+            
             <div class="footer-ui">
                 <div class="vectornator-parent">
                     <div class="vectornator">
@@ -200,17 +199,17 @@
         </div>
     </body>
     <script>
-        var swiper = new Swiper(".progress-slide-carousel", {
-            loop: true,
-            fraction: true,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: true,
-            },
-            pagination: {
-                el: ".progress-slide-carousel .swiper-pagination",
-                type: "progressbar",
-            },
-        });
-    </script>
+      var swiper = new Swiper(".progress-slide-carousel", {
+      loop: true,
+      fraction: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: true,
+      },
+      pagination: {
+        el: ".progress-slide-carousel .swiper-pagination",
+        type: "progressbar",
+      },
+      });
+      </script>
 </html>

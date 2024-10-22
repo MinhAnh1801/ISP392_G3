@@ -8,6 +8,6 @@ package Model;
  *
  * @author khucx
  */
-public class Notifications {
+public class Exams {
     
 }
