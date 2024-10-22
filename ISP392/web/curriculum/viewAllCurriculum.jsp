@@ -110,19 +110,81 @@
         </div>
 
         <script>
+            const rowsPerPage = 5; // Số hàng hiển thị trên mỗi trang
+            let currentPage = 1; // Trang hiện tại
+
             function filterMajor() {
                 const selectedMajor = document.getElementById("majorSelect").value; // Lấy giá trị đã chọn
-                const rows = document.querySelectorAll(".table tbody tr");
-
-                rows.forEach(row => {
+                const rows = Array.from(document.querySelectorAll(".table tbody tr")); // Lấy tất cả hàng
+                let filteredRows = rows.filter(row => {
                     const majorCell = row.cells[1].textContent; // Cột chuyên ngành ở chỉ số 1
-                    if (selectedMajor === "all" || majorCell === selectedMajor) {
-                        row.style.display = ""; // Hiển thị hàng
-                    } else {
-                        row.style.display = "none"; // Ẩn hàng
-                    }
+                    return selectedMajor === "all" || majorCell === selectedMajor;
                 });
+
+                // Hiển thị hàng theo trang
+                paginate(filteredRows);
             }
+
+            function paginate(rows) {
+                // Ẩn tất cả hàng
+                const allRows = document.querySelectorAll(".table tbody tr");
+                allRows.forEach(row => row.style.display = "none");
+
+                // Tính toán số trang
+                const totalPages = Math.ceil(rows.length / rowsPerPage);
+                const startRow = (currentPage - 1) * rowsPerPage;
+                const endRow = startRow + rowsPerPage;
+
+                // Hiển thị hàng trong khoảng startRow đến endRow
+                rows.slice(startRow, endRow).forEach(row => row.style.display = "");
+
+                // Tạo phân trang
+                createPagination(totalPages);
+            }
+
+            function createPagination(totalPages) {
+                const paginationDiv = document.getElementById("pagination");
+                paginationDiv.innerHTML = ""; // Xóa nội dung cũ
+
+                // Nút Previous
+                const prevButton = document.createElement("button");
+                prevButton.textContent = "Previous";
+                prevButton.disabled = currentPage === 1;
+                prevButton.onclick = () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        filterMajor();
+                    }
+                };
+                paginationDiv.appendChild(prevButton);
+
+                // Nút số trang
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement("button");
+                    pageButton.textContent = i;
+                    pageButton.className = (i === currentPage) ? "active" : "";
+                    pageButton.onclick = () => {
+                        currentPage = i;
+                        filterMajor();
+                    };
+                    paginationDiv.appendChild(pageButton);
+                }
+
+                // Nút Next
+                const nextButton = document.createElement("button");
+                nextButton.textContent = "Next";
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.onclick = () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        filterMajor();
+                    }
+                };
+                paginationDiv.appendChild(nextButton);
+            }
+
+            // Gọi hàm filterMajor để hiển thị hàng đầu tiên
+            filterMajor();
         </script>
                     
     </div>
