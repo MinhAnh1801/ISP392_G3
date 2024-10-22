@@ -60,11 +60,26 @@ public class MajorDAO extends DBContext {
     public List<Subjects> getSubjectByMajorId(int majorId) {
         List<Subjects> subjects = new ArrayList<>();
         // Ensure the SQL query includes condition_subject_1 and condition_subject_2
-        String sql = "SELECT s.id, s.code, s.name, s.credits, s.description, s.semester, s.lecturer_id, "
-                + "c.condition_subject_1, c.condition_subject_2 "
-                + "FROM Subjects s "
-                + "JOIN Curriculum c ON s.id = c.subject_id "
-                + "WHERE c.major_id = ? ORDER BY s.semester ASC";
+        String sql = "  SELECT TOP (1000)\n"
+                + "    s.id,\n"
+                + "    s.code,\n"
+                + "    s.name,\n"
+                + "    s.description,\n"
+                + "    s.lecturer_id,\n"
+                + "    c.major_id,\n"
+                + "    c.subject_id,\n"
+                + "	c.[semester],\n"
+                + "	c.[credits],\n"
+                + "    c.condition_subject_1,\n"
+                + "    c.condition_subject_2\n"
+                + "FROM\n"
+                + "    [TEST].[dbo].[Subjects] s\n"
+                + "JOIN\n"
+                + "    [TEST].[dbo].[Curriculum] c ON s.id = c.subject_id\n"
+                + "WHERE\n"
+                + "    c.major_id = ?\n"
+                + "ORDER BY\n"
+                + "    c.semester ASC;";
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, majorId);
@@ -108,7 +123,7 @@ public class MajorDAO extends DBContext {
 
     private Subjects getSubject(int id) {
         Subjects subject = null;
-        String sql = "SELECT id, code, name, credits, description, semester, lecturer_id "
+        String sql = "SELECT id, code, name, description, lecturer_id "
                 + "FROM Subjects "
                 + "WHERE id = ?";
 
@@ -121,9 +136,7 @@ public class MajorDAO extends DBContext {
                 subject.setId(rs.getInt("id"));
                 subject.setCode(rs.getString("code"));
                 subject.setName(rs.getString("name"));
-                subject.setCredits(rs.getInt("credits"));
                 subject.setDescription(rs.getString("description"));
-                subject.setSemester(rs.getInt("semester"));
                 subject.setLecturerId(rs.getInt("lecturer_id"));
             }
         } catch (SQLException e) {
@@ -135,7 +148,7 @@ public class MajorDAO extends DBContext {
 
     public List<Curriculum> getListCurriculum() {
         List<Curriculum> curriculumList = new ArrayList<>();
-        String sql = "SELECT  [major_id], [subject_id], [condition_subject_1], [condition_subject_2] FROM [dbo].[Curriculum]";
+        String sql = "SELECT * FROM [dbo].[Curriculum]";
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
@@ -162,24 +175,75 @@ public class MajorDAO extends DBContext {
                     curriculum.setCondition_subject_2(condition2);
                 }
 
+                curriculum.setCredits(rs.getInt("credits"));
+                curriculum.setSemester(rs.getInt("semester"));
+
                 curriculumList.add(curriculum);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace(); // In ra lỗi nếu có
+            e.printStackTrace();
         }
 
         return curriculumList;
     }
 
-    public static void main(String[] args) {
-        MajorDAO mdao = new MajorDAO();
-         List<Curriculum> curriculumList = mdao.getListCurriculum();
-        for (Curriculum curriculum : curriculumList) {
-            System.out.println(curriculum.getMajor_id().getName());            
+ public boolean updateByMajorIdSubjectId(int majorId, int subjectId, int conditionSubject1, int conditionSubject2, int credits) {
+    String checkSql = "SELECT COUNT(*) FROM [TEST].[dbo].[Curriculum] WHERE [major_id] = ? AND [subject_id] = ?";
+    String updateSql = "UPDATE [TEST].[dbo].[Curriculum] "
+            + "SET [condition_subject_1] = ?, "
+            + "[condition_subject_2] = ?, "
+            + "[credits] = ? "
+            + "WHERE [major_id] = ? AND [subject_id] = ?";
+
+    try (Connection connection = getConnection();
+         PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+         PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+
+        // Kiểm tra xem bản ghi có tồn tại hay không
+        checkStmt.setInt(1, majorId);
+        checkStmt.setInt(2, subjectId);
+        ResultSet rs = checkStmt.executeQuery();
+
+        if (rs.next() && rs.getInt(1) > 0) { // Nếu có ít nhất một bản ghi
+            // Thực hiện cập nhật
+            updateStmt.setInt(1, conditionSubject1);
+            updateStmt.setInt(2, conditionSubject2);
+            updateStmt.setInt(3, credits);
+            updateStmt.setInt(4, majorId);
+            updateStmt.setInt(5, subjectId);
+
+            int rowsAffected = updateStmt.executeUpdate();
+            return rowsAffected > 0; // Trả về true nếu có bản ghi được cập nhật
+        } else {
+            System.out.println("Bản ghi không tồn tại.");
+            return false; // Trả về false nếu không tìm thấy bản ghi
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; // Trả về false nếu có lỗi xảy ra
     }
+}
 
 
+    public static void main(String[] args) {
+        MajorDAO manager = new MajorDAO(); // Thay đổi tên lớp theo lớp thực tế của bạn
+
+        // Các tham số mẫu để kiểm tra
+        int majorId = 1; // ID của chuyên ngành
+        int subjectId = 28; // ID của môn học
+        int conditionSubject1 = 21; // Điều kiện môn học 1
+        int conditionSubject2 = 22; // Điều kiện môn học 2
+        int credits = 5; // Số tín chỉ
+
+        boolean isUpdated = manager.updateByMajorIdSubjectId(majorId, subjectId, conditionSubject1, conditionSubject2, credits);
+
+        if (isUpdated) {
+            System.out.println("Cập nhật thành công!");
+        } else {
+            System.out.println("Cập nhật thất bại!");
+        }
+
+    }
 
 }

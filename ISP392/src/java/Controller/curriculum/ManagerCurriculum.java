@@ -73,8 +73,13 @@ public class ManagerCurriculum extends HttpServlet {
         MajorDAO mdao = new MajorDAO();
         List<Curriculum> listCurriculum = mdao.getListCurriculum();
         request.setAttribute("listCurriculum", listCurriculum);
-        
-       
+
+        List<Subjects> listAllSubject1 = mdao.getSubjectByMajorId(1);
+        List<Subjects> listAllSubject2 = mdao.getSubjectByMajorId(2);
+        List<Subjects> listAllSubject3 = mdao.getSubjectByMajorId(3);
+        request.setAttribute("listAllSubject1", listAllSubject1);
+        request.setAttribute("listAllSubject2", listAllSubject2);
+        request.setAttribute("listAllSubject3", listAllSubject3);
 
         request.getRequestDispatcher("curriculum/viewAllCurriculum.jsp").forward(request, response);
     }
@@ -90,7 +95,23 @@ public class ManagerCurriculum extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        int majorId = Integer.parseInt(request.getParameter("majorId"));
+        int subjectId = Integer.parseInt(request.getParameter("subjectId"));
+        int conditionSubject1 = Integer.parseInt(request.getParameter("conditionSubject1"));
+        int conditionSubject2 = Integer.parseInt(request.getParameter("conditionSubject2"));
+        int credits = Integer.parseInt(request.getParameter("credits"));
+
+        MajorDAO mdao = new MajorDAO();
+        boolean checkUpdate = mdao.updateByMajorIdSubjectId(majorId, subjectId, conditionSubject1, conditionSubject2, credits);
+
+        if (checkUpdate) {
+            request.setAttribute("mess", "Update success");
+        } else {
+            request.setAttribute("error", "Update false");
+
+        }
+        doGet(request, response);
     }
 
     /**

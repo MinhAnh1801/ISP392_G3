@@ -9,20 +9,43 @@ package Model;
  * @author khucx
  */
 public class Curriculum {
-    private  Major major_id;
+
+    private Major major_id;
     private Subjects subject_id;
     private Subjects condition_subject_2;
     private Subjects condition_subject_1;
+    private int credits;
+    private int semester;
 
     public Curriculum() {
     }
 
-    public Curriculum(Major major_id, Subjects subject_id, Subjects condition_subject_2, Subjects condition_subject_1) {
+    public Curriculum(Major major_id, Subjects subject_id, Subjects condition_subject_2, Subjects condition_subject_1, int credits, int semester) {
         this.major_id = major_id;
         this.subject_id = subject_id;
         this.condition_subject_2 = condition_subject_2;
         this.condition_subject_1 = condition_subject_1;
+        this.credits = credits;
+        this.semester = semester;
     }
+
+    public int getCredits() {
+        return credits;
+    }
+
+    public void setCredits(int credits) {
+        this.credits = credits;
+    }
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
+    }
+    
+    
 
     public Major getMajor_id() {
         return major_id;
@@ -56,10 +79,9 @@ public class Curriculum {
         this.condition_subject_1 = condition_subject_1;
     }
 
-  
     @Override
     public String toString() {
         return "Curriculum{" + "major_id=" + major_id + ", subject_id=" + subject_id + ", condition_subject_2=" + condition_subject_2 + ", condition_subject_1=" + condition_subject_1 + '}';
     }
-    
+
 }
