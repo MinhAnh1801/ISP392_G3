@@ -7,20 +7,23 @@ public class Subjects {
     private int credits; 
     private String description; 
     private int semester; 
-    private int lecturerId;
 
     // Constructor
     public Subjects() {
     }
 
-    public Subjects(int id, String code, String name, int credits, String description, int semester, int lecturerId) {
+    public Subjects(int id, String code) {
+        this.id = id;
+        this.code = code;
+    }
+
+    public Subjects(int id, String code, String name, int credits, String description, int semester) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.credits = credits;
         this.description = description;
         this.semester = semester;
-        this.lecturerId = lecturerId;
     }
 
     public int getId() {
@@ -71,13 +74,6 @@ public class Subjects {
         this.semester = semester;
     }
 
-    public int getLecturerId() {
-        return lecturerId;
-    }
-
-    public void setLecturerId(int lecturerId) {
-        this.lecturerId = lecturerId;
-    }
 
    
 }

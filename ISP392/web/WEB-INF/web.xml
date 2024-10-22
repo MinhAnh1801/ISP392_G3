@@ -4,6 +4,10 @@
         <servlet-name>LoginControl</servlet-name>
         <servlet-class>Controller.LoginControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ImportControl</servlet-name>
+        <servlet-class>Controller.ImportControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogOutControl</servlet-name>
         <url-pattern>/logout</url-pattern>
@@ -17,7 +21,7 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>landing.jsp</welcome-file>
+        <welcome-file>landing</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>LoginGoogleHandler</servlet-name>
@@ -43,7 +47,123 @@
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportControl</servlet-name>
+        <url-pattern>/import</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ClassController</servlet-name>
+        <servlet-class>controllers.ClassController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NotificationController</servlet-name>
+        <servlet-class>controllers.NotificationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExamsController</servlet-name>
+        <servlet-class>controllers.ExamsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClassController</servlet-name>
+        <url-pattern>/class</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SubjectsController</servlet-name>
+        <servlet-class>controllers.SubjectsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubjectsController</servlet-name>
+        <url-pattern>/subject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationController</servlet-name>
+        <url-pattern>/notice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExamsController</servlet-name>
+        <url-pattern>/exam</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddDormRoom</servlet-name>
+        <servlet-class>DormRoomController.AddDormRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewListDormRoom</servlet-name>
+        <servlet-class>DormRoomController.ViewListDormRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDormRoom</servlet-name>
+        <servlet-class>DormRoomController.EditDormRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteDormRoom</servlet-name>
+        <servlet-class>DormRoomController.DeleteDormRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddApplicationType</servlet-name>
+        <servlet-class>AddApplicationType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditApplicationType</servlet-name>
+        <servlet-class>EditApplicationType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteApplicationType</servlet-name>
+        <servlet-class>DeleteApplicationType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchDormRooms</servlet-name>
+        <servlet-class>DormRoomController.SearchDormRooms</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAvailableDormRooms</servlet-name>
+        <servlet-class>DormRoomController.ViewAvailableDormRooms</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendApplication</servlet-name>
+        <servlet-class>SendApplication</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddDormRoom</servlet-name>
+        <url-pattern>/adddorm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewListDormRoom</servlet-name>
+        <url-pattern>/viewdorm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDormRoom</servlet-name>
+        <url-pattern>/editdorm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteDormRoom</servlet-name>
+        <url-pattern>/deletedorm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddApplicationType</servlet-name>
+        <url-pattern>/addapplicationtype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditApplicationType</servlet-name>
+        <url-pattern>/editapplicationtype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteApplicationType</servlet-name>
+        <url-pattern>/deleteapplicationtype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchDormRooms</servlet-name>
+        <url-pattern>/searchDorm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAvailableDormRooms</servlet-name>
+        <url-pattern>/availableDormRooms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendApplication</servlet-name>
+        <url-pattern>/SendApplication</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>15</session-timeout>
-</session-config>
+        <session-timeout>20</session-timeout>
+    </session-config>
 </web-app>
