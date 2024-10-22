@@ -257,9 +257,11 @@
                             <div>
 
                                 <h5 class="modal-title" id="guideModalLabel1">Hưỡng dẫn chi tiết:</h5>
-                                <!-- Create New Button -->
-                                <!-- Button to Open the Modal -->
-                                <!-- Button to Open the Modal -->
+
+
+                               
+
+
                                 <c:if test="${sessionScope.role == 0}">
 
 
@@ -322,51 +324,53 @@
                         </div>
                         <div class="modal-body">
 
-                            <c:forEach items="${listGuideDetail}" var="listGuideDetail">
-                                <c:if test="${listGuideDetail.guideline_id.id == listGuideline.id}">
-                                    <h3>${listGuideDetail.step_title}</h3>
-                                    <p>${listGuideDetail.description}</p>
+                            <div>
+    <c:set var="hasData" value="false" />
 
+    <c:forEach items="${listGuideDetail}" var="listGuideDetail">
+        <c:if test="${listGuideDetail.guideline_id.id == listGuideline.id}">
+            <h3>${listGuideDetail.step_title}</h3>
+            <p>${listGuideDetail.description}</p>
+            
+            <c:set var="hasData" value="true" /> <!-- Đặt cờ hasData là true nếu có dữ liệu -->
 
-                                    <c:if test="${sessionScope.role == 0}">
+            <c:if test="${sessionScope.role == 0}">
+                <div class="d-flex align-items-center">
+                    <button type="button" 
+                            class="btn btn-info me-2"  
+                            data-bs-toggle="modal" 
+                            data-bs-target="#editDetailModal"
+                            data-id="${listGuideDetail.id}"
+                            data-title="${listGuideDetail.step_title}"
+                            data-description="${listGuideDetail.description}">
+                        Edit
+                    </button>
 
+                    <form action="guideline" method="post" onsubmit="return confirmDelete()">
+                        <input value="deleteDetail" name="action" type="hidden">
+                        <input value="${listGuideDetail.id}" name="id" type="hidden">
+                        <button type="submit" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </c:if>
 
-                                        <div class="d-flex align-items-center">
-                                            <button type="button" 
-                                                    class="btn btn-info me-2"  
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#editDetailModal"
-                                                    data-id="${listGuideDetail.id}"
-                                                    data-title="${listGuideDetail.step_title}"
-                                                    data-description="${listGuideDetail.description}">
-                                                Edit
-                                            </button>
+            <script>
+                // Function to display a confirmation dialog
+                function confirmDelete() {
+                    return confirm("Are you sure you want to delete this step?");
+                }
+            </script>
+        </c:if>
+    </c:forEach>
 
-                                            <form action="guideline" method="post" onsubmit="return confirmDelete()">
-                                                <input value="deleteDetail" name="action" hidden="">
-                                                <input value="${listGuideDetail.id}" name="id" hidden="">
-                                                <button type="submit" class="btn btn-danger">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </div>
+    <c:if test="${!hasData}">
+        <h3>Không có dữ liệu hướng dẫn</h3>
+        <p>Vui lòng kiểm tra lại sau.</p>
+    </c:if>
+</div>
 
-                                    </c:if>
-
-                                    <script>
-                                        // Function to display a confirmation dialog
-                                        function confirmDelete() {
-                                            return confirm("Are you sure you want to delete this step?");
-                                        }
-                                    </script>
-
-
-
-
-
-                                </c:if>
-
-                            </c:forEach>
 
 
 
