@@ -12,6 +12,16 @@ public class Subjects {
     private Subjects conditionSubject1;
     private Subjects conditionSubject2;
 
+    public Subjects(int id, String code, String name, String description, int lecturerId) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.lecturerId = lecturerId;
+    }
+
+   
+
 
     public Subjects() {
     }

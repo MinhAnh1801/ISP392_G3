@@ -79,9 +79,12 @@
         <div class="container" style=" margin: auto; padding: 20px;">
             <h1>Curriculum Overview</h1>
             <div>
-                <button class="button-edit">
-                    Create new curiculum
-                </button>
+                <a href="createCurriculum">
+                    <button class="button-edit">
+                        Create new curiculum
+                    </button>
+                </a>
+
                 <br>
                 <br>
                 <br>
