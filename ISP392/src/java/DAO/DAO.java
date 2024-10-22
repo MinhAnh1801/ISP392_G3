@@ -8,6 +8,7 @@ import Context.DBContext;
 import Model.Materials;
 import Model.News;
 import Model.Notifications;
+import Model.Student_Profile;
 import Model.Subjects;
 import Model.User;
 import java.util.ArrayList;
@@ -75,7 +76,6 @@ public class DAO {
         }
         return null;
     }
-
     public List<Notifications> getNotificationsByRole(String role) {
         List<Notifications> notifications = new ArrayList<>();
 

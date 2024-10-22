@@ -68,6 +68,11 @@ public class Student_Profile {
         this.medical_conditions = medical_conditions;
     }
 
+    @Override
+    public String toString() {
+        return "Student_Profile{" + "id=" + id + ", student_id=" + student_id + ", major_id=" + major_id + ", year_of_study=" + year_of_study + ", full_name=" + full_name + ", date_of_birth=" + date_of_birth + ", phone_number=" + phone_number + ", email=" + email + ", gender=" + gender + ", student_code=" + student_code + ", address=" + address + ", emergency_contact=" + emergency_contact + ", photo=" + photo + ", national_id=" + national_id + ", class_id=" + class_id + ", enrollment_year=" + enrollment_year + ", graduation_year=" + graduation_year + ", gpa=" + gpa + ", scholarship_status=" + scholarship_status + ", medical_conditions=" + medical_conditions + '}';
+    }
+
     public String getFull_name() {
         return full_name;
     }

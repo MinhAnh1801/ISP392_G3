@@ -170,11 +170,12 @@
             <c:if test="${sessionScope.role == 0}">
                 <div class="registraion1">
                     <div class="subject-settings">Subject settings</div>
-                    <div class="view-list-of-container">
+                    <div class="view-list-of-container w-[200px]">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
                                 <a href="subject">View list of subjects</a></li>
                             <li class="hover:underline"><a href="">Add new subject</a></li>
+                            <li class="hover:underline"><a href="viewSchedules">Manage subject schedule</a></li>
                         </ul>
                     </div>
                 </div>

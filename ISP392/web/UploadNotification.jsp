@@ -79,10 +79,9 @@
         </style>
     </head>
     <body>
-        <div class="taskbar">
-            <h1>University Academic Portal</h1>
-            <a href="home" class="logout-button">
-                <img src="https://img.icons8.com/ios-filled/20/FFFFFF/logout-rounded--v1.png" alt="Logout Icon"> Log out
+        <div class="taskbar">     
+            <a href="home" class="text-decoration-none">
+                <h1>University Academic Portal</h1>
             </a>
         </div>
         <div class="container">

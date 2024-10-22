@@ -171,12 +171,12 @@ public class ImportServlet extends HttpServlet {
                 // Log the error and notify the user
                 e.printStackTrace();
                 request.setAttribute("errorMessage", "Error processing file: " + e.getMessage());
-                request.getRequestDispatcher("import.jsp").forward(request, response);
+                request.getRequestDispatcher("importstudent.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Error processing file: " + e.getMessage());
-            request.getRequestDispatcher("import.jsp").forward(request, response);
+            request.getRequestDispatcher("importstudent.jsp").forward(request, response);
         }
     }
 

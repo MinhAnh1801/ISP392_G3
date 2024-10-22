@@ -8,7 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curriculum Overview</title>
-    
     <!-- Custom CSS -->
     <style>
         body {
@@ -56,6 +55,7 @@
     </script>
 </head>
 <body>
+    <div style="width: 70px; height: 20px; background: #007bff; padding: 10px 5px 10px 5px;text-align: center; border-radius: 10px;"><a style="text-decoration: none; color:white" href="home">Return</a></div>
     <div class="container" style="max-width: 800px; margin: auto; padding: 20px;">
         <h1>Curriculum Overview</h1>
 

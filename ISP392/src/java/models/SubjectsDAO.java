@@ -116,7 +116,7 @@ public class SubjectsDAO extends DBContext {
     public void update(Subjects s) {
         try {
             String strSQL = "UPDATE Subjects SET code=?, name=?, credits=?"
-                    + ", description=?, semester=? WHERE Id=?";
+                    + ", description=?, semester=? WHERE id=?";
 
             PreparedStatement stm = connection.prepareStatement(strSQL);
 
@@ -125,7 +125,7 @@ public class SubjectsDAO extends DBContext {
             stm.setInt(3, Integer.parseInt(s.getCredits()));
             stm.setString(4, s.getDescription());
             stm.setString(5, s.getSemester());
-            stm.setInt(7, Integer.parseInt(s.getId()));
+            stm.setInt(6, Integer.parseInt(s.getId()));
 
             int rowsAffected = stm.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);

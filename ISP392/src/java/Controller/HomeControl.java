@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.DAO;
+import DAO.UserDAO;
 import Model.Notifications;
 import Model.Profile;
 import Model.Student_Profile;
@@ -41,6 +42,7 @@ public class HomeControl extends HttpServlet {
             return;
         } else {
             DAO dao = new DAO();
+            UserDAO udao= new UserDAO();
             String role="";
             if ((int) session.getAttribute("role") == 1) {
                 role = "student";
@@ -48,7 +50,7 @@ public class HomeControl extends HttpServlet {
                 role = "lecturer";
             }
             
-            Student_Profile st_profile;
+            Student_Profile st_profile = udao.getStudentProfile((int)session.getAttribute("user"));
             List<Notifications> notifications = dao.getNotificationsByRole(role); // Thay "admin" bằng role bạn muốn lấy
             // Gán danh sách thông báo vào request
             request.setAttribute("notifications", notifications);

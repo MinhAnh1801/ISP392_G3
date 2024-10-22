@@ -55,14 +55,15 @@ public class ClassController extends HttpServlet {
             throws ServletException, IOException {
 
         String class_name = request.getParameter("class_name");
+        int capacity = Integer.parseInt(request.getParameter("capacity"));
         ClassDAO d = new ClassDAO();
 
         if (request.getParameter("add") != null) {
-            d.insert(new Classes("", class_name));
+            d.insert(new Classes("", class_name,capacity));
         }
         if (request.getParameter("update") != null) {
             String id1 = request.getParameter("id");
-            d.update(new Classes(id1, class_name));
+            d.update(new Classes(id1, class_name,capacity));
         }
         doGet(request, response);
     }
