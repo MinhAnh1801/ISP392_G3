@@ -183,7 +183,7 @@
                     <div class="import-list-of-container">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="hover:underline">
-                                <a href="import.jsp">Import list of student</a></li>
+                                <a href="importstudent.jsp">Import list of student</a></li>
                         </ul>
                     </div>
                 </div>
