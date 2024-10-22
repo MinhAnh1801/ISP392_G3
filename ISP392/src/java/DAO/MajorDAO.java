@@ -313,4 +313,24 @@ public class MajorDAO extends DBContext {
         return subjectList;
     }
 
+   public boolean deleteCurriculum(int majorId, int subjectId) {
+    String sql = "DELETE FROM [dbo].[Curriculum] WHERE [major_id] = ? AND [subject_id] = ?";
+    
+    try (Connection connection = getConnection();
+         PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+        // Thiết lập tham số cho câu lệnh SQL
+        stmt.setInt(1, majorId);
+        stmt.setInt(2, subjectId);
+
+        // Thực hiện câu lệnh xóa
+        int rowsAffected = stmt.executeUpdate();
+        return rowsAffected > 0; // Trả về true nếu có ít nhất một bản ghi được xóa
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; // Trả về false nếu có lỗi xảy ra
+    }
+}
+
+
 }

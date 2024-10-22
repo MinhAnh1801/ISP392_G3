@@ -95,6 +95,23 @@ public class ManagerCurriculum extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        MajorDAO mdao = new MajorDAO();
+
+        if (request.getParameter("action") != null) {
+            int majorId = Integer.parseInt(request.getParameter("majorId"));
+            int subjectId = Integer.parseInt(request.getParameter("subjectId"));
+
+            boolean check = mdao.deleteCurriculum(majorId, subjectId);
+
+            if (check) {
+                request.setAttribute("mess", "Delete success");
+            } else {
+                request.setAttribute("error", "Delete false");
+
+            }
+            doGet(request, response);
+            return;
+        }
 
         int majorId = Integer.parseInt(request.getParameter("majorId"));
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
@@ -102,7 +119,6 @@ public class ManagerCurriculum extends HttpServlet {
         int conditionSubject2 = Integer.parseInt(request.getParameter("conditionSubject2"));
         int credits = Integer.parseInt(request.getParameter("credits"));
 
-        MajorDAO mdao = new MajorDAO();
         boolean checkUpdate = mdao.updateByMajorIdSubjectId(majorId, subjectId, conditionSubject1, conditionSubject2, credits);
 
         if (checkUpdate) {

@@ -150,6 +150,20 @@
                                                 >
                                             Update
                                         </button>
+<form method="post" action="managerCurriculum" onsubmit="return confirmDelete()">
+    <input value="delete" name="action" hidden="">
+    <input hidden="" value="${curriculum.major_id.id}" name="majorId">
+    <input value="${curriculum.subject_id.id}" name="subjectId" hidden="">
+    <button class="btn btn-danger" type="submit">Delete</button>
+</form>
+
+<script>
+    function confirmDelete() {
+        return confirm("Bạn có chắc chắn muốn xóa bản ghi này không?");
+    }
+</script>
+
+
 
                                     </td>
 
