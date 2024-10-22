@@ -11,6 +11,7 @@ import java.util.Date;
  * @author khucx
  */
 public class Profile {
+    private int id;
     private User user_id;
     private String full_name;
     private Date date_of_birth;
@@ -21,6 +22,17 @@ public class Profile {
     private String bio;
 
     public Profile() {
+    }
+
+    public Profile(int id, String full_name, Date date_of_birth, String phone_number, String address, String gender, String profile_picture, String bio) {
+        this.id = id;
+        this.full_name = full_name;
+        this.date_of_birth = date_of_birth;
+        this.phone_number = phone_number;
+        this.address = address;
+        this.gender = gender;
+        this.profile_picture = profile_picture;
+        this.bio = bio;
     }
 
     public Profile(User user_id, String full_name, Date date_of_birth, String phone_number, String address, String gender, String profile_picture, String bio) {
