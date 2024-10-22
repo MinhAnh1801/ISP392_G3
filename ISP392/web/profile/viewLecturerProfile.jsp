@@ -175,80 +175,79 @@
                                     <button>Change password</button>
                                 </a>
                             </ul>
-                            <ul class="social-icon-style2 ps-0">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">Cập nhật hồ sơ</button>
-                            </ul>
+                           <ul class="social-icon-style2 ps-0">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">Cập nhật hồ sơ</button>
+</ul>
 
-                            <script>
-                                function openUpdateProfileModal() {
-                                    // Mở modal hoặc chuyển hướng đến trang cập nhật hồ sơ
-                                    // Ví dụ: Nếu bạn sử dụng Bootstrap cho modal
-                                    $('#updateProfileModal').modal('show');
-                                }
+<!-- Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Cập nhật Hồ sơ Giảng viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="lecturerProfileForm" action="profile" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="lecturerId" value="${lecturerProfile.lecturerId}" />
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input name="fullName" type="text" class="form-control" id="fullName" value="${lecturerProfile.fullName}" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input name="email" type="email" class="form-control" id="email" value="${lecturerProfile.email}" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" value="${lecturerProfile.phoneNumber}" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="department" class="form-label">Department</label>
+                        <input name="department" type="text" class="form-control" id="department" value="${lecturerProfile.department}" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="expertise" class="form-label">Expertise</label>
+                        <input name="expertise" type="text" class="form-control" id="expertise" value="${lecturerProfile.expertise}" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="researchSkill" class="form-label">Research Skill</label>
+                        <input name="researchSkill" type="number" class="form-control" id="researchSkill" value="${lecturerProfile.researchSkill}" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="teachingSkill" class="form-label">Teaching Skill</label>
+                        <input name="teachingSkill" type="number" class="form-control" id="teachingSkill" value="${lecturerProfile.teachingSkill}" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="mentoringSkill" class="form-label">Mentoring Skill</label>
+                        <input name="mentoringSkill" type="number" class="form-control" id="mentoringSkill" value="${lecturerProfile.mentoringSkill}" required />
+                    </div>
+                </div>
+                <input type="text" value="lecturer" name="action" hidden="">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveChanges">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+<script>
+    // Chức năng mở modal (nếu cần thiết, nhưng bạn đã sử dụng data-bs-toggle)
+    function openUpdateProfileModal() {
+        $('#editProfileModal').modal('show');
+    }
+</script>
 
-
-                            </script>
-                            <!-- Modal -->
-                            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="editProfileModalLabel">Cập nhật Hồ sơ Giảng viên</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form id="lecturerProfileForm" action="profile" method="post">
-
-                                            <div class="modal-body">
-                                                <input type="hidden" id="lecturerId" value="${lecturerProfile.lecturerId}" />
-                                                <div class="mb-3">
-                                                    <label for="fullName" class="form-label">Full Name</label>
-                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="${lecturerProfile.fullName}" required />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="email" class="form-label">Email</label>
-                                                    <input name="email" type="email" class="form-control" id="email" value="${lecturerProfile.email}" required />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="phoneNumber" class="form-label">Phone Number</label>
-                                                    <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" value="${lecturerProfile.phoneNumber}" required />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="department" class="form-label">Department</label>
-                                                    <input name="department" type="text" class="form-control" id="department" value="${lecturerProfile.department}" required />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="expertise" class="form-label">Expertise</label>
-                                                    <input name="expertise" type="text" class="form-control" id="expertise" value="${lecturerProfile.expertise}" required />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="researchSkill" class="form-label">Research Skill</label>
-                                                    <input name="researchSkill" type="number" class="form-control" id="researchSkill" value="${lecturerProfile.researchSkill}" required />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="teachingSkill" class="form-label">Teaching Skill</label>
-                                                    <input name="teachingSkill" type="number" class="form-control" id="teachingSkill" value="${lecturerProfile.teachingSkill}" required />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="mentoringSkill" class="form-label">Mentoring Skill</label>
-                                                    <input name="mentoringSkill" type="number" class="form-control" id="mentoringSkill" value="${lecturerProfile.mentoringSkill}" required />
-                                                </div>
-                                                <!-- Add other fields if needed -->
-                                            </div>
-
-
-                                            <input type="text" value="lecturer" name="action" hidden="">
-
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" id="saveChanges">Save</button>
-                                            </div>
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
+                                  <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+              
+                                                
+                                                
+                                                
 
                         </div>
                     </div>

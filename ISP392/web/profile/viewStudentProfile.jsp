@@ -193,57 +193,27 @@
                             </ul>
 
 
-
-
-                            <div>
-                                <!-- Change Password Button -->
-                                <ul class="social-icon-style2 ps-0">
-                                    <li>
-                                        <a style="   text-decoration: none;" href="changepassword" class="change-password-btn" id="change-password-btn">
-                                            Đổi mật khẩu
-                                        </a>
-
-
-                                    </li>
-                                </ul>
-
-                                <!-- Update Profile Button -->
-                                <ul class="social-icon-style2 ps-0">
-                                    <li>
-                                        <button id="update-profile-btn" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
-                                            Update profile
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
                             <style>
                                 /* Reset basic styles */
-                                ul {
+                                .button-group ul {
                                     list-style-type: none;
                                     padding: 0;
                                     margin: 0;
-                                    display: inline-block; /* Giữ các ul nằm ngang */
+                                    display: flex; /* Sử dụng flexbox để căn chỉnh các nút */
+                                    gap: 15px; /* Khoảng cách giữa các nút */
                                 }
 
-                                li {
+                                .button-group li {
                                     margin-bottom: 0; /* Bỏ khoảng cách dọc giữa các item */
                                 }
 
-                                /* Button container: Dùng flexbox để căn chỉnh các nút nằm ngang */
-                                .button-container {
-                                    display: flex;
-                                    justify-content: space-between; /* Tạo khoảng cách đều giữa các nút */
-                                    gap: 15px; /* Khoảng cách giữa các nút */
-                                    flex-wrap: wrap; /* Đảm bảo các nút sẽ xuống dòng khi không đủ chỗ */
-                                }
-
                                 /* Base button styles */
-                                button, .btn {
+                                .custom-button {
                                     padding: 12px 20px;
                                     font-size: 16px;
                                     font-weight: 600;
                                     color: #fff;
-                                    background-color: #007bff;
+                                    background-color: #007bff; /* Màu nền mặc định */
                                     border: none;
                                     border-radius: 8px;
                                     cursor: pointer;
@@ -251,34 +221,33 @@
                                     text-align: center;
                                     transition: background-color 0.3s ease, transform 0.2s ease;
                                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                    text-decoration: none; /* Xóa gạch chân cho liên kết */
                                 }
 
                                 /* Hover effect for buttons */
-                                button:hover, .btn:hover {
+                                .custom-button:hover {
                                     transform: scale(1.05);
                                 }
 
                                 /* Specific styles for buttons */
                                 #change-password-btn {
-                                    background-color: #28a745;
-                                    width: 120px;
+                                    background-color: #28a745; /* Màu nền cho nút đổi mật khẩu */
                                 }
 
                                 #change-password-btn:hover {
-                                    background-color: #218838;
-                                    text-decoration: none;
+                                    background-color: #218838; /* Màu nền khi hover cho nút đổi mật khẩu */
                                 }
 
                                 #update-profile-btn {
-                                    background-color: #6c757d;
+                                    background-color: #6c757d; /* Màu nền cho nút cập nhật hồ sơ */
                                 }
 
                                 #update-profile-btn:hover {
-                                    background-color: #5a6268;
+                                    background-color: #5a6268; /* Màu nền khi hover cho nút cập nhật hồ sơ */
                                 }
 
                                 /* Align text inside buttons to the center */
-                                button, .btn {
+                                .custom-button {
                                     display: flex;
                                     justify-content: center;
                                     align-items: center;
@@ -287,64 +256,78 @@
 
                                 /* Full width buttons on mobile */
                                 @media (max-width: 576px) {
-                                    button, .btn {
+                                    .custom-button {
                                         width: 100%;
                                     }
                                 }
-
-
                             </style>
 
+                           <div class="button-group">
+    <!-- Change Password Button -->
+    <ul>
+        <li>
+            <a href="changepassword" class="custom-button" id="change-password-btn">
+                Đổi mật khẩu
+            </a>
+        </li>
+        <li>
+            <button type="button" class="custom-button" id="update-profile-btn" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
+                Cập nhật hồ sơ
+            </button>
+        </li>
+    </ul>
+</div>
 
-                            <!-- Modal Update Profile -->
-                            <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content border-0 shadow-lg rounded">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="updateProfileModalLabel">Cập nhật hồ sơ</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="updateProfileForm" action="profile" method="post">
-                                                <input type="text" value="student" name="action" hidden="">
+<!-- Modal Update Profile -->
+<div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow-lg rounded">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateProfileModalLabel">Cập nhật hồ sơ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateProfileForm" action="profile" method="post">
+                    <input type="text" value="student" name="action" hidden="">
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="${studentProfile.phone_number}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" name="address" value="${studentProfile.address}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parentName" class="form-label">Tên phụ huynh</label>
+                        <input type="text" class="form-control" id="parentName" name="parentName" value="${studentProfile.ten_phu_huynh}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parentPhone" class="form-label">Số điện thoại phụ huynh</label>
+                        <input type="tel" class="form-control" id="parentPhone" name="parentPhone" value="${studentProfile.so_dien_thoai_phu_huynh}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parentAddress" class="form-label">Địa chỉ phụ huynh</label>
+                        <input type="text" class="form-control" id="parentAddress" name="parentAddress" value="${studentProfile.dia_chi_phu_huynh}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parentOccupation" class="form-label">Nghề nghiệp phụ huynh</label>
+                        <input type="text" class="form-control" id="parentOccupation" name="parentOccupation" value="${studentProfile.nghe_nghiep_phu_huynh}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parentWorkplace" class="form-label">Nơi làm việc phụ huynh</label>
+                        <input type="text" class="form-control" id="parentWorkplace" name="parentWorkplace" value="${studentProfile.noi_lam_viec_phu_huynh}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                                <div class="mb-3">
-                                                    <label for="phoneNumber" class="form-label">Số điện thoại</label>
-                                                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="${studentProfile.phone_number}" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="address" class="form-label">Địa chỉ</label>
-                                                    <input type="text" class="form-control" id="address" name="address" value="${studentProfile.address}" required>
-                                                </div>
+<!-- Kết nối jQuery và Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
-                                                <div class="mb-3">
-                                                    <label for="parentName" class="form-label">Tên phụ huynh</label>
-                                                    <input type="text" class="form-control" id="parentName" name="parentName" value="${studentProfile.ten_phu_huynh}" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="parentPhone" class="form-label">Số điện thoại phụ huynh</label>
-                                                    <input type="tel" class="form-control" id="parentPhone" name="parentPhone" value="${studentProfile.so_dien_thoai_phu_huynh}" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="parentAddress" class="form-label">Địa chỉ phụ huynh</label>
-                                                    <input type="text" class="form-control" id="parentAddress" name="parentAddress" value="${studentProfile.dia_chi_phu_huynh}" required>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="parentOccupation" class="form-label">Nghề nghiệp phụ huynh</label>
-                                                    <input type="text" class="form-control" id="parentOccupation" name="parentOccupation" value="${studentProfile.nghe_nghiep_phu_huynh}" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="parentWorkplace" class="form-label">Nơi làm việc phụ huynh</label>
-                                                    <input type="text" class="form-control" id="parentWorkplace" name="parentWorkplace" value="${studentProfile.noi_lam_viec_phu_huynh}" required>
-                                                </div>
-
-                                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <style>
                                 .modal-content {
