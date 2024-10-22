@@ -123,6 +123,7 @@
                             <li class="view-notifications hover:underline">
                                 <a href="">View list of subjects</a></li>
                             <li class="hover:underline"><a href="">Add new subject</a></li>
+                            <li class="hover:underline"><a href="managerCurriculum">Curriculum</a></li>
                         </ul>
                     </div>
                 </div>
@@ -292,6 +293,7 @@
                     <div class="registrationng-k">Report/Báo cáo</div>
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
+                            <li class="register-courses hover:underline"><a href="gradeAssignment">Grade assignment / Chấm điểm</a></li>
                             <li class="register-courses hover:underline"><a href="">Upload grades / Cập nhật điểm</a></li>
                             <li class="register-courses hover:underline"><a href="">Check grades / Xem điểm sinh viên</a></li>
                         </ul>

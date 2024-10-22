@@ -5,6 +5,7 @@
 package DAO;
 
 import Context.DBContext;
+import Model.Curriculum;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -132,13 +133,53 @@ public class MajorDAO extends DBContext {
         return subject;
     }
 
+    public List<Curriculum> getListCurriculum() {
+        List<Curriculum> curriculumList = new ArrayList<>();
+        String sql = "SELECT  [major_id], [subject_id], [condition_subject_1], [condition_subject_2] FROM [dbo].[Curriculum]";
+
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Lấy thông tin major
+                Curriculum curriculum = new Curriculum();
+                MajorDAO mdao = new MajorDAO();
+                Major major = mdao.getMajorById(rs.getInt("major_id"));
+                curriculum.setMajor_id(major);
+
+                Subjects subject = mdao.getSubject(rs.getInt("subject_id"));
+                curriculum.setSubject_id(subject);
+
+                // Lấy thông tin điều kiện môn học
+                int conditionSubject1Id = rs.getInt("condition_subject_1");
+                if (!rs.wasNull()) {
+                    Subjects condition1 = mdao.getSubject(conditionSubject1Id);
+                    curriculum.setCondition_subject_1(condition1);
+                }
+
+                int conditionSubject2Id = rs.getInt("condition_subject_2");
+                if (!rs.wasNull()) {
+                    Subjects condition2 = mdao.getSubject(conditionSubject2Id);
+                    curriculum.setCondition_subject_2(condition2);
+                }
+
+                curriculumList.add(curriculum);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // In ra lỗi nếu có
+        }
+
+        return curriculumList;
+    }
+
     public static void main(String[] args) {
         MajorDAO mdao = new MajorDAO();
-        List<Subjects> subjects = mdao.getListSubjectByUserId(2);
-        for (Subjects s : subjects) {
-            System.out.println(s.getId());
-            System.out.println(s.getConditionSubject1().getName());
+         List<Curriculum> curriculumList = mdao.getListCurriculum();
+        for (Curriculum curriculum : curriculumList) {
+            System.out.println(curriculum.getMajor_id().getName());            
         }
     }
+
+
 
 }

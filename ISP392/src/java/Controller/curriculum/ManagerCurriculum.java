@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Controller.curriculum;
 
 import DAO.MajorDAO;
-import Model.Major;
+import Model.Curriculum;
 import Model.Subjects;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,14 +16,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import javax.security.auth.Subject;
 
 /**
  *
  * @author trung
  */
-@WebServlet(name = "ViewCurriculum", urlPatterns = {"/viewCurriculum"})
-public class ViewCurriculumController extends HttpServlet {
+@WebServlet(name = "ManagerCurriculum", urlPatterns = {"/managerCurriculum"})
+public class ManagerCurriculum extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +41,10 @@ public class ViewCurriculumController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewCurriculum</title>");
+            out.println("<title>Servlet ManagerCurriculum</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewCurriculum at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManagerCurriculum at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,17 +63,20 @@ public class ViewCurriculumController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Integer id = (Integer) session.getAttribute("user");
-        if (id == null) {
+        Integer id = (Integer) session.getAttribute("role");
+        if (id == null || id != 0) {
             response.sendRedirect("login");
             return;
 
         }
 
         MajorDAO mdao = new MajorDAO();
-        List<Subjects> listSubject = mdao.getListSubjectByUserId(id);
-        request.setAttribute("listSubject", listSubject);
-        request.getRequestDispatcher("curriculum/viewCurriculum.jsp").forward(request, response);
+        List<Curriculum> listCurriculum = mdao.getListCurriculum();
+        request.setAttribute("listCurriculum", listCurriculum);
+        
+       
+
+        request.getRequestDispatcher("curriculum/viewAllCurriculum.jsp").forward(request, response);
     }
 
     /**
