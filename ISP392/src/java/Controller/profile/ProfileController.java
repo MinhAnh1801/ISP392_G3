@@ -136,18 +136,25 @@ public class ProfileController extends HttpServlet {
                 request.setAttribute("error", "Update False");
             }
         } else if (action.equalsIgnoreCase("student")) {
-            String phoneNumber = request.getParameter("phoneNumber");
-            String address = request.getParameter("address");
+    String phoneNumber = request.getParameter("phoneNumber");
+    String address = request.getParameter("address");
+    String parentName = request.getParameter("parentName");
+    String parentPhone = request.getParameter("parentPhone");
+    String parentEmail = request.getParameter("parentEmail");
+    String parentOccupation = request.getParameter("parentOccupation");
+    String parentWorkplace = request.getParameter("parentWorkplace");
 
-            UserDAO udao = new UserDAO();
-            boolean updateProfile = udao.updateStudentProfile(id, phoneNumber, address);
+    UserDAO udao = new UserDAO();
+    boolean updateProfile = udao.updateStudentProfile(id, phoneNumber, address, parentName, parentPhone, parentEmail, parentOccupation, parentWorkplace);
 
-            if (updateProfile) {
-                request.setAttribute("mess", "Update Successes");
-            } else {
-                request.setAttribute("error", "Update False");
-            }
-        }
+    if (updateProfile) {
+        request.setAttribute("mess", "Cập nhật thành công");
+    } else {
+        request.setAttribute("error", "Cập nhật thất bại");
+    }
+}
+
+        
 
         doGet(request, response);
 

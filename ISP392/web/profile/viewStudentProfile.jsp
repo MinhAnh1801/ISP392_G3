@@ -162,7 +162,24 @@
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
                     <div class="card border-0 shadow">
-                        <img src="${studentProfile.photo}" alt="${studentProfile.photo}">
+                        <div class="photo-container">
+                            <img src="${studentProfile.photo}" alt="${studentProfile.photo}" class="profile-photo">
+                        </div>
+                        <style>
+                            .photo-container {
+                                text-align: center; /* Căn giữa theo chiều ngang */
+                            }
+
+                            .profile-photo {
+                                width: 200px; /* Chiều rộng của ảnh */
+                                height: 200px; /* Chiều cao của ảnh */
+                                border-radius: 50%; /* Để tạo hình tròn */
+                                object-fit: cover; /* Để đảm bảo ảnh được cắt theo hình tròn mà không bị méo */
+                                border: 2px solid #ccc; /* Thêm viền nếu cần */
+                            }
+
+
+                        </style>
                         <div class="card-body p-1-9 p-xl-5">
                             <div class="mb-4">
                                 <h3 class="h4 mb-0">${studentProfile.full_name}</h3>
@@ -173,27 +190,104 @@
                                 <li class="mb-3"><a href="#!"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i>${studentProfile.phone_number}</a></li>
                                 <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>${studentProfile.address}</a></li>
                             </ul>
-                            <ul class="social-icon-style2 ps-0">
-                                <a href="changepassword">
-                                    <button>
-                                        Change password
-                                    </button>
-                                </a>
+                            <div>
+                                <!-- Change Password Button -->
+                                <ul class="social-icon-style2 ps-0">
+                                    <li>
+                                        <a href="changepassword" class="btn btn-secondary" id="change-password-btn">
+                                            Đổi mật khẩu
+                                        </a>
 
-                            </ul>
-                            <ul class="social-icon-style2 ps-0">
-                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
-                                    Update profile
-                                </button>
-                            </ul>
+
+                                    </li>
+                                </ul>
+
+                                <!-- Update Profile Button -->
+                                <ul class="social-icon-style2 ps-0">
+                                    <li>
+                                        <button id="update-profile-btn" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
+                                            Update profile
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <style>
+                                /* Reset some basic styles */
+                                ul {
+                                    list-style-type: none;
+                                    padding: 0;
+                                    margin: 0;
+                                    display: inline-block; /* Để các <ul> nằm ngang */
+                                }
+
+                                li {
+                                    margin-bottom: 0; /* Không có khoảng cách dọc giữa các item */
+                                }
+
+                                /* Button container: Dùng flexbox để các nút nằm ngang */
+                                .button-container {
+                                    display: flex;
+                                    justify-content: space-between; /* Tạo khoảng cách đều giữa các nút */
+                                    gap: 10px; /* Khoảng cách giữa các nút */
+                                    flex-wrap: wrap; /* Đảm bảo chúng sẽ xuống dòng khi không đủ chỗ */
+                                }
+
+                                /* Base button styles */
+                                button {
+                                    padding: 10px 15px;
+                                    font-size: 16px;
+                                    font-weight: 600;
+                                    color: #fff;
+                                    background-color: #007bff;
+                                    border: none;
+                                    border-radius: 8px;
+                                    cursor: pointer;
+                                    text-align: center;
+                                    display: inline-block;
+                                    transition: background-color 0.3s ease, transform 0.2s ease;
+                                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                }
+
+                                /* Hover effect for buttons */
+                                button:hover {
+                                    background-color: #0056b3;
+                                    transform: scale(1.05);
+                                }
+
+                                /* Style for specific buttons */
+                                #change-password-btn {
+                                    background-color: #28a745;
+                                }
+
+                                #change-password-btn:hover {
+                                    background-color: #218838;
+                                }
+
+                                #update-profile-btn {
+                                    background-color: #6c757d;
+                                }
+
+                                #update-profile-btn:hover {
+                                    background-color: #5a6268;
+                                }
+
+                                /* Full width buttons on mobile */
+                                @media (max-width: 576px) {
+                                    button {
+                                        width: 100%;
+                                    }
+                                }
+
+
+                            </style>
 
 
                             <!-- Modal Update Profile -->
                             <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-content border-0 shadow-lg rounded">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
+                                            <h5 class="modal-title" id="updateProfileModalLabel">Cập nhật hồ sơ</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -201,22 +295,76 @@
                                                 <input type="text" value="student" name="action" hidden="">
 
                                                 <div class="mb-3">
-                                                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                                                    <label for="phoneNumber" class="form-label">Số điện thoại</label>
                                                     <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="${studentProfile.phone_number}" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="address" class="form-label">Address</label>
+                                                    <label for="address" class="form-label">Địa chỉ</label>
                                                     <input type="text" class="form-control" id="address" name="address" value="${studentProfile.address}" required>
                                                 </div>
 
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                <div class="mb-3">
+                                                    <label for="parentName" class="form-label">Tên phụ huynh</label>
+                                                    <input type="text" class="form-control" id="parentName" name="parentName" value="${studentProfile.ten_phu_huynh}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="parentPhone" class="form-label">Số điện thoại phụ huynh</label>
+                                                    <input type="tel" class="form-control" id="parentPhone" name="parentPhone" value="${studentProfile.so_dien_thoai_phu_huynh}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="parentAddress" class="form-label">Địa chỉ phụ huynh</label>
+                                                    <input type="text" class="form-control" id="parentAddress" name="parentAddress" value="${studentProfile.dia_chi_phu_huynh}" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="parentOccupation" class="form-label">Nghề nghiệp phụ huynh</label>
+                                                    <input type="text" class="form-control" id="parentOccupation" name="parentOccupation" value="${studentProfile.nghe_nghiep_phu_huynh}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="parentWorkplace" class="form-label">Nơi làm việc phụ huynh</label>
+                                                    <input type="text" class="form-control" id="parentWorkplace" name="parentWorkplace" value="${studentProfile.noi_lam_viec_phu_huynh}" required>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                                             </form>
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <style>
+                                .modal-content {
+                                    border-radius: 15px; /* Thay đổi độ tròn của góc */
+                                    transition: transform 0.3s ease; /* Hiệu ứng khi mở modal */
+                                }
+
+                                .modal-header {
+                                    background-color: #007bff; /* Màu nền cho header */
+                                    color: #fff; /* Màu chữ trong header */
+                                    border-top-left-radius: 15px; /* Bo góc trái trên */
+                                    border-top-right-radius: 15px; /* Bo góc phải trên */
+                                }
+
+                                .modal-body {
+                                    background-color: #fdfdfd; /* Màu nền cho body */
+                                    border: 1px solid #ddd; /* Đường viền nhẹ */
+                                }
+
+                                .form-label {
+                                    font-weight: bold; /* Làm chữ đậm cho nhãn */
+                                }
+
+                                .btn-primary {
+                                    background-color: #0056b3; /* Màu nền của nút */
+                                    border: none; /* Bỏ viền */
+                                }
+
+                                .btn-primary:hover {
+                                    background-color: #004494; /* Màu nền khi hover */
+                                }
+                            </style>
+
+
 
                         </div>
                     </div>
@@ -250,29 +398,155 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-5 wow fadeIn">
-                            <div class="text-start mb-1-6 wow fadeIn">
-                                <h2 class="mb-0 text-primary">#Profile Details</h2>
+
+
+
+                        <div class="profile-container mb-5 wow fadeIn">
+                            <div class="profile-header text-start mb-1-6 wow fadeIn">
+                                <h2 class="profile-title mb-0 text-primary">#Profile Details</h2>
                             </div>
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-3"><i class="far fa-calendar-alt display-25 me-3 text-secondary"></i> Date of Birth: ${studentProfile.date_of_birth}</li>
-                                <li class="mb-3"><i class="fas fa-id-card-alt display-25 me-3 text-secondary"></i> Student Code: ${studentProfile.student_code}</li>
-                                <li class="mb-3"><i class="fas fa-graduation-cap display-25 me-3 text-secondary"></i> Enrollment Year: ${studentProfile.enrollment_year}</li>
-                                <li class="mb-3"><i class="fas fa-calendar-check display-25 me-3 text-secondary"></i> Graduation Year: ${studentProfile.graduation_year}</li>
-                                <li class="mb-3"><i class="fas fa-star display-25 me-3 text-secondary"></i> GPA: ${studentProfile.gpa}</li>
-                                <li class="mb-3"><i class="fas fa-award display-25 me-3 text-secondary"></i> Scholarship Status: 
-                                    <c:choose>
-                                        <c:when test="${studentProfile.scholarship_status}">
-                                            Yes
-                                        </c:when>
-                                        <c:otherwise>
-                                            No
-                                        </c:otherwise>
-                                    </c:choose>
-                                </li>
-                                <li class="mb-3"><i class="fas fa-notes-medical display-25 me-3 text-secondary"></i> Medical Conditions: ${studentProfile.medical_conditions}</li>
-                            </ul>
+
+                            <div class="profile-content">
+                                <div class="profile-section">
+                                    <h3 class="section-title">Student Information</h3>
+                                    <div class="profile-info">
+                                        <ul class="list-unstyled profile-list mb-4">
+                                            <li class="mb-3">
+                                                <i class="far fa-calendar-alt display-25 me-3 text-secondary"></i> 
+                                                <strong>Date of Birth:</strong> ${studentProfile.date_of_birth}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-id-card-alt display-25 me-3 text-secondary"></i> 
+                                                <strong>Student Code:</strong> ${studentProfile.student_code}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-envelope display-25 me-3 text-secondary"></i> 
+                                                <strong>Email:</strong> ${studentProfile.email}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-phone display-25 me-3 text-secondary"></i> 
+                                                <strong>Phone Number:</strong> ${studentProfile.phone_number}
+                                            </li>
+                                        </ul>
+                                        <ul class="list-unstyled profile-list mb-4">
+                                            <li class="mb-3">
+                                                <i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i> 
+                                                <strong>Address:</strong> ${studentProfile.address}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-book display-25 me-3 text-secondary"></i> 
+                                                <strong>Major:</strong> ${studentProfile.nganh_hoc}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-university display-25 me-3 text-secondary"></i> 
+                                                <strong>Program:</strong> ${studentProfile.chuong_trinh_hoc}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-calendar-check display-25 me-3 text-secondary"></i> 
+                                                <strong>Enrollment Year:</strong> ${studentProfile.enrollment_year}
+                                            </li>
+                                        </ul>
+                                        <ul class="list-unstyled profile-list mb-4">
+                                            <li class="mb-3">
+                                                <i class="fas fa-calendar-check display-25 me-3 text-secondary"></i> 
+                                                <strong>Graduation Year:</strong> ${studentProfile.graduation_year}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-star display-25 me-3 text-secondary"></i> 
+                                                <strong>GPA:</strong> ${studentProfile.gpa}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-award display-25 me-3 text-secondary"></i> 
+                                                <strong>Scholarship Status:</strong> 
+                                                <span class="status ${studentProfile.scholarship_status ? 'status-yes' : 'status-no'}">
+                                                    ${studentProfile.scholarship_status ? 'Yes' : 'No'}
+                                                </span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-notes-medical display-25 me-3 text-secondary"></i> 
+                                                <strong>Medical Conditions:</strong> ${studentProfile.medical_conditions}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="profile-section">
+                                    <h3 class="section-title">Parent Information</h3>
+                                    <div class="profile-info">
+                                        <ul class="list-unstyled profile-list mb-4">
+                                            <li class="mb-3">
+                                                <i class="fas fa-user-friends display-25 me-3 text-secondary"></i> 
+                                                <strong>Parent's Name:</strong> ${studentProfile.ten_phu_huynh}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-phone-square-alt display-25 me-3 text-secondary"></i> 
+                                                <strong>Parent's Phone:</strong> ${studentProfile.so_dien_thoai_phu_huynh}
+                                            </li>
+                                        </ul>
+                                        <ul class="list-unstyled profile-list mb-4">
+                                            <li class="mb-3">
+                                                <i class="fas fa-home display-25 me-3 text-secondary"></i> 
+                                                <strong>Parent's Address:</strong> ${studentProfile.dia_chi_phu_huynh}
+                                            </li>
+                                            <li class="mb-3">
+                                                <i class="fas fa-briefcase display-25 me-3 text-secondary"></i> 
+                                                <strong>Parent's Job:</strong> ${studentProfile.nghe_nghiep_phu_huynh}
+                                            </li>
+                                        </ul>
+                                        <ul class="list-unstyled profile-list mb-4">
+                                            <li class="mb-3">
+                                                <i class="fas fa-building display-25 me-3 text-secondary"></i> 
+                                                <strong>Parent's Workplace:</strong> ${studentProfile.noi_lam_viec_phu_huynh}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Thông tin bổ sung -->
+                            <div class="profile-section">
+                                <h3 class="section-title">Additional Information</h3>
+                                <ul class="list-unstyled profile-list mb-4">
+                                    <li class="mb-3">
+                                        <i class="fas fa-id-badge display-25 me-3 text-secondary"></i> 
+                                        <strong>National ID:</strong> ${studentProfile.national_id}
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-file-alt display-25 me-3 text-secondary"></i> 
+                                        <strong>Graduation Thesis:</strong> ${studentProfile.de_tai_tot_nghiep}
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-piggy-bank display-25 me-3 text-secondary"></i> 
+                                        <strong>Account Balance:</strong> ${studentProfile.so_du_tai_khoan}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
+
+
+                        <style>
+                            .profile-content {
+                                display: flex;
+                                justify-content: space-between;
+                                flex-wrap: wrap; /* Cho phép phần tử xuống dòng nếu không đủ chỗ */
+                            }
+
+                            .profile-section {
+                                flex: 1 1 45%; /* Chiếm khoảng 45% chiều rộng, có thể điều chỉnh tùy thuộc vào độ rộng màn hình */
+                                margin: 15px; /* Khoảng cách giữa các phần */
+                                padding: 15px;
+                                background-color: #ffffff; /* Màu nền phần thông tin */
+                                border-radius: 8px; /* Bo tròn góc */
+                                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+                            }
+
+
+                        </style>
+
+
+
+
+
 
                     </div>
                 </div>
