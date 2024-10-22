@@ -259,16 +259,16 @@
                                 <h5 class="modal-title" id="guideModalLabel1">Hưỡng dẫn chi tiết:</h5>
 
 
-                               
 
 
-                                <c:if test="${sessionScope.role == 0}">
-
-
-                                    <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
-                                        Tạo thêm bước 
-                                    </button>
+                                <c:if test="${hasData}">
+                                    <c:if test="${sessionScope.role == 0}">
+                                        <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
+                                            Tạo thêm bước 
+                                        </button>
+                                    </c:if>
                                 </c:if>
+
                                 <!-- The Modal -->
                                 <div class="modal fade" id="CreatelGuidelineDetailStep${listGuideline.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -325,51 +325,57 @@
                         <div class="modal-body">
 
                             <div>
-    <c:set var="hasData" value="false" />
+                                <c:set var="hasData" value="false" />
 
-    <c:forEach items="${listGuideDetail}" var="listGuideDetail">
-        <c:if test="${listGuideDetail.guideline_id.id == listGuideline.id}">
-            <h3>${listGuideDetail.step_title}</h3>
-            <p>${listGuideDetail.description}</p>
-            
-            <c:set var="hasData" value="true" /> <!-- Đặt cờ hasData là true nếu có dữ liệu -->
+                                <c:forEach items="${listGuideDetail}" var="listGuideDetail">
+                                    <c:if test="${listGuideDetail.guideline_id.id == listGuideline.id}">
+                                        <h3>${listGuideDetail.step_title}</h3>
+                                        <p>${listGuideDetail.description}</p>
 
-            <c:if test="${sessionScope.role == 0}">
-                <div class="d-flex align-items-center">
-                    <button type="button" 
-                            class="btn btn-info me-2"  
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editDetailModal"
-                            data-id="${listGuideDetail.id}"
-                            data-title="${listGuideDetail.step_title}"
-                            data-description="${listGuideDetail.description}">
-                        Edit
-                    </button>
+                                        <c:set var="hasData" value="true" /> <!-- Đặt cờ hasData là true nếu có dữ liệu -->
 
-                    <form action="guideline" method="post" onsubmit="return confirmDelete()">
-                        <input value="deleteDetail" name="action" type="hidden">
-                        <input value="${listGuideDetail.id}" name="id" type="hidden">
-                        <button type="submit" class="btn btn-danger">
-                            Delete
-                        </button>
-                    </form>
-                </div>
-            </c:if>
+                                        <c:if test="${sessionScope.role == 0}">
+                                            <div class="d-flex align-items-center">
+                                                <button type="button" 
+                                                        class="btn btn-info me-2"  
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#editDetailModal"
+                                                        data-id="${listGuideDetail.id}"
+                                                        data-title="${listGuideDetail.step_title}"
+                                                        data-description="${listGuideDetail.description}">
+                                                    Edit
+                                                </button>
 
-            <script>
-                // Function to display a confirmation dialog
-                function confirmDelete() {
-                    return confirm("Are you sure you want to delete this step?");
-                }
-            </script>
-        </c:if>
-    </c:forEach>
+                                                <form action="guideline" method="post" onsubmit="return confirmDelete()">
+                                                    <input value="deleteDetail" name="action" type="hidden">
+                                                    <input value="${listGuideDetail.id}" name="id" type="hidden">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </c:if>
 
-    <c:if test="${!hasData}">
-        <h3>Không có dữ liệu hướng dẫn</h3>
-        <p>Vui lòng kiểm tra lại sau.</p>
-    </c:if>
-</div>
+                                        <script>
+                                            // Function to display a confirmation dialog
+                                            function confirmDelete() {
+                                                return confirm("Are you sure you want to delete this step?");
+                                            }
+                                        </script>
+                                    </c:if>
+                                </c:forEach>
+
+                                <c:if test="${!hasData}">
+                                    <h3>Không có dữ liệu hướng dẫn</h3>
+                                    <p>Vui lòng kiểm tra lại sau.</p>
+                                    <c:if test="${sessionScope.role == 0}">
+                                        Click vào đểt tạo thêm bước
+                                        <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
+                                            Tạo thêm bước 
+                                        </button>
+                                    </c:if>
+                                </c:if>
+                            </div>
 
 
 
