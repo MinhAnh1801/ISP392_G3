@@ -62,4 +62,33 @@ public class ApplicationDAO extends DBcontext{
 
         return applications;
     }
+    
+    public List<Applications> getAllApplications() {
+    List<Applications> applications = new ArrayList<>();
+    String sql = "SELECT * FROM applications order by id desc";
+
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        ApplicationTypeDAO typeDao = new ApplicationTypeDAO();
+        while (rs.next()) {
+            Applications application = new Applications();
+            application.setStudentId(rs.getInt("student_id"));
+            application.setApplicationType(rs.getInt("application_type"));
+            application.setContent(rs.getString("content"));
+            application.setCreatedAt(rs.getTimestamp("created_at"));
+            application.setStatus(rs.getString("status"));
+            application.setLastUpdated(rs.getTimestamp("last_updated"));
+            application.setType(typeDao.getApplicationTypeById(rs.getInt("application_type")));
+            application.setAttachedFile(rs.getString("attachedFile"));
+            application.setResponse(rs.getString("response"));
+            applications.add(application);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return applications;
+}
+
 }

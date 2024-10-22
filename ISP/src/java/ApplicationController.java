@@ -32,7 +32,10 @@ public class ApplicationController extends HttpServlet {
             showApplicationForm(request, response);
         } else if (action.equals("viewApplications")) {
             viewApplicationsByStudent(request, response);
+        }else if (action.equals("viewAllApplications")) {
+            viewAllApplications(request, response);
         }
+
     }
 
     @Override
@@ -52,7 +55,7 @@ public class ApplicationController extends HttpServlet {
     }
 
     private void submitApplication(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int studentId = 2; 
+        int studentId = 3; 
         int applicationTypeId = Integer.parseInt(request.getParameter("applicationType"));
         String content = request.getParameter("content");
 
@@ -79,10 +82,17 @@ public class ApplicationController extends HttpServlet {
     }
 
     private void viewApplicationsByStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int studentId = 2; 
+        int studentId = 3; 
         ApplicationDAO applicationDAO = new ApplicationDAO();
         List<Applications> applications = applicationDAO.getApplicationsByStudentId(studentId);
         request.setAttribute("applications", applications);
         request.getRequestDispatcher("viewApplications.jsp").forward(request, response);
     }
+
+    private void viewAllApplications(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ApplicationDAO applicationDAO = new ApplicationDAO();
+        List<Applications> applications = applicationDAO.getAllApplications();
+        request.setAttribute("applications", applications);
+        request.getRequestDispatcher("viewAllApplications.jsp").forward(request, response);
+    }    
 }
