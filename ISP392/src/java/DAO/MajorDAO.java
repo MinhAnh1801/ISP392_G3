@@ -313,24 +313,44 @@ public class MajorDAO extends DBContext {
         return subjectList;
     }
 
-   public boolean deleteCurriculum(int majorId, int subjectId) {
-    String sql = "DELETE FROM [dbo].[Curriculum] WHERE [major_id] = ? AND [subject_id] = ?";
-    
-    try (Connection connection = getConnection();
-         PreparedStatement stmt = connection.prepareStatement(sql)) {
+    public boolean deleteCurriculum(int majorId, int subjectId) {
+        String sql = "DELETE FROM [dbo].[Curriculum] WHERE [major_id] = ? AND [subject_id] = ?";
 
-        // Thiết lập tham số cho câu lệnh SQL
-        stmt.setInt(1, majorId);
-        stmt.setInt(2, subjectId);
+        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        // Thực hiện câu lệnh xóa
-        int rowsAffected = stmt.executeUpdate();
-        return rowsAffected > 0; // Trả về true nếu có ít nhất một bản ghi được xóa
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false; // Trả về false nếu có lỗi xảy ra
+            // Thiết lập tham số cho câu lệnh SQL
+            stmt.setInt(1, majorId);
+            stmt.setInt(2, subjectId);
+
+            // Thực hiện câu lệnh xóa
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0; // Trả về true nếu có ít nhất một bản ghi được xóa
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Trả về false nếu có lỗi xảy ra
+        }
     }
-}
 
+    public boolean checkCurriculum(String major, String ss) {
+        String sql = "SELECT COUNT(*) FROM [dbo].[Curriculum] WHERE major_id = ? AND subject_id = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            // Thiết lập tham số cho câu lệnh SQL
+            stmt.setString(1, major);
+            stmt.setString(2, ss);
+
+            // Thực hiện truy vấn
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0; 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false; // Trả về false nếu có lỗi xảy ra hoặc không tìm thấy bản ghi
+    }
 
 }

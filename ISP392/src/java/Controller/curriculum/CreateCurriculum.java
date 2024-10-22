@@ -76,9 +76,8 @@ public class CreateCurriculum extends HttpServlet {
         request.setAttribute("listCurriculum", listCurriculum);
 
         List<Subjects> listAllSubject1 = mdao.getAllSubjects();
-        
+
         request.setAttribute("listAllSubject1", listAllSubject1);
-       
 
         List<Major> listMajor = mdao.getAllMajor();
         request.setAttribute("listMajor", listMajor);
@@ -104,6 +103,14 @@ public class CreateCurriculum extends HttpServlet {
         String conditionSubject2 = request.getParameter("conditionSubject2");
         String semester = request.getParameter("semester");
         String credits = request.getParameter("credits");
+        MajorDAO mdao = new MajorDAO();
+
+        boolean checkCurriculum = mdao.checkCurriculum(major, ss);
+        if (checkCurriculum) {
+            request.setAttribute("error", "Tồn tại!");
+            doGet(request, response);
+            return;
+        }
 
         // Kiểm tra xem dữ liệu có hợp lệ không
         if (major != null && conditionSubject1 != null && conditionSubject2 != null && semester != null && credits != null) {
@@ -115,8 +122,6 @@ public class CreateCurriculum extends HttpServlet {
                 int conditionSubject21 = Integer.parseInt(conditionSubject2);
                 int semester1 = Integer.parseInt(semester);
                 int credits1 = Integer.parseInt(credits);
-
-                MajorDAO mdao = new MajorDAO();
 
                 boolean check = mdao.createCurriculum(major1, subject, conditionSubject21, conditionSubject21, semester1, credits1, credits1);
                 if (check) {
