@@ -261,13 +261,7 @@
 
 
 
-                                <c:if test="${hasData}">
-                                    <c:if test="${sessionScope.role == 0}">
-                                        <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
-                                            Tạo thêm bước 
-                                        </button>
-                                    </c:if>
-                                </c:if>
+                               
 
                                 <!-- The Modal -->
                                 <div class="modal fade" id="CreatelGuidelineDetailStep${listGuideline.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -332,7 +326,7 @@
                                         <h3>${listGuideDetail.step_title}</h3>
                                         <p>${listGuideDetail.description}</p>
 
-                                        <c:set var="hasData" value="true" /> <!-- Đặt cờ hasData là true nếu có dữ liệu -->
+                                        <c:set var="hasData" value="true" />
 
                                         <c:if test="${sessionScope.role == 0}">
                                             <div class="d-flex align-items-center">
@@ -376,6 +370,16 @@
                                     </c:if>
                                 </c:if>
                             </div>
+                                <br>
+                                <br>
+                                <br>
+                                 <c:if test="${hasData == true}">
+                                    <c:if test="${sessionScope.role == 0}">
+                                        <button type="button" class="btn btn-primary btn-tren" id="openModal1${listGuideline.id}">
+                                            Tạo thêm bước 
+                                        </button>
+                                    </c:if>
+                                </c:if>
 
 
 
