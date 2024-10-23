@@ -74,6 +74,8 @@ public class ViewCurriculumController extends HttpServlet {
         MajorDAO mdao = new MajorDAO();
         List<Subjects> listSubject = mdao.getListSubjectByUserId(id);
         request.setAttribute("listSubject", listSubject);
+        
+        
         request.getRequestDispatcher("curriculum/viewCurriculum.jsp").forward(request, response);
     }
 

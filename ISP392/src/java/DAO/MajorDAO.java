@@ -50,6 +50,7 @@ public class MajorDAO extends DBContext {
         Student_Profile user = udao.getStudentProfile(id);
 
         int majorId = user.getMajor_id().getId();
+        System.out.println(majorId);
 
         MajorDAO mdao = new MajorDAO();
         List<Subjects> subjects = mdao.getSubjectByMajorId(majorId);
@@ -266,28 +267,7 @@ public class MajorDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        // Tạo đối tượng của lớp chứa phương thức createCurriculum
-        MajorDAO curriculumDAO = new MajorDAO();
-
-        // Các giá trị mẫu để kiểm tra
-        int majorId = 3; // ID chuyên ngành
-        int subjectId = 21; // ID môn học
-        int conditionSubject1 = 20; // Môn học điều kiện 1
-        int conditionSubject2 = 21; // Môn học điều kiện 2
-        int semester = 3; // Học kỳ
-        int credits = 4; // Số tín chỉ
-
-        // Gọi phương thức createCurriculum và kiểm tra kết quả
-        boolean result = curriculumDAO.createCurriculum(majorId, subjectId, conditionSubject1, conditionSubject2, semester, credits, credits);
-
-        // Hiển thị kết quả kiểm tra
-        if (result) {
-            System.out.println("Thêm bản ghi mới thành công!");
-        } else {
-            System.out.println("Thêm bản ghi mới thất bại!");
-        }
-    }
+   
 
     public List<Subjects> getAllSubjects() {
         List<Subjects> subjectList = new ArrayList<>();
@@ -353,4 +333,16 @@ public class MajorDAO extends DBContext {
         return false; // Trả về false nếu có lỗi xảy ra hoặc không tìm thấy bản ghi
     }
 
+    
+    public static void main(String[] args) {
+        MajorDAO mdao = new MajorDAO();
+        List<Subjects> getListSubjectByUserId = mdao.getListSubjectByUserId(2);
+        
+        for (Subjects subjects : getListSubjectByUserId) {
+            System.out.println(subjects.getId());
+            
+        }
+    }
+    
+    
 }
