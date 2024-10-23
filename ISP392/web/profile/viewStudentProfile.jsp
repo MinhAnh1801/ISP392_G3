@@ -262,71 +262,71 @@
                                 }
                             </style>
 
-                           <div class="button-group">
-    <!-- Change Password Button -->
-    <ul>
-        <li>
-            <a href="changepassword" class="custom-button" id="change-password-btn">
-                Đổi mật khẩu
-            </a>
-        </li>
-        <li>
-            <button type="button" class="custom-button" id="update-profile-btn" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
-                Cập nhật hồ sơ
-            </button>
-        </li>
-    </ul>
-</div>
+                            <div class="button-group">
+                                <!-- Change Password Button -->
+                                <ul>
+                                    <li>
+                                        <a href="changepassword" class="custom-button" id="change-password-btn">
+                                            Đổi mật khẩu
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="custom-button" id="update-profile-btn" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
+                                            Cập nhật hồ sơ
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
 
-<!-- Modal Update Profile -->
-<div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content border-0 shadow-lg rounded">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateProfileModalLabel">Cập nhật hồ sơ</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="updateProfileForm" action="profile" method="post">
-                    <input type="text" value="student" name="action" hidden="">
-                    <div class="mb-3">
-                        <label for="phoneNumber" class="form-label">Số điện thoại</label>
-                        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="${studentProfile.phone_number}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Địa chỉ</label>
-                        <input type="text" class="form-control" id="address" name="address" value="${studentProfile.address}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="parentName" class="form-label">Tên phụ huynh</label>
-                        <input type="text" class="form-control" id="parentName" name="parentName" value="${studentProfile.ten_phu_huynh}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="parentPhone" class="form-label">Số điện thoại phụ huynh</label>
-                        <input type="tel" class="form-control" id="parentPhone" name="parentPhone" value="${studentProfile.so_dien_thoai_phu_huynh}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="parentAddress" class="form-label">Địa chỉ phụ huynh</label>
-                        <input type="text" class="form-control" id="parentAddress" name="parentAddress" value="${studentProfile.dia_chi_phu_huynh}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="parentOccupation" class="form-label">Nghề nghiệp phụ huynh</label>
-                        <input type="text" class="form-control" id="parentOccupation" name="parentOccupation" value="${studentProfile.nghe_nghiep_phu_huynh}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="parentWorkplace" class="form-label">Nơi làm việc phụ huynh</label>
-                        <input type="text" class="form-control" id="parentWorkplace" name="parentWorkplace" value="${studentProfile.noi_lam_viec_phu_huynh}" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                            <!-- Modal Update Profile -->
+                            <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content border-0 shadow-lg rounded">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="updateProfileModalLabel">Cập nhật hồ sơ</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="updateProfileForm" action="profile" method="post">
+                                                <input type="text" value="student" name="action" hidden="">
+                                                <div class="mb-3">
+                                                    <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                                                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="${studentProfile.phone_number}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="address" class="form-label">Địa chỉ</label>
+                                                    <input type="text" class="form-control" id="address" name="address" value="${studentProfile.address}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="parentName" class="form-label">Tên phụ huynh</label>
+                                                    <input type="text" class="form-control" id="parentName" name="parentName" value="${studentProfile.ten_phu_huynh}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="parentPhone" class="form-label">Số điện thoại phụ huynh</label>
+                                                    <input type="tel" class="form-control" id="parentPhone" name="parentPhone" value="${studentProfile.so_dien_thoai_phu_huynh}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="parentAddress" class="form-label">Địa chỉ phụ huynh</label>
+                                                    <input type="text" class="form-control" id="parentAddress" name="parentAddress" value="${studentProfile.dia_chi_phu_huynh}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="parentOccupation" class="form-label">Nghề nghiệp phụ huynh</label>
+                                                    <input type="text" class="form-control" id="parentOccupation" name="parentOccupation" value="${studentProfile.nghe_nghiep_phu_huynh}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="parentWorkplace" class="form-label">Nơi làm việc phụ huynh</label>
+                                                    <input type="text" class="form-control" id="parentWorkplace" name="parentWorkplace" value="${studentProfile.noi_lam_viec_phu_huynh}" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-<!-- Kết nối jQuery và Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+                            <!-- Kết nối jQuery và Bootstrap JS -->
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
 
                             <style>

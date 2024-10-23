@@ -83,61 +83,61 @@
     <body>
 
 
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
-    <div id="toastMessage" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
-        <div class="d-flex">
-            <div class="toast-body">
-                ${mess}
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
+            <div id="toastMessage" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${mess}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
             </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
 
-    <div id="toastError" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
-        <div class="d-flex">
-            <div class="toast-body">
-                ${error}
+            <div id="toastError" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${error}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
             </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-    </div>
-</div>
 
-<script>
-    // Lấy các biến mess và error (thay đổi tùy theo cách bạn lấy giá trị thực tế)
-    var mess = "${mess}"; // Giả định có giá trị nào đó
-    var error = "${error}"; // Giả định có giá trị nào đó
+        <script>
+            // Lấy các biến mess và error (thay đổi tùy theo cách bạn lấy giá trị thực tế)
+            var mess = "${mess}"; // Giả định có giá trị nào đó
+            var error = "${error}"; // Giả định có giá trị nào đó
 
-    // Lấy các phần tử toast
-    var toastMessage = document.getElementById('toastMessage');
-    var toastError = document.getElementById('toastError');
+            // Lấy các phần tử toast
+            var toastMessage = document.getElementById('toastMessage');
+            var toastError = document.getElementById('toastError');
 
-    if (mess) {
-        // Hiển thị thông báo thành công nếu có mess
-        toastMessage.querySelector('.toast-body').textContent = mess; // Cập nhật nội dung
-        toastMessage.style.display = 'block'; // Hiện toast
-        var bootstrapToastMessage = new bootstrap.Toast(toastMessage);
-        bootstrapToastMessage.show();
+            if (mess) {
+                // Hiển thị thông báo thành công nếu có mess
+                toastMessage.querySelector('.toast-body').textContent = mess; // Cập nhật nội dung
+                toastMessage.style.display = 'block'; // Hiện toast
+                var bootstrapToastMessage = new bootstrap.Toast(toastMessage);
+                bootstrapToastMessage.show();
 
-        // Thiết lập ẩn toast sau 5 giây
-        setTimeout(function() {
-            bootstrapToastMessage.hide();
-        }, 5000);
-    }
+                // Thiết lập ẩn toast sau 5 giây
+                setTimeout(function () {
+                    bootstrapToastMessage.hide();
+                }, 5000);
+            }
 
-    if (error) {
-        // Hiển thị thông báo lỗi nếu có error
-        toastError.querySelector('.toast-body').textContent = error; // Cập nhật nội dung
-        toastError.style.display = 'block'; // Hiện toast
-        var bootstrapToastError = new bootstrap.Toast(toastError);
-        bootstrapToastError.show();
+            if (error) {
+                // Hiển thị thông báo lỗi nếu có error
+                toastError.querySelector('.toast-body').textContent = error; // Cập nhật nội dung
+                toastError.style.display = 'block'; // Hiện toast
+                var bootstrapToastError = new bootstrap.Toast(toastError);
+                bootstrapToastError.show();
 
-        // Thiết lập ẩn toast sau 5 giây
-        setTimeout(function() {
-            bootstrapToastError.hide();
-        }, 5000);
-    }
-</script>
+                // Thiết lập ẩn toast sau 5 giây
+                setTimeout(function () {
+                    bootstrapToastError.hide();
+                }, 5000);
+            }
+        </script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
@@ -148,7 +148,24 @@
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
                     <div class="card border-0 shadow">
-                        <img src="${lecturerProfile.photoUrl}" alt="${lecturerProfile.fullName}">
+                        <div class="photo-container">
+                            <img src="${lecturerProfile.photoUrl}" alt="${lecturerProfile.fullName}"  class="profile-photo">
+                        </div>
+                        <style>
+                            .photo-container {
+                                text-align: center; /* Căn giữa theo chiều ngang */
+                            }
+
+                            .profile-photo {
+                                width: 200px; /* Chiều rộng của ảnh */
+                                height: 200px; /* Chiều cao của ảnh */
+                                border-radius: 50%; /* Để tạo hình tròn */
+                                object-fit: cover; /* Để đảm bảo ảnh được cắt theo hình tròn mà không bị méo */
+                                border: 2px solid #ccc; /* Thêm viền nếu cần */
+                            }
+
+
+                        </style>
                         <div class="card-body p-1-9 p-xl-5">
                             <div class="mb-4">
                                 <h3 class="h4 mb-0">${lecturerProfile.fullName}</h3>
@@ -170,84 +187,165 @@
                                 <li><a href="#!" class="rounded-3"><i class="fab fa-youtube"></i></a></li>
                                 <li><a href="#!" class="rounded-3"><i class="fab fa-linkedin-in"></i></a></li>
                             </ul>
-                            <ul class="social-icon-style2 ps-0">
-                                <a href="changepassword">
-                                    <button>Change password</button>
-                                </a>
-                            </ul>
-                           <ul class="social-icon-style2 ps-0">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">Cập nhật hồ sơ</button>
-</ul>
+                           
+                            <br>
+                            <br>
+                            <br>
+                            
+                            <div class="button-group">
+                                <!-- Change Password Button -->
+                                <ul>
+                                    <li>
+                                        <a href="changepassword" class="custom-button" id="change-password-btn">
+                                            Đổi mật khẩu
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="custom-button" id="update-profile-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                            Cập nhật hồ sơ
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <style>
+                                /* Reset basic styles */
+                                .button-group ul {
+                                    list-style-type: none;
+                                    padding: 0;
+                                    margin: 0;
+                                    display: flex; /* Sử dụng flexbox để căn chỉnh các nút */
+                                    gap: 15px; /* Khoảng cách giữa các nút */
+                                }
 
-<!-- Modal -->
-<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editProfileModalLabel">Cập nhật Hồ sơ Giảng viên</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="lecturerProfileForm" action="profile" method="post">
-                <div class="modal-body">
-                    <input type="hidden" id="lecturerId" value="${lecturerProfile.lecturerId}" />
-                    <div class="mb-3">
-                        <label for="fullName" class="form-label">Full Name</label>
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="${lecturerProfile.fullName}" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input name="email" type="email" class="form-control" id="email" value="${lecturerProfile.email}" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="phoneNumber" class="form-label">Phone Number</label>
-                        <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" value="${lecturerProfile.phoneNumber}" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="department" class="form-label">Department</label>
-                        <input name="department" type="text" class="form-control" id="department" value="${lecturerProfile.department}" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="expertise" class="form-label">Expertise</label>
-                        <input name="expertise" type="text" class="form-control" id="expertise" value="${lecturerProfile.expertise}" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="researchSkill" class="form-label">Research Skill</label>
-                        <input name="researchSkill" type="number" class="form-control" id="researchSkill" value="${lecturerProfile.researchSkill}" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="teachingSkill" class="form-label">Teaching Skill</label>
-                        <input name="teachingSkill" type="number" class="form-control" id="teachingSkill" value="${lecturerProfile.teachingSkill}" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="mentoringSkill" class="form-label">Mentoring Skill</label>
-                        <input name="mentoringSkill" type="number" class="form-control" id="mentoringSkill" value="${lecturerProfile.mentoringSkill}" required />
-                    </div>
-                </div>
-                <input type="text" value="lecturer" name="action" hidden="">
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveChanges">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                                .button-group li {
+                                    margin-bottom: 0; /* Bỏ khoảng cách dọc giữa các item */
+                                }
 
-<script>
-    // Chức năng mở modal (nếu cần thiết, nhưng bạn đã sử dụng data-bs-toggle)
-    function openUpdateProfileModal() {
-        $('#editProfileModal').modal('show');
-    }
-</script>
+                                /* Base button styles */
+                                .custom-button {
+                                    padding: 12px 20px;
+                                    font-size: 16px;
+                                    font-weight: 600;
+                                    color: #fff;
+                                    background-color: #007bff; /* Màu nền mặc định */
+                                    border: none;
+                                    border-radius: 8px;
+                                    cursor: pointer;
+                                    display: inline-block;
+                                    text-align: center;
+                                    transition: background-color 0.3s ease, transform 0.2s ease;
+                                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                    text-decoration: none; /* Xóa gạch chân cho liên kết */
+                                }
 
-                                  <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-              
-                                                
-                                                
-                                                
+                                /* Hover effect for buttons */
+                                .custom-button:hover {
+                                    transform: scale(1.05);
+                                }
+
+                                /* Specific styles for buttons */
+                                #change-password-btn {
+                                    background-color: #28a745; /* Màu nền cho nút đổi mật khẩu */
+                                }
+
+                                #change-password-btn:hover {
+                                    background-color: #218838; /* Màu nền khi hover cho nút đổi mật khẩu */
+                                }
+
+                                #update-profile-btn {
+                                    background-color: #6c757d; /* Màu nền cho nút cập nhật hồ sơ */
+                                }
+
+                                #update-profile-btn:hover {
+                                    background-color: #5a6268; /* Màu nền khi hover cho nút cập nhật hồ sơ */
+                                }
+
+                                /* Align text inside buttons to the center */
+                                .custom-button {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    text-align: center;
+                                }
+
+                                /* Full width buttons on mobile */
+                                @media (max-width: 576px) {
+                                    .custom-button {
+                                        width: 100%;
+                                    }
+                                }
+                            </style>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editProfileModalLabel">Cập nhật Hồ sơ Giảng viên</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form id="lecturerProfileForm" action="profile" method="post">
+                                            <div class="modal-body">
+                                                <input type="hidden" id="lecturerId" value="${lecturerProfile.lecturerId}" />
+                                                <div class="mb-3">
+                                                    <label for="fullName" class="form-label">Full Name</label>
+                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="${lecturerProfile.fullName}" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input name="email" type="email" class="form-control" id="email" value="${lecturerProfile.email}" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                                                    <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" value="${lecturerProfile.phoneNumber}" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="department" class="form-label">Department</label>
+                                                    <input name="department" type="text" class="form-control" id="department" value="${lecturerProfile.department}" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="expertise" class="form-label">Expertise</label>
+                                                    <input name="expertise" type="text" class="form-control" id="expertise" value="${lecturerProfile.expertise}" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="researchSkill" class="form-label">Research Skill</label>
+                                                    <input name="researchSkill" type="number" class="form-control" id="researchSkill" value="${lecturerProfile.researchSkill}" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="teachingSkill" class="form-label">Teaching Skill</label>
+                                                    <input name="teachingSkill" type="number" class="form-control" id="teachingSkill" value="${lecturerProfile.teachingSkill}" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="mentoringSkill" class="form-label">Mentoring Skill</label>
+                                                    <input name="mentoringSkill" type="number" class="form-control" id="mentoringSkill" value="${lecturerProfile.mentoringSkill}" required />
+                                                </div>
+                                            </div>
+                                            <input type="text" value="lecturer" name="action" hidden="">
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" id="saveChanges">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                // Chức năng mở modal (nếu cần thiết, nhưng bạn đã sử dụng data-bs-toggle)
+                                function openUpdateProfileModal() {
+                                    $('#editProfileModal').modal('show');
+                                }
+                            </script>
+
+                            <!-- jQuery -->
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            <!-- Bootstrap JS -->
+                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+
+
+
 
                         </div>
                     </div>
