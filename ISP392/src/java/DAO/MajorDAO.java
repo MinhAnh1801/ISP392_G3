@@ -333,7 +333,31 @@ public class MajorDAO extends DBContext {
         return false; // Trả về false nếu có lỗi xảy ra hoặc không tìm thấy bản ghi
     }
 
-    
+    public Subjects getSubjectById(int subjectId) {
+    Subjects subject = null; // Khởi tạo biến subject
+    String sql = "SELECT id, code, name, description, lecturer_id FROM [dbo].[Subjects] WHERE id = ?"; // Truy vấn SQL
+
+    try (Connection connection = getConnection(); // Kết nối cơ sở dữ liệu
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+        
+        ps.setInt(1, subjectId); // Thiết lập giá trị cho tham số trong truy vấn
+        ResultSet rs = ps.executeQuery(); // Thực thi truy vấn
+
+        if (rs.next()) { // Kiểm tra nếu có kết quả
+            subject = new Subjects(); // Tạo đối tượng Subjects
+            subject.setId(rs.getInt("id")); // Thiết lập ID
+            subject.setCode(rs.getString("code")); // Thiết lập mã môn học
+            subject.setName(rs.getString("name")); // Thiết lập tên môn học
+            subject.setDescription(rs.getString("description")); // Thiết lập mô tả
+            subject.setLecturerId(rs.getInt("lecturer_id")); // Thiết lập ID giảng viên
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // In ra lỗi nếu có
+    }
+
+    return subject; // Trả về đối tượng môn học
+}
+
     public static void main(String[] args) {
         MajorDAO mdao = new MajorDAO();
         List<Subjects> getListSubjectByUserId = mdao.getListSubjectByUserId(2);
@@ -343,6 +367,6 @@ public class MajorDAO extends DBContext {
             
         }
     }
-    
+
     
 }

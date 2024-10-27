@@ -234,6 +234,7 @@
                             <li class="register-courses hover:underline"><a href="">Assignment / Bài tập</a></li>
                             <li class="register-courses hover:underline"><a href="">View exam schedule / Xem lịch thi</a></li>
                             <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
+                            <li><a class="hover:underline" href="viewAllMaterial">Student Material / Tài liệu hưỡng dẫn </a></li>
                         </ul>
                     </div>
                 </div>
@@ -268,8 +269,8 @@
                     <div class="registrationng-k">Subject materials/Tài liệu môn học</div>
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Upload materials / Tải lên tài liệu</a></li>
-                            <li><a class="hover:underline" href="">View materials / Xem tài liệu</a></li>
+                            <li class="register-courses hover:underline"><a href="createMaterial">Upload materials / Tải lên tài liệu</a></li>
+                            <li><a class="hover:underline" href="viewAllMaterial">View materials / Xem tài liệu</a></li>
                         </ul>
                     </div>
                 </div>
@@ -281,7 +282,7 @@
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses hover:underline"><a href="">Attendance report / Báo cáo điểm danh</a></li>
-                            <li class="register-courses hover:underline"><a href="">Mark report / Báo cáo điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="viewMarkReport">Mark report / Báo cáo điểm</a></li>
                             <li><a href="viewCurriculum" class="hover:underline">Curriculum / Khung chương trình</a></li>
                         </ul>
                     </div>
