@@ -4,17 +4,58 @@
  */
 package Model;
 
+import java.util.Date;
+
 /**
  *
  * @author khucx
  */
 public class Schedule {
-    int id;
+    int id, available_slot;
     String class_name,classroom_name,subject_code,day_of_week, start_time, end_time;
+    String due_date;
+    String status;
 
     @Override
     public String toString() {
-        return "Schedule{" + "id=" + id + ", class_name=" + class_name + ", classroom_name=" + classroom_name + ", subject_code=" + subject_code + ", day_of_week=" + day_of_week + ", start_time=" + start_time + ", end_time=" + end_time + '}';
+        return "Schedule{" + "id=" + id + ", class_name=" + class_name + ", classroom_name=" + classroom_name + ", subject_code=" + subject_code + ", day_of_week=" + day_of_week + ", start_time=" + start_time + ", end_time=" + end_time + ", due_date=" + due_date + ", status=" + status +", slots="+available_slot +'}';
+    }
+
+    public Schedule(int id, String class_name, String classroom_name, String subject_code, String day_of_week, String start_time, String end_time, String due_date, String status, int available_slot) {
+        this.id = id;
+        this.class_name = class_name;
+        this.classroom_name = classroom_name;
+        this.subject_code = subject_code;
+        this.day_of_week = day_of_week;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.due_date = due_date;
+        this.status = status;
+        this.available_slot = available_slot;
+    }
+
+    public int getAvailable_slot() {
+        return available_slot;
+    }
+
+    public void setAvailable_slot(int available_slot) {
+        this.available_slot = available_slot;
+    }
+
+    public String getDue_date() {
+        return due_date;
+    }
+
+    public void setDue_date(String due_date) {
+        this.due_date = due_date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Schedule(int id, String class_name, String classroom_name, String subject_code, String day_of_week, String start_time, String end_time) {

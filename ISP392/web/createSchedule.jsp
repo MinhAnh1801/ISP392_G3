@@ -51,16 +51,20 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.has('success')) {
                     showAlert("Schedule created successfully!", true);
+                } else if (urlParams.get('error') === "invalidDueDate") {
+                    alert("Due date can't be behind current date. Please check your inputs.");
+                    window.location.href = "createSchedule";
                 } else if (urlParams.has('error')) {
                     alert("Failed to create schedule. Please try again.");
                     window.location.href = "createSchedule";
                 }
+
             };
         </script>
     </head>
     <body class="bg-gray-100">
         <c:if test="${sessionScope.role == 0}">
-            
+
             <div class="container mx-auto py-8">
                 <a class="w-[70px] h-[20px] px-4 py-2 bg-blue-700 align-middle rounded-lg text-white" href="viewSchedules">Return</a>
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 mt-2">Create New Schedule</h2>
@@ -82,7 +86,7 @@
                         <select id="classId" name="classId" class="w-full p-2 border rounded">
                             <c:forEach var="classInfo" items="${classList}">
                                 <option value="${classInfo.class_id}">
-                                    ${classInfo.class_name} (Capacity: ${classInfo.capacity})
+                                    ${classInfo.class_name}
                                 </option>
                             </c:forEach>
                         </select>
@@ -126,7 +130,15 @@
                     <!-- Hidden Inputs for Start and End Time -->
                     <input type="hidden" id="startTime" name="startTime">
                     <input type="hidden" id="endTime" name="endTime">
+                    <div class="mb-4">
+                        <label for="dueDate" class="block text-gray-700 font-bold mb-2">Due Date</label>
+                        <input type="date" id="dueDate" name="dueDate" class="w-[300px] p-2 border rounded" required>
+                    </div>
 
+                    <div class="mb-4">
+                        <label for="dueTime" class="block text-gray-700 font-bold mb-2">Due Time</label>
+                        <input type="time" id="dueTime" name="dueTime" class="w-[300px] p-2 border rounded" required>
+                    </div>
                     <!-- Submit Button -->
                     <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Create Schedule</button>
                 </form>

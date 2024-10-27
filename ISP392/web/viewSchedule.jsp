@@ -4,7 +4,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>News</title>
+        <title>Schedule management</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">  
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -210,25 +210,31 @@
                     </svg>
                 </div>
             </a>
-            <table id="table" class="pb-8 absolute left-[-200px] top-[100px] table-fixed border-collapse border-2 shadow-md">
+            <table id="table" class="pb-8 absolute left-[-310px] top-[100px] table-fixed border-collapse border-2 shadow-md">
                 <thead>
                     <tr>
-                        <th class="border-y-2 w-[45px] h-[50px]">Subject</th>
-                        <th class="border-y-2 w-[236px] h-[50px]">Class</th>
-                        <th class="border-y-2 w-[204px] h-[50px]">Classroom</th>
-                        <th class="border-y-2 w-[306px] h-[50px]">Day of the Week</th>
-                        <th class="border-y-2 w-[306px] h-[50px]">Time</th>
+                        <th class="border-y-2 w-[80px] h-[50px]">Subject</th>
+                        <th class="border-y-2 w-[120px] h-[50px]">Class</th>
+                        <th class="border-y-2 w-[120px] h-[50px]">Classroom</th>
+                        <th class="border-y-2 w-[160px] h-[50px]">Day of the Week</th>
+                        <th class="border-y-2 w-[200px] h-[50px]">Time</th>
+                        <th class="border-y-2 w-[200px] h-[50px]">Available slots</th>
+                        <th class="border-y-2 w-[200px] h-[50px]">Due Date</th>
+                        <th class="border-y-2 w-[100px] h-[50px]">Status</th>
                         <th class="border-y-2 w-[116px] h-[50px]">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="schedule" items="${scheduleList}">
                         <tr>
-                            <th class="border-b-2 w-[45px] h-[50px] font-normal">${schedule.subject_code}</th>
-                            <th class="border-b-2 w-[236px] h-[50px] font-normal">${schedule.class_name}</th>
-                            <th class="border-b-2 w-[204px] h-[50px] font-normal">${schedule.classroom_name}</th>
-                            <th class="border-b-2 w-[306px] h-[50px] font-normal trumcate">${schedule.day_of_week}</th>
-                            <th class="border-b-2 w-[306px] h-[50px] font-normal">${schedule.start_time} - ${schedule.end_time}</th>
+                            <th class="border-b-2 w-[80px] h-[50px] font-normal">${schedule.subject_code}</th>
+                            <th class="border-b-2 w-[120px] h-[50px] font-normal">${schedule.class_name}</th>
+                            <th class="border-b-2 w-[120px] h-[50px] font-normal">${schedule.classroom_name}</th>
+                            <th class="border-b-2 w-[160px] h-[50px] font-normal trumcate">${schedule.day_of_week}</th>
+                            <th class="border-b-2 w-[200px] h-[50px] font-normal">${schedule.start_time} - ${schedule.end_time}</th>
+                            <th class="border-y-2 w-[200px] h-[50px]">${schedule.available_slot}</th>
+                            <th class="border-b-2 w-[200px] h-[50px] font-normal">${schedule.due_date}</th>
+                            <th class="border-b-2 w-[100px] h-[50px] font-normal">${schedule.status}</th>
                             <th class="border-b-2 w-[116px] h-[50px] font-normal"><button>Action</button></th>
                         </tr>
                     </c:forEach>

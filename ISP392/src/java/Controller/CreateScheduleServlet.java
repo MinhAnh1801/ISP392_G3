@@ -39,19 +39,24 @@ public class CreateScheduleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // Process the form submission (same as before)
-        String dayOfWeek = request.getParameter("dayOfWeek");
-        String startTime = request.getParameter("startTime");
-        String endTime = request.getParameter("endTime");
-        String classId = request.getParameter("classId");
-        int classroomId = Integer.parseInt(request.getParameter("classroomId"));
-        int subjectID = Integer.parseInt(request.getParameter("subjectid"));
-        boolean success = scheduleDAO.createSchedule(dayOfWeek, startTime, endTime, classId, classroomId,subjectID);
+        try {
+            // Process the form submission (same as before)
+            String dayOfWeek = request.getParameter("dayOfWeek");
+            String startTime = request.getParameter("startTime");
+            String endTime = request.getParameter("endTime");
+            String classId = request.getParameter("classId");
+            int classroomId = Integer.parseInt(request.getParameter("classroomId"));
+            int subjectID = Integer.parseInt(request.getParameter("subjectid"));
+            String dueDate = request.getParameter("dueDate") + " " + request.getParameter("dueTime");  // Combine date and time
+            boolean success = scheduleDAO.createSchedule(dayOfWeek, startTime, endTime, classId, classroomId, subjectID, dueDate, 1);
 
-        if (success) {
-            response.sendRedirect("createSchedule.jsp?success=true");
-        } else {
+            if (success) {
+                response.sendRedirect("createSchedule.jsp?success=true");
+            } else {
+                response.sendRedirect("createSchedule.jsp?error=invalidDueDate");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             response.sendRedirect("createSchedule.jsp?error=true");
         }
     }

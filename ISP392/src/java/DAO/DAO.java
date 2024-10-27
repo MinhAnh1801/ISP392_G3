@@ -76,6 +76,7 @@ public class DAO {
         }
         return null;
     }
+
     public List<Notifications> getNotificationsByRole(String role) {
         List<Notifications> notifications = new ArrayList<>();
 
@@ -179,6 +180,7 @@ public class DAO {
 
         return newsList;
     }
+
     public List<News> getTop3News() {
         List<News> newsList = new ArrayList<>();
         String query = "SELECT TOP 3 id, title, img, content, upload_date FROM News ORDER BY upload_date DESC";
@@ -206,6 +208,63 @@ public class DAO {
         }
 
         return newsList;
+    }
+
+    public boolean updateNews(News news) {
+        String sql = "UPDATE News SET title = ?, img = ?, content = ? WHERE id = ?";
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, news.getTitle());
+            ps.setString(2, news.getImg());
+            ps.setString(3, news.getContent());
+            ps.setInt(4, news.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public News getNewsById(int id) {
+        String sql = "SELECT id, title, img, content, upload_date FROM News WHERE id = ?";
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Timestamp uploadTime = rs.getTimestamp("upload_date");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String formattedUploadTime = sdf.format(uploadTime);
+                    return new News(
+                            rs.getInt("id"),
+                            rs.getString("title"),
+                            rs.getString("img"),
+                            rs.getString("content"),
+                            formattedUploadTime
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Delete news by ID
+    public boolean deleteNews(int id) {
+        String sql = "DELETE FROM News WHERE id = ?";
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     // Method to retrieve materials uploaded by a specific lecturer (based on lecturer_id)
