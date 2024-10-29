@@ -39,32 +39,32 @@ public class TransactionsDAO extends DBContext {
         return transactionList;
     }
 
-    public static void main(String[] args) {
-        TransactionsDAO dao = new TransactionsDAO();
-
-        // Test với các tham số mẫu
-        int userId = 2; // Giả sử userId là 1
-        String transactionType = "fee"; // Lọc theo loại giao dịch 'Credit'
-        String transactionMonth = "2024-10"; // Lọc theo tháng 10 năm 2024
-        int start = 0; // Bắt đầu từ giao dịch đầu tiên
-        int total = 5; // Lấy 5 giao dịch mỗi lần
-
-        // Gọi phương thức getFilteredTransactions
-        List<Transactions> transactions = dao.getFilteredTransactions(userId, transactionType, transactionMonth, start, total);
-
-        // In kết quả ra màn hình
-        if (transactions.isEmpty()) {
-            System.out.println("No transactions found.");
-        } else {
-            transactions.forEach(transaction -> {
-                System.out.println("Transaction ID: " + transaction.getId());
-                System.out.println("Amount: " + transaction.getAmount());
-                System.out.println("Type: " + transaction.getTransaction_type());
-                System.out.println("Date: " + transaction.getTransaction_date());
-                System.out.println("-----------------------------");
-            });
-        }
-    }
+//    public static void main(String[] args) {
+//        TransactionsDAO dao = new TransactionsDAO();
+//
+//        // Test với các tham số mẫu
+//        int userId = 2; // Giả sử userId là 1
+//        String transactionType = "fee"; // Lọc theo loại giao dịch 'Credit'
+//        String transactionMonth = "2024-10"; // Lọc theo tháng 10 năm 2024
+//        int start = 0; // Bắt đầu từ giao dịch đầu tiên
+//        int total = 5; // Lấy 5 giao dịch mỗi lần
+//
+//        // Gọi phương thức getFilteredTransactions
+//        List<Transactions> transactions = dao.getFilteredTransactions(userId, transactionType, transactionMonth, start, total);
+//
+//        // In kết quả ra màn hình
+//        if (transactions.isEmpty()) {
+//            System.out.println("No transactions found.");
+//        } else {
+//            transactions.forEach(transaction -> {
+//                System.out.println("Transaction ID: " + transaction.getId());
+//                System.out.println("Amount: " + transaction.getAmount());
+//                System.out.println("Type: " + transaction.getTransaction_type());
+//                System.out.println("Date: " + transaction.getTransaction_date());
+//                System.out.println("-----------------------------");
+//            });
+//        }
+//    }
 
     public void recordTransaction(int userId, int paymentId, int paymentAmount, String paymentType) {
         String sql = "INSERT INTO Transactions (user_id, amount, transaction_date, transaction_type) VALUES (?, ?, GETDATE(), ?)";
