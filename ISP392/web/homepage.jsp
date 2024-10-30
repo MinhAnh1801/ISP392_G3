@@ -210,8 +210,7 @@
                     <div class="view-list-of-container2">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
-                                <a href="">View list of classrooms</a></li>
-                            <li class="hover:underline"><a href="">Add new classroom</a></li>
+                                <a href="dashboardClassrooms">View list of classrooms</a></li>
                         </ul>
                     </div>
                 </div>
@@ -356,8 +355,8 @@
                     <div class="registrationng-k">Finance/Tài chính</div>
                     <div class="pay-paid-items-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Pay paid items / Thanh toán các khoản nộp</a></li>
-                            <li><a href="" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
+                            <li class="register-courses hover:underline"><a href="dashboardPayments">Pay paid items / Thanh toán các khoản nộp</a></li>
+                            <li><a href="transactionHistory" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
                         </ul>
                     </div>
                 </div>

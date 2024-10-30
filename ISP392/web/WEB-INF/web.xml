@@ -202,6 +202,7 @@
     <servlet-mapping>
         <servlet-name>AddWalletController</servlet-name>
         <url-pattern>/addWallet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>
