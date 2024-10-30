@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import models.Classes;
@@ -23,7 +24,11 @@ public class CreateScheduleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
+            if(session.getAttribute("user")==null){
+                response.sendRedirect("login");
+                return;
+            }
         // Get the list of classes and classrooms from DAO
         List<Classes> classList = scheduleDAO.getAllClasses();
         List<Classrooms> classroomList = scheduleDAO.getAllClassrooms();
@@ -39,12 +44,12 @@ public class CreateScheduleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
+        try {        
             // Process the form submission (same as before)
             String dayOfWeek = request.getParameter("dayOfWeek");
             String startTime = request.getParameter("startTime");
             String endTime = request.getParameter("endTime");
-            String classId = request.getParameter("classId");
+            int classId = Integer.parseInt(request.getParameter("classId"));
             int classroomId = Integer.parseInt(request.getParameter("classroomId"));
             int subjectID = Integer.parseInt(request.getParameter("subjectid"));
             String dueDate = request.getParameter("dueDate") + " " + request.getParameter("dueTime");  // Combine date and time
@@ -53,7 +58,7 @@ public class CreateScheduleServlet extends HttpServlet {
             if (success) {
                 response.sendRedirect("createSchedule.jsp?success=true");
             } else {
-                response.sendRedirect("createSchedule.jsp?error=invalidDueDate");
+                response.sendRedirect("createSchedule.jsp?error=invalidInputs");
             }
         } catch (Exception e) {
             e.printStackTrace();

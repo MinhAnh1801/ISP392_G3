@@ -43,6 +43,7 @@ public class ScheduleDAO {
             = "UPDATE Schedule SET status = 0 WHERE available_slot = 0 AND status = 1";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private static final String GET_CLASSROOM = "Select capacity from Classrooms where id = ?";
+    private static final String GET_CLASS = "Select capacity from Class where id = ?";
 
     // Method to get all classes
     public List<Classes> getAllClasses() {
@@ -84,10 +85,10 @@ public class ScheduleDAO {
     }
 
     // Method to check for duplicate schedules
-    public boolean isDuplicateSchedule(String classId, String dayOfWeek, String startTime, String endTime, int subjectid) {
+    public boolean isDuplicateSchedule(int classId, String dayOfWeek, String startTime, String endTime, int subjectid) {
         try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(CHECK_DUPLICATE_SCHEDULE)) {
 
-            ps.setString(1, classId);
+            ps.setInt(1, classId);
             ps.setString(2, dayOfWeek);
             ps.setString(3, startTime);
             ps.setString(4, endTime);
@@ -123,11 +124,28 @@ public class ScheduleDAO {
         }
         return available_slot;
     }
+    public int getCLassCapacity(int id) {
+        int available_slot = 1;
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement p = conn.prepareStatement(GET_CLASS);) {
+            p.setInt(1, id);
+            ResultSet rs = p.executeQuery();
+            if (rs.next()) {
+                available_slot = rs.getInt("capacity");
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+        return available_slot;
+    }
 
     // Method to insert a new schedule
-    public boolean createSchedule(String dayOfWeek, String startTime, String endTime, String classId, int classroomId, int subjectId, String dueDateStr, int status) {
+    public boolean createSchedule(String dayOfWeek, String startTime, String endTime, int classId, int classroomId, int subjectId, String dueDateStr, int status) {
         try {
             int available_slot = getCapacity(classroomId);
+            int classcapacity = getCLassCapacity(classId);
+            if(available_slot<classcapacity){
+                return false;
+            }
             // Check for duplicate schedule
             if (isDuplicateSchedule(classId, dayOfWeek, startTime, endTime, subjectId)) {
                 System.out.println("Duplicate schedule detected.");
@@ -143,7 +161,7 @@ public class ScheduleDAO {
                 ps.setString(1, dayOfWeek);
                 ps.setString(2, startTime);
                 ps.setString(3, endTime);
-                ps.setString(4, classId);
+                ps.setInt(4, classId);
                 ps.setInt(5, classroomId);
                 ps.setInt(6, subjectId);
                 ps.setTimestamp(7, dueDate);
