@@ -5,7 +5,7 @@
 
 package DormRoomController;
 
-import DAO.DormRoomsDAO;
+import DAL.DormRoomsDAO;
 import Model.DormRooms;
 import java.io.IOException;
 import java.io.PrintWriter;
