@@ -18,7 +18,21 @@ public class Attendance {
     private String status;
     private String reason;
 
+    private Classs classId;
+    private String fullName;
+    
     public Attendance() {
+    }
+
+    public Attendance(int id, User studentId, Subjects subject, Date attendance_date, String status, String reason, Classs classId, String fullName) {
+        this.id = id;
+        this.studentId = studentId;
+        this.subject = subject;
+        this.attendance_date = attendance_date;
+        this.status = status;
+        this.reason = reason;
+        this.classId = classId;
+        this.fullName = fullName;
     }
 
     public Attendance(int id, User studentId, Subjects subject, Date attendance_date, String status, String reason) {
@@ -29,6 +43,33 @@ public class Attendance {
         this.status = status;
         this.reason = reason;
     }
+
+    public Attendance(int id, User studentId, Subjects subject, Date attendance_date, String status, String reason, Classs classId) {
+        this.id = id;
+        this.studentId = studentId;
+        this.subject = subject;
+        this.attendance_date = attendance_date;
+        this.status = status;
+        this.reason = reason;
+        this.classId = classId;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Classs getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Classs classId) {
+        this.classId = classId;
+    }
+    
 
     public int getId() {
         return id;

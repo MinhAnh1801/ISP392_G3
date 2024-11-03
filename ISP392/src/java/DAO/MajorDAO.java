@@ -5,6 +5,7 @@
 package DAO;
 
 import Context.DBContext;
+import Model.Classs;
 import Model.Curriculum;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -267,8 +268,6 @@ public class MajorDAO extends DBContext {
         }
     }
 
-   
-
     public List<Subjects> getAllSubjects() {
         List<Subjects> subjectList = new ArrayList<>();
         String sql = "SELECT  * FROM [dbo].[Subjects]";
@@ -324,7 +323,7 @@ public class MajorDAO extends DBContext {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return rs.getInt(1) > 0; 
+                return rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -334,39 +333,112 @@ public class MajorDAO extends DBContext {
     }
 
     public Subjects getSubjectById(int subjectId) {
-    Subjects subject = null; // Khởi tạo biến subject
-    String sql = "SELECT id, code, name, description, lecturer_id FROM [dbo].[Subjects] WHERE id = ?"; // Truy vấn SQL
+        Subjects subject = null; // Khởi tạo biến subject
+        String sql = "SELECT id, code, name, description, lecturer_id FROM [dbo].[Subjects] WHERE id = ?"; // Truy vấn SQL
 
-    try (Connection connection = getConnection(); // Kết nối cơ sở dữ liệu
-         PreparedStatement ps = connection.prepareStatement(sql)) {
-        
-        ps.setInt(1, subjectId); // Thiết lập giá trị cho tham số trong truy vấn
-        ResultSet rs = ps.executeQuery(); // Thực thi truy vấn
+        try (Connection connection = getConnection(); // Kết nối cơ sở dữ liệu
+                 PreparedStatement ps = connection.prepareStatement(sql)) {
 
-        if (rs.next()) { // Kiểm tra nếu có kết quả
-            subject = new Subjects(); // Tạo đối tượng Subjects
-            subject.setId(rs.getInt("id")); // Thiết lập ID
-            subject.setCode(rs.getString("code")); // Thiết lập mã môn học
-            subject.setName(rs.getString("name")); // Thiết lập tên môn học
-            subject.setDescription(rs.getString("description")); // Thiết lập mô tả
-            subject.setLecturerId(rs.getInt("lecturer_id")); // Thiết lập ID giảng viên
+            ps.setInt(1, subjectId); // Thiết lập giá trị cho tham số trong truy vấn
+            ResultSet rs = ps.executeQuery(); // Thực thi truy vấn
+
+            if (rs.next()) { // Kiểm tra nếu có kết quả
+                subject = new Subjects(); // Tạo đối tượng Subjects
+                subject.setId(rs.getInt("id")); // Thiết lập ID
+                subject.setCode(rs.getString("code")); // Thiết lập mã môn học
+                subject.setName(rs.getString("name")); // Thiết lập tên môn học
+                subject.setDescription(rs.getString("description")); // Thiết lập mô tả
+                subject.setLecturerId(rs.getInt("lecturer_id")); // Thiết lập ID giảng viên
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // In ra lỗi nếu có
         }
-    } catch (SQLException e) {
-        e.printStackTrace(); // In ra lỗi nếu có
+
+        return subject; // Trả về đối tượng môn học
     }
 
-    return subject; // Trả về đối tượng môn học
-}
+    public List<Classs> getAllClass() {
+        List<Classs> classList = new ArrayList<>();
+
+        String sql = "SELECT class_id, class_name FROM [dbo].[Class]";
+
+        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int classId = rs.getInt("class_id");
+                String className = rs.getString("class_name");
+
+                Classs classObj = new Classs();
+                classObj.setClass_id(classId);
+                classObj.setClass_name(className);
+
+                classList.add(classObj);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle exceptions appropriately in production code
+        }
+
+        return classList;
+    }
+
+    public List<Subjects> getSubjectByTeacher(int userId) {
+        List<Subjects> subjectsList = new ArrayList<>();
+        String query = "SELECT s.* FROM Subjects s "
+                + "JOIN Lecturer_Timetable lt ON s.id = lt.subject_id "
+                + "WHERE lt.lecturer_id = ?"; // Join Subjects with Lecturer_Timetable
+
+        try (Connection connection = getConnection(); // Ensure connection is managed
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Subjects subject = new Subjects();
+                subject.setId(resultSet.getInt("id"));
+                subject.setCode(resultSet.getString("code"));
+                subject.setName(resultSet.getString("name"));
+                subject.setDescription(resultSet.getString("description"));
+                subjectsList.add(subject);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return subjectsList;
+    }
+
+    public List<Classs> getClassBySubjectId(int subjectId) {
+        List<Classs> classList = new ArrayList<>();
+        String sql = "SELECT DISTINCT c.class_id, c.class_name "
+                + "FROM Lecturer_Timetable lt "
+                + "JOIN Class c ON lt.class_id = c.class_id "
+                + "WHERE lt.subject_id = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, subjectId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Classs classObj = new Classs();
+                classObj.setClass_id(rs.getInt("class_id"));
+                classObj.setClass_name(rs.getString("class_name"));
+                classList.add(classObj);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return classList;
+    }
 
     public static void main(String[] args) {
         MajorDAO mdao = new MajorDAO();
         List<Subjects> getListSubjectByUserId = mdao.getListSubjectByUserId(2);
-        
+
         for (Subjects subjects : getListSubjectByUserId) {
             System.out.println(subjects.getId());
-            
+
         }
     }
 
-    
 }

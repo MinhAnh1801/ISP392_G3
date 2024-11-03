@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Controller.attendance;
 
 import DAO.AttendanceDAO;
+import DAO.MajorDAO;
 import Model.Attendance;
-import Model.User;
+import Model.Classs;
+import Model.Subjects;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,12 +19,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
-/**
- *
- * @author trung
- */
-@WebServlet(name = "ViewAttendanceReportController", urlPatterns = {"/viewAttendanceReport"})
-public class ViewAttendanceReportController extends HttpServlet {
+@WebServlet(name = "CheckAttendanceController", urlPatterns = {"/checkAttendance"})
+public class CheckAttendanceController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +39,10 @@ public class ViewAttendanceReportController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewAttendanceReportController</title>");
+            out.println("<title>Servlet CheckAttendanceController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewAttendanceReportController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CheckAttendanceController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,16 +60,23 @@ public class ViewAttendanceReportController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
-        int user = (int) session.getAttribute("user");
+
+        Integer user = (Integer) session.getAttribute("user");
+
+        if (user == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
         AttendanceDAO adao = new AttendanceDAO();
-        List<Attendance> listAttendance = adao.getAllListAttendanceByStudenid(user);
-        request.setAttribute("listAttendance", listAttendance);
+        MajorDAO mdao = new MajorDAO();
 
-        request.getRequestDispatcher("attendanceReport/viewAttendanceReport.jsp").forward(request, response);
+        List<Subjects> listSubjectBylecture = mdao.getSubjectByTeacher(user);
 
+        request.setAttribute("listSubjectBylecture", listSubjectBylecture);
+
+        request.getRequestDispatcher("attendanceReport/checkAttendance.jsp").forward(request, response);
     }
 
     /**
@@ -85,7 +90,41 @@ public class ViewAttendanceReportController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        HttpSession session = request.getSession();
+
+        Integer user = (Integer) session.getAttribute("user");
+
+        if (user == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        String action = request.getParameter("action");
+        if (action.equalsIgnoreCase("chooseSubject")) {
+            int subjectId = Integer.parseInt(request.getParameter("subjects"));
+            MajorDAO mdao = new MajorDAO();
+            List<Classs> listClassBySubjectId = mdao.getClassBySubjectId(subjectId);
+            request.setAttribute("listClassBySubjectId", listClassBySubjectId);
+            request.setAttribute("subjectId", subjectId);
+        } else if (action.equalsIgnoreCase("chooseClass")) {
+
+            int subjectId = Integer.parseInt(request.getParameter("subjectId"));
+
+            int classId = Integer.parseInt(request.getParameter("classes"));
+            String attendanceDate = request.getParameter("attendanceDate");
+
+            AttendanceDAO adao = new AttendanceDAO();
+
+            List<Attendance> listAttendance = adao.getAttendanceForClassAndDate(classId, subjectId, attendanceDate);
+
+            request.setAttribute("listAttendance", listAttendance);
+            request.setAttribute("attendanceDate", attendanceDate);
+        }
+
+        doGet(request, response);
+
+
     }
 
     /**

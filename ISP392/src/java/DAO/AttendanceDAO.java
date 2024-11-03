@@ -18,8 +18,8 @@ public class AttendanceDAO extends DBContext {
 
     public List<Attendance> getAllListAttendanceByStudenid(int studentId) {
         List<Attendance> attendanceList = new ArrayList<>();
-        String sql = "SELECT [id], [student_id], [subject_id], [attendance_date], [status], [reason] " +
-                     "FROM [dbo].[Attendance] WHERE [student_id] = ?";
+        String sql = "SELECT [id], [student_id], [subject_id], [attendance_date], [status], [reason] "
+                + "FROM [dbo].[Attendance] WHERE [student_id] = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, studentId);
@@ -27,18 +27,17 @@ public class AttendanceDAO extends DBContext {
             while (rs.next()) {
                 Attendance attendance = new Attendance();
                 attendance.setId(rs.getInt("id"));
-                
+
                 UserDAO udao = new UserDAO();
-                User user = udao.getUserById(rs.getInt("student_id"));                
+                User user = udao.getUserById(rs.getInt("student_id"));
                 attendance.setStudentId(user);
-                
+
                 MajorDAO mdao = new MajorDAO();
-                Subjects subject=mdao.getSubjectById(rs.getInt("subject_id"));
+                Subjects subject = mdao.getSubjectById(rs.getInt("subject_id"));
                 attendance.setSubject(subject);
-                
-                
+
                 attendance.setAttendance_date(rs.getDate("attendance_date"));
-                
+
                 attendance.setStatus(rs.getString("status"));
                 attendance.setReason(rs.getString("reason"));
                 attendanceList.add(attendance);
@@ -49,4 +48,42 @@ public class AttendanceDAO extends DBContext {
 
         return attendanceList;
     }
+
+    public List<Attendance> getAttendanceForClassAndDate(int classId, int subjectId, String attendanceDate) {
+        List<Attendance> attendanceList = new ArrayList<>();
+
+        String query = "SELECT sp.student_id, sp.full_name, a.attendance_date, a.status, a.reason "
+                + "FROM [dbo].[StudentClass] sc "
+                + "JOIN [dbo].[Student_Profile] sp ON sc.student_id = sp.student_id "
+                + "LEFT JOIN [dbo].[Attendance] a ON sp.student_id = a.student_id AND a.subject_id = ? "
+                + "WHERE sc.class_id = ? AND a.attendance_date = ?";
+
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, subjectId); 
+            stmt.setInt(2, classId);   
+            stmt.setString(3, attendanceDate); 
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Attendance attendance = new Attendance();
+                UserDAO udao = new UserDAO();
+                User usert = udao.getUserById(rs.getInt("student_id"));
+                attendance.setStudentId(usert);
+                attendance.setFullName(rs.getString("full_name"));
+                attendance.setAttendance_date(rs.getDate("attendance_date"));
+                attendance.setStatus(rs.getString("status"));
+                attendance.setReason(rs.getString("reason"));
+
+                attendanceList.add(attendance);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions as appropriate
+        }
+
+        return attendanceList;
+    }
+
 }

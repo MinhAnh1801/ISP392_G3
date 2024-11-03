@@ -218,7 +218,7 @@
                                 <a href="" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
                             </li>
                             <li>
-                                <a href="" class="hover:underline">Check attendance / Điểm danh</a>
+                                <a href="checkAttendance" class="hover:underline">Check attendance / Điểm danh</a>
                             </li>
                         </ul>
                     </div>
