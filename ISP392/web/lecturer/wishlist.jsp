@@ -4,7 +4,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Schedule management</title>
+        <title>Work time</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">  
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -14,28 +14,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" />
     </head>
     <body>
-        <div class="hidden absolute w-[800px] top-[200px] left-[600px] bg-white shadow-md rounded-lg z-10 " id="modal">
-            <div class="h-[74px] w-full bg-slate-100 rounded-t-lg flex justify-items-center">
-                <p class="w-full text-center text-[26px] font-semibold m-auto leading-none">Semester duration</p>
-                <button id="close" class="absolute w-[32px] h-[32px] left-[740px] top-[24px]"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#ff5900" stroke-width="1.5"></circle> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ff5900" stroke-width="1.5" stroke-linecap="round"></path> </g></svg></button>
-            </div>     
-            <form id="semesterForm" action="viewSchedules" method="post" >
-                <div class="flex ml-8 mt-2">
-                    <div class="mb-4 mr-8">
-                        <label for="startDate" class="block text-gray-700 font-bold mb-2">Start Date</label>
-                        <input type="date" id="startDate" name="startDate" class="w-[300px] p-2 border rounded" value="${startDate}" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="endDate" class="block text-gray-700 font-bold mb-2">End Date</label>
-                        <input type="date" id="endDate" name="endDate" class="w-[300px] p-2 border rounded" value="${endDate}" required>
-                    </div>
-                </div>
-                <div class="mb-2 mr-2 flex justify-end">
-                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Save</button>
-                </div>
-            </form>
-        </div>
         <script>
             $(document).ready(function () {
                 $('#table').DataTable();
@@ -224,7 +202,7 @@
                 </svg>
                 <div class="back m-auto">Return</div>
             </a>
-            <a href="createSchedule" class="flex absolute w-[135px] h-[36px] shadow-md bg-grey top-[100px] left-[250px] rounded-full bg-[#029F31] hover:shadow-md">
+            <a href="createSchedule" class="flex absolute w-[135px] h-[36px] shadow-md bg-grey top-[100px] left-[250px] rounded-full bg-[#029F31]">
                 <p class="pl-2 m-auto font-semibold text-white leading-none">ADD NEW</p>
                 <div class="m-auto pr-1">
                     <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -232,17 +210,10 @@
                     </svg>
                 </div>
             </a>
-            <button id="openModalBtn" class="absolute w-[135px] top-[150px] left-[250px] bg-[#e8b86f] p-1 rounded-full text-white font-semibold hover:shadow-md duration-200">
-                Semester Time
-            </button>
-
             <table id="table" class="pb-8 absolute left-[-310px] top-[100px] table-fixed border-collapse border-2 shadow-md">
                 <thead>
                     <tr>
-                        <th class="border-y-2 w-[80px] h-[50px]">Subject</th>
-                        <th class="border-y-2 w-[120px] h-[50px]">Class</th>
-                        <th class="border-y-2 w-[120px] h-[50px]">Classroom</th>
-                        <th class="border-y-2 w-[160px] h-[50px]">Day of the Week</th>
+                        <th class="border-y-2 w-[80px] h-[50px]">Day of week</th>
                         <th class="border-y-2 w-[200px] h-[50px]">Time</th>
                         <th class="border-y-2 w-[200px] h-[50px]">Available slots</th>
                         <th class="border-y-2 w-[200px] h-[50px]">Due Date</th>
@@ -302,48 +273,33 @@
                     </div>
                 </form>
             </div>
+            <script>
+                // Get modal element
+                var modal = document.getElementById("modal");
+
+                // Get button that opens the modal
+                var btn = document.getElementById("openModalBtn");
+
+                // Get the <span> element that closes the modal
+                var close = document.getElementById("close");
+
+                var content = document.getElementById("content_btn");
+                var content_input = document.getElementById("content_input");
+                // When the user clicks the button, open the modal
+
+                btn.onclick = function () {
+                    modal.classList.remove("hidden");
+                }
+
+                // When the user clicks on <span> (x), close the modal
+                close.onclick = function () {
+                    modal.classList.add("hidden");
+                }
+                content.onclick = function () {
+                    content_input.classList.remove("hidden");
+                    content.classList.add("hidden");
+                }
+            </script>
         </c:if>
-        <script>
-            // Get modal element
-            var modal = document.getElementById("modal");
-
-            // Get button that opens the modal
-            var btn = document.getElementById("openModalBtn");
-
-            // Get the <span> element that closes the modal
-            var close = document.getElementById("close");
-
-            var content = document.getElementById("content_btn");
-            var content_input = document.getElementById("content_input");
-            // When the user clicks the button, open the modal
-            var table_wrapper = document.getElementById("table_wrapper");
-            var table = document.getElementById("table");
-            var allElements = document.body.children;
-            btn.onclick = function () {
-                modal.classList.remove("hidden");
-                for (let element of allElements) {
-                    // Check if the element is not the one with ID 'modal'
-                    if (element.id !== modal) {
-                        element.style.filter = 'blur(5px)'; // Apply blur to all other elements
-                    }
-                }
-                modal.style.filter = 'none';
-            }
-
-            // When the user clicks on <span> (x), close the modal
-            close.onclick = function () {
-                modal.classList.add("hidden");
-                for (let element of allElements) {
-                    // Check if the element is not the one with ID 'modal'
-                    if (element.id !== modal) {
-                        element.style.filter = 'none'; // Apply blur to all other elements
-                    }
-                }
-            }
-            content.onclick = function () {
-                content_input.classList.remove("hidden");
-                content.classList.add("hidden");
-            }
-        </script>
     </body>
 </html>

@@ -252,7 +252,7 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses">
-                                <a href="" class="hover:underline">Register courses / Đăng ký môn học</a>
+                                <a href="availableSubjects" class="hover:underline">Register courses / Đăng ký môn học</a>
                             </li>
                             <li>
                                 <a href="availableDormRooms" class="hover:underline">Register dorm room / Đăng ký phòng ký túc xá</a>
@@ -272,6 +272,9 @@
                             </li>
                             <li>
                                 <a href="" class="hover:underline">Check attendance / Điểm danh</a>
+                            </li>
+                            <li>
+                                <a href="lecturer/wishlist.jsp" class="hover:underline">Work time preference / Lịch làm việc mong muốn</a>
                             </li>
                         </ul>
                     </div>

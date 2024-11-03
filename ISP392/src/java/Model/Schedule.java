@@ -11,14 +11,39 @@ import java.util.Date;
  * @author khucx
  */
 public class Schedule {
-    int id, available_slot;
+    int id, available_slot,subject_id;
     String class_name,classroom_name,subject_code,day_of_week, start_time, end_time;
     String due_date;
     String status;
 
+    public Schedule(int id, int available_slot, int subject_id, String class_name, String classroom_name, String subject_code, String day_of_week, String start_time, String end_time, String due_date, String status) {
+        this.id = id;
+        this.available_slot = available_slot;
+        this.subject_id = subject_id;
+        this.class_name = class_name;
+        this.classroom_name = classroom_name;
+        this.subject_code = subject_code;
+        this.day_of_week = day_of_week;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.due_date = due_date;
+        this.status = status;
+    }
+
+    public int getSubject_id() {
+        return subject_id;
+    }
+
+    public void setSubject_id(int subject_id) {
+        this.subject_id = subject_id;
+    }
+
     @Override
     public String toString() {
         return "Schedule{" + "id=" + id + ", class_name=" + class_name + ", classroom_name=" + classroom_name + ", subject_code=" + subject_code + ", day_of_week=" + day_of_week + ", start_time=" + start_time + ", end_time=" + end_time + ", due_date=" + due_date + ", status=" + status +", slots="+available_slot +'}';
+    }
+
+    public Schedule() {
     }
 
     public Schedule(int id, String class_name, String classroom_name, String subject_code, String day_of_week, String start_time, String end_time, String due_date, String status, int available_slot) {

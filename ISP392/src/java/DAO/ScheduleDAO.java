@@ -14,6 +14,10 @@ import java.util.Date;
 import models.Classes;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.ClassDAO;
 
 public class ScheduleDAO {
@@ -218,8 +222,124 @@ public class ScheduleDAO {
         }
     }
 
+    private static final String GET_SCHEDULES_BY_MAJOR
+            = "SELECT distinct s.id AS schedule_id,\n"
+            + "       s.day_of_week,\n"
+            + "       s.start_time,\n"
+            + "       s.end_time,\n"
+            + "       sub.name AS subject_name,\n"
+            + "       sub.code AS subject_code,\n"
+            + "	   cl.class_name, cl.class_id,\n"
+            + "	   cr.name as classroom_name\n"
+            + "FROM Schedule s\n"
+            + "JOIN Class cl on cl.class_id = s.class_id\n"
+            + "JOIN Classrooms cr on cr.id = s.classroom_id\n"
+            + "JOIN Subjects sub ON s.subject_id = sub.id\n"
+            + "JOIN Student_Profile sp ON sp.major_id = sub.major_id and sp.hoc_ki_hien_tai = sub.semester\n"
+            + "LEFT JOIN Timetable t ON t.schedule_id = s.id AND t.student_id = ? \n"
+            + "WHERE s.status = 1 and s.subject_id = ?\n"
+            + "  and t.id is null-- Only active schedules\n"
+            + "ORDER BY cl.class_id,s.day_of_week, s.start_time;";
+
+    public Map<Integer,List<Schedule>> getSchedulesForStudentMajor(int studentId, int subject_id) {
+        List<Schedule> schedules = new ArrayList<>();
+        Map<Integer, List<Schedule>> classSchedulesMap = new HashMap<>();
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(GET_SCHEDULES_BY_MAJOR)) {
+
+            ps.setInt(1, studentId);
+            ps.setInt(2, subject_id);
+            try (ResultSet rs = ps.executeQuery()) {
+                
+                while (rs.next()) {
+                    int classId = rs.getInt("class_id");
+                    Timestamp start = rs.getTimestamp("start_time");
+                    Timestamp end = rs.getTimestamp("end_time");
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                    String start_time = sdf.format(start);
+                    String end_time = sdf.format(end);
+                    Schedule schedule = new Schedule();
+                    schedule.setId(rs.getInt("schedule_id"));
+                    schedule.setDay_of_week(rs.getString("day_of_week"));
+                    schedule.setStart_time(start_time);
+                    schedule.setEnd_time(end_time);
+                    schedule.setSubject_code(rs.getString("subject_code"));
+                    schedule.setClass_name(rs.getString("class_name"));
+                    schedule.setClassroom_name(rs.getString("classroom_name"));
+                    // Group schedules by classId
+                    classSchedulesMap.computeIfAbsent(classId, k -> new ArrayList<>()).add(schedule);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return classSchedulesMap;
+    }
+
+    private static final String CHECK_EXISTING_REGISTRATION
+            = "SELECT COUNT(*) FROM Timetable t "
+            + "JOIN Schedule s ON t.schedule_id = s.id "
+            + "WHERE t.student_id = ? AND s.subject_id = ?";
+
+    // Method to check if student is already registered for a subject
+    public boolean isStudentRegisteredForSubject(int studentId, int subjectId) {
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(CHECK_EXISTING_REGISTRATION)) {
+
+            ps.setInt(1, studentId);
+            ps.setInt(2, subjectId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;  // True if the student is already registered
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Method to get all schedule IDs by class ID
+    public List<Integer> getScheduleIdsByClassId(int classId, int subjectId) throws SQLException {
+        List<Integer> scheduleIds = new ArrayList<>();
+        String query = "SELECT id FROM Schedule WHERE class_id = ? and subject_id = ?";
+        
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, classId);
+            ps.setInt(2, subjectId);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                scheduleIds.add(rs.getInt("id"));
+            }
+        }
+        
+        return scheduleIds;
+    }
+    
+    // New method to get tuition by subject_id
+    public int getTuitionBySubjectId(int subjectId) throws SQLException {
+        String query = "SELECT tuition FROM Subjects WHERE id = ?";
+        int tuition = 0;
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, subjectId);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                tuition = rs.getInt("tuition");
+            }
+        }    
+        return tuition;
+    }
+    
     public static void main(String[] args) {
         ScheduleDAO dao = new ScheduleDAO();
-        System.out.println(dao.getCapacity(1));
+        try {
+            System.out.println(dao.getScheduleIdsByClassId(4, 1));
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

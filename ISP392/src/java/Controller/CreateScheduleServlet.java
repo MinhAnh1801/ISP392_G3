@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import models.Classes;
@@ -23,7 +24,11 @@ public class CreateScheduleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user")==null){
+            response.sendRedirect("login");
+            return;
+        }
         // Get the list of classes and classrooms from DAO
         List<Classes> classList = scheduleDAO.getAllClasses();
         List<Classrooms> classroomList = scheduleDAO.getAllClassrooms();
