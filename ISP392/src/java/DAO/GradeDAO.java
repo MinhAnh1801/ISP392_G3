@@ -68,25 +68,30 @@ public class GradeDAO  extends DBContext{
     return gradesList; // Trả về danh sách các điểm số
 }
 
-        public static void main(String[] args) {
-            GradeDAO gradeDAO = new GradeDAO();
-            
-            
-         List<Grades> grades = gradeDAO.getGradeById(2);
-        
-        // Kiểm tra và in ra danh sách điểm
-        if (grades.isEmpty()) {
-            System.out.println("No grades found for student ID: " + 2);
+   public void insertGrade(int studentId, int subjectId, double grade, String comments, int typeId) {
+    String query = "INSERT INTO [dbo].[Grades] (student_id, subject_id, grade, comments, type,upload_date) VALUES (?, ?, ?, ?, ?,GETDATE())";
+
+    try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setInt(1, studentId);
+        stmt.setInt(2, subjectId);
+        stmt.setDouble(3, grade);
+        stmt.setString(4, comments);
+        stmt.setInt(5, typeId);
+
+        // Thực thi câu lệnh chèn dữ liệu
+        int rowsInserted = stmt.executeUpdate();
+        if (rowsInserted > 0) {
+            System.out.println("Grade inserted successfully.");
         } else {
-            System.out.println("Grades for student ID: " + 2);
-            for (Grades grade : grades) {
-                System.out.println("Subject ID: " + grade.getSubjectId().getName() + 
-                                   ", Grade: " + grade.getDate()+ 
-                                   ", Upload Date: " + grade.getDate()+ 
-                                   ", Comments: " + grade.getComment());
-            }
+            System.out.println("Failed to insert grade.");
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Error while inserting grade: " + e.getMessage());
     }
+}
+
         
 
+   
 }

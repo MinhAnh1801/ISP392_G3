@@ -87,7 +87,7 @@ public class AttendanceDAO extends DBContext {
         return attendanceList;
     }
 
-  public boolean updateAttendance(int attendanceId) {
+public boolean updateAttendance(int attendanceId) {
     String query = "UPDATE [dbo].[Attendance] "
                  + "SET [status] = CASE "
                  + "WHEN [status] IS NULL THEN 'Absent' "
@@ -98,14 +98,20 @@ public class AttendanceDAO extends DBContext {
 
     try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
         stmt.setInt(1, attendanceId);
-
         int rowsUpdated = stmt.executeUpdate();
-        return rowsUpdated > 0; // Trả về true nếu có ít nhất một hàng được cập nhật
+        return rowsUpdated > 0;
     } catch (SQLException e) {
-        e.printStackTrace();
-        return false; // Trả về false nếu có lỗi xảy ra
+        e.printStackTrace(); // Ghi log lỗi chi tiết để kiểm tra
+        return false;
     }
 }
 
 
+    
+    
+    
+
 }
+
+
+

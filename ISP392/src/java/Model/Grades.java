@@ -17,6 +17,28 @@ public class Grades {
     private double grade; 
     private Date date;
     private String comment;
+    
+    // thêm 
+    private typeGrade type;
+
+    public Grades(int id, Student_Profile studentId, Subjects subjectId, double grade, Date date, String comment, typeGrade type) {
+        this.id = id;
+        this.studentId = studentId;
+        this.subjectId = subjectId;
+        this.grade = grade;
+        this.date = date;
+        this.comment = comment;
+        this.type = type;
+    }
+
+    public typeGrade getType() {
+        return type;
+    }
+
+    public void setType(typeGrade type) {
+        this.type = type;
+    }
+    
 
     public Grades() {
     }
