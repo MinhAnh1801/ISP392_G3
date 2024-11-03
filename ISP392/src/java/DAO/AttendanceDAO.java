@@ -52,7 +52,7 @@ public class AttendanceDAO extends DBContext {
     public List<Attendance> getAttendanceForClassAndDate(int classId, int subjectId, String attendanceDate) {
         List<Attendance> attendanceList = new ArrayList<>();
 
-        String query = "SELECT sp.student_id, sp.full_name, a.attendance_date, a.status, a.reason "
+        String query = "SELECT a.[id], sp.student_id, sp.full_name, a.attendance_date, a.status, a.reason "
                 + "FROM [dbo].[StudentClass] sc "
                 + "JOIN [dbo].[Student_Profile] sp ON sc.student_id = sp.student_id "
                 + "LEFT JOIN [dbo].[Attendance] a ON sp.student_id = a.student_id AND a.subject_id = ? "
@@ -68,6 +68,7 @@ public class AttendanceDAO extends DBContext {
 
             while (rs.next()) {
                 Attendance attendance = new Attendance();
+                attendance.setId(rs.getInt("id"));
                 UserDAO udao = new UserDAO();
                 User usert = udao.getUserById(rs.getInt("student_id"));
                 attendance.setStudentId(usert);
@@ -85,5 +86,26 @@ public class AttendanceDAO extends DBContext {
 
         return attendanceList;
     }
+
+  public boolean updateAttendance(int attendanceId) {
+    String query = "UPDATE [dbo].[Attendance] "
+                 + "SET [status] = CASE "
+                 + "WHEN [status] IS NULL THEN 'Absent' "
+                 + "WHEN [status] = 'Present' THEN 'Absent' "
+                 + "WHEN [status] = 'Absent' THEN 'Present' "
+                 + "ELSE [status] END "
+                 + "WHERE [id] = ?";
+
+    try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setInt(1, attendanceId);
+
+        int rowsUpdated = stmt.executeUpdate();
+        return rowsUpdated > 0; // Trả về true nếu có ít nhất một hàng được cập nhật
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; // Trả về false nếu có lỗi xảy ra
+    }
+}
+
 
 }

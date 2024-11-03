@@ -120,10 +120,15 @@ public class CheckAttendanceController extends HttpServlet {
 
             request.setAttribute("listAttendance", listAttendance);
             request.setAttribute("attendanceDate", attendanceDate);
+        } else if (action.equalsIgnoreCase("updateAttendance")) {
+            int attendanceId = Integer.parseInt(request.getParameter("attendanceId"));
+            AttendanceDAO adao = new AttendanceDAO();
+
+            boolean checkUpdate = adao.updateAttendance(attendanceId);
+
         }
 
         doGet(request, response);
-
 
     }
 
