@@ -102,12 +102,15 @@ public class CheckAttendanceController extends HttpServlet {
 
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("chooseSubject")) {
+
+            request.removeAttribute("listAttendance");
             int subjectId = Integer.parseInt(request.getParameter("subjects"));
             MajorDAO mdao = new MajorDAO();
             List<Classs> listClassBySubjectId = mdao.getClassBySubjectId(subjectId);
             request.setAttribute("listClassBySubjectId", listClassBySubjectId);
             request.setAttribute("subjectId", subjectId);
         } else if (action.equalsIgnoreCase("chooseClass")) {
+            request.removeAttribute("listAttendance");
 
             int subjectId = Integer.parseInt(request.getParameter("subjectId"));
 
@@ -118,8 +121,15 @@ public class CheckAttendanceController extends HttpServlet {
 
             List<Attendance> listAttendance = adao.getAttendanceForClassAndDate(classId, subjectId, attendanceDate);
 
+            MajorDAO mdao = new MajorDAO();
+            List<Classs> listClassBySubjectId = mdao.getClassBySubjectId(subjectId);
+            request.setAttribute("listClassBySubjectId", listClassBySubjectId);
+
             request.setAttribute("listAttendance", listAttendance);
             request.setAttribute("attendanceDate", attendanceDate);
+            request.setAttribute("subjectId", subjectId);
+            request.setAttribute("classId", classId);
+
         } else if (action.equalsIgnoreCase("updateAttendance")) {
             int attendanceId = Integer.parseInt(request.getParameter("attendanceId"));
             AttendanceDAO adao = new AttendanceDAO();
