@@ -26,16 +26,10 @@ public class ViewSchedule extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("user")==null) {
             response.sendRedirect("login");
             return;
         }
-        Date startDate = (Date) session.getAttribute("semesterStartDate");
-        Date endDate = (Date) session.getAttribute("semesterEndDate");
-
-        // Set attributes for display in JSP
-        request.setAttribute("startDate", startDate != null ? DATE_FORMAT.format(startDate) : "");
-        request.setAttribute("endDate", endDate != null ? DATE_FORMAT.format(endDate) : "");
         List<Schedule> scheduleList = scheduleDAO.getAllSchedules();
         request.setAttribute("scheduleList", scheduleList);
         request.getRequestDispatcher("viewSchedule.jsp").forward(request, response);

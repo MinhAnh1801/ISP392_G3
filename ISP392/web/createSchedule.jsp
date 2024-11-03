@@ -52,7 +52,7 @@
                 if (urlParams.has('success')) {
                     showAlert("Schedule created successfully!", true);
                 } else if (urlParams.get('error') === "invalidDueDate") {
-                    alert("Due date can't be behind current date. Please check your inputs.");
+                    alert("Unable to save new entry. Please check your inputs.");
                     window.location.href = "createSchedule";
                 } else if (urlParams.has('error')) {
                     alert("Failed to create schedule. Please try again.");
@@ -86,7 +86,7 @@
                         <select id="classId" name="classId" class="w-full p-2 border rounded">
                             <c:forEach var="classInfo" items="${classList}">
                                 <option value="${classInfo.class_id}">
-                                    ${classInfo.class_name}
+                                    ${classInfo.class_name} (Capacity: ${classInfo.capacity})
                                 </option>
                             </c:forEach>
                         </select>
@@ -94,7 +94,7 @@
 
                     <!-- Select Classroom -->
                     <div class="mb-4">
-                        <label for="classroomId" class="block text-gray-700 font-bold mb-2">Select Classroom</label>
+                        <label for="classroomId" class="block text-gray-700 font-bold mb-2">Select Classroom<p class="text-sm font-normal text-red-600"> *Capacity must be > Class capacity</p></label>
                         <select id="classroomId" name="classroomId" class="w-full p-2 border rounded">
                             <c:forEach var="classroom" items="${classroomList}">
                                 <option value="${classroom.id}">
@@ -121,7 +121,7 @@
                     <!-- Select Time Range -->
                     <div class="mb-4">
                         <label for="timeRange" class="block text-gray-700 font-bold mb-2">Select Time</label>
-                        <select id="timeRange" class="w-full p-2 border rounded" onchange="handleTimeRangeChange()" required>
+                        <select id="timeRange" class="w-[400px] p-2 border rounded" onchange="handleTimeRangeChange()" required>
                             <option value="" selected>Choose time</option>
                             <!-- Options populated by JavaScript -->
                         </select>
