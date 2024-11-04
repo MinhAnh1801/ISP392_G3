@@ -16,7 +16,7 @@ import java.util.List;
 public class AssignmentsDAO {
 
     public void insert(Assignments assignment) {
-        String sql = "INSERT INTO Assignments (LecturerID, SubjectID, ClassID, AssignmentDescription, AssignedDate, DueDate) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Assignments (LecturerID, SubjectID, ClassID, AssignmentName, AssignmentDescription, AssignedDate, DueDate) VALUES (?, ?, ?, ?, ?, ?)";
         DBContext dbContext = new DBContext(); // Khởi tạo đối tượng DBContext
 
         try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -24,9 +24,10 @@ public class AssignmentsDAO {
             stmt.setInt(1, assignment.getLecturerID());
             stmt.setInt(2, assignment.getSubjectID());
             stmt.setInt(3, assignment.getClassID());
-            stmt.setString(4, assignment.getAssignmentDecription());
-            stmt.setDate(5, new java.sql.Date(assignment.getAssignedDate().getTime()));
-            stmt.setDate(6, new java.sql.Date(assignment.getDueDate().getTime()));
+            stmt.setString(4, assignment.getAssignmentName());
+            stmt.setString(5, assignment.getAssignmentDecription());
+            stmt.setDate(6, new java.sql.Date(assignment.getAssignedDate().getTime()));
+            stmt.setDate(7, new java.sql.Date(assignment.getDueDate().getTime()));
 
             stmt.executeUpdate();
         } catch (SQLException e) {

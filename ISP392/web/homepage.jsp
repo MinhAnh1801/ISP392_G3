@@ -295,7 +295,7 @@
                     <div class="registrationng-k">Assignment/Bài tập</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
-                            <li class="register-courses hover:underline"><a href="">Upload assignment / Giao bài tập</a></li>
+                            <li class="register-courses hover:underline"><a href="uploadAssignment">Upload assignment / Giao bài tập</a></li>
                             <li class="register-courses hover:underline"><a href="">Grade assignments / Chấm điểm</a></li>
                         </ul>
                     </div>
