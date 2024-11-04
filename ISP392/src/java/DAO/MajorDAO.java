@@ -35,7 +35,7 @@ public class MajorDAO extends DBContext {
 
             if (rs.next()) {
                 major.setId(rs.getInt("id"));
-                major.setName(rs.getString("major_name"));
+                major.setName(rs.getString("major_name").trim());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,10 +88,7 @@ public class MajorDAO extends DBContext {
     
     public static void main(String[] args) {
         MajorDAO mdao = new MajorDAO();
-        List<Subjects> subjects = mdao.getListSubjectByUserId(4);
-        for(Subjects s : subjects){
-            System.out.println(s.getId());
-        }
+        System.out.println(mdao.getMajorById(2));
     }
     
 }

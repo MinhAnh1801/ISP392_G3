@@ -27,6 +27,7 @@ public class Assignments {
     private int LecturerID;
     private int SubjectID;
     private int ClassID;
+    private String AssignmentName;
     private String AssignmentDecription;
     private Date AssignedDate;
     private Date DueDate;

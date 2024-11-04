@@ -37,6 +37,8 @@ public class ProfileDAO {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    private final UserDAO userDAO = new UserDAO();
+    private final MajorDAO majorDAO = new MajorDAO();
 
     public Profile getProfileById(HttpSession session) {
         // Lấy id và role từ session
@@ -89,12 +91,12 @@ public class ProfileDAO {
             ps.setInt(1, student_id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int majorId = rs.getInt("major_id");
+//                    int majorId = rs.getInt("major_id");
                     String yearOfStudy = rs.getString("year_of_study");
                     int wallet = rs.getInt("wallet");  // Lấy số dư ví
                     studentProfile = new Student_Profile();
-                    studentProfile.setStudent_id(student_id);
-                    studentProfile.setMajor_id(majorId);
+                    studentProfile.setStudent_id(userDAO.getUserById(rs.getInt("student_id")));
+                    studentProfile.setMajor_id(majorDAO.getMajorById(rs.getInt("major_id")));
                     studentProfile.setWallet(wallet);
                     studentProfile.setYear_of_study(yearOfStudy);
                 }
@@ -145,13 +147,13 @@ public class ProfileDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                int studentId = resultSet.getInt("student_id");
-                int majorId = resultSet.getInt("major_id");
+//                int studentId = resultSet.getInt("student_id");
+//                int majorId = resultSet.getInt("major_id");
                 String yearOfStudy = resultSet.getString("year_of_study");
                 int wallet = resultSet.getInt("wallet");
                 studentProfile = new Student_Profile();
-                studentProfile.setStudent_id(studentId);
-                studentProfile.setMajor_id(majorId);
+                studentProfile.setStudent_id(userDAO.getUserById(resultSet.getInt("student_id")));
+                studentProfile.setMajor_id(majorDAO.getMajorById(resultSet.getInt("major_id")));
                 studentProfile.setWallet(wallet);
                 studentProfile.setYear_of_study(yearOfStudy);
             }
@@ -161,6 +163,23 @@ public class ProfileDAO {
         }
 
         return studentProfile;
+    }
+
+    public static void main(String[] args) {
+        ProfileDAO profileDAO = new ProfileDAO();
+
+        // Thay thế id của sinh viên với một id hợp lệ trong cơ sở dữ liệu của bạn
+        int testUserId = 2; // Ví dụ: giả sử userId là 1, bạn cần thay thế bằng ID hợp lệ
+
+        Student_Profile studentProfile = profileDAO.getStudentProfileByUserId(testUserId);
+        if (studentProfile != null) {
+            System.out.println("Student ID: " + studentProfile.getStudent_id());
+            System.out.println("Major ID: " + studentProfile.getMajor_id());
+            System.out.println("Year of Study: " + studentProfile.getYear_of_study());
+            System.out.println("Wallet Balance: " + studentProfile.getWallet());
+        } else {
+            System.out.println("No student profile found for user ID: " + testUserId);
+        }
     }
 
 }

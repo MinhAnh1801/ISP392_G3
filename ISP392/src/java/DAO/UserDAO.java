@@ -265,19 +265,9 @@ public class UserDAO extends DBContext {
 }
 
     public static void main(String[] args) {
-          UserDAO userDAO = new UserDAO();
+        UserDAO userDAO = new UserDAO();
 
-    int studentId = 2; // Thay đổi ID sinh viên mà bạn muốn cập nhật
-    String newPhoneNumber = "0123456789";
-    String newAddress = "123 Đường ABC, Quận XYZ";
-
-    boolean isUpdated = userDAO.updateStudentProfile(studentId, newPhoneNumber, newAddress);
-
-    if (isUpdated) {
-        System.out.println("Cập nhật thông tin sinh viên thành công.");
-    } else {
-        System.out.println("Cập nhật thông tin sinh viên thất bại.");
-    }
+        System.out.println(userDAO.getUserById(2));
     }
 
 }

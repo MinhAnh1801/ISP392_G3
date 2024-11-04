@@ -23,4 +23,12 @@ import lombok.ToString;
 
 public class Assignment_Submissions {
 
+    private int ID;
+    private int AssignmentID;
+    private int StudentID;
+    private int ClassID;
+    private int SubjectID;
+    private Date SubmissionDate;
+    private String StudentProgress;
+    private String InstructorReview;
 }

@@ -5,7 +5,6 @@ import DAO.ProfileDAO;
 import DAO.TransactionsDAO;
 import Model.Payments;
 import Model.Student_Profile;
-import Model.User;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -14,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 public class DashboardPayments extends HttpServlet {
 
@@ -47,7 +45,7 @@ public class DashboardPayments extends HttpServlet {
         Student_Profile studentProfile = (Student_Profile) request.getAttribute("profile");
         if (studentProfile == null) {
             studentProfile = profileDAO.getStudentProfile(session);
-            session.setAttribute("studentProfile", studentProfile);  // Lưu vào session nếu cần dùng lại
+            session.setAttribute("studentProfile", studentProfile);  
         }
         // Chỉ lấy các khoản thanh toán có trạng thái Pending cho người dùng
         List<Payments> listPayments = paymentsDAO.findPendingPayments(idUser);
@@ -77,40 +75,31 @@ public class DashboardPayments extends HttpServlet {
         int idUser = (Integer) session.getAttribute("user");
 
         if (idUser < 0) {
-            // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
             response.sendRedirect(request.getContextPath() + "/authen?action=login");
             return;
         }
 
-        // Lấy thông tin người dùng
         Student_Profile studentProfile = (Student_Profile) session.getAttribute("studentProfile");
         if (studentProfile == null) {
             studentProfile = profileDAO.getStudentProfile(session);
         }
 
-        // Lấy danh sách các khoản thanh toán "Pending"
         List<Payments> listPayments = paymentsDAO.findPendingPayments(idUser);
         request.setAttribute("studentProfile", studentProfile);
 
-        // Lấy tổng số tiền từ biểu mẫu
         int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
 
-        // Kiểm tra số dư ví
         int wallet = studentProfile.getWallet();
         String[] selectedPayments = request.getParameterValues("payment");
 
         if (wallet >= totalAmount) {
-            // Số dư đủ, tiến hành trừ số dư và ghi lại vào database
             studentProfile.setWallet(wallet - totalAmount);
 
-            // Cập nhật ví vào cơ sở dữ liệu
             try {
                 profileDAO.updateStudentProfile(studentProfile);
 
-                // Ghi lại giao dịch vào lịch sử
                 TransactionsDAO transactionsDAO = new TransactionsDAO();
                 for (String paymentId : selectedPayments) {
-                    // Lấy thông tin payment từ bảng Payments
                     Payments payment = paymentsDAO.findPaymentById(Integer.parseInt(paymentId));
 
                     if (payment != null) {

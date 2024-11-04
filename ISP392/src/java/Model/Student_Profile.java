@@ -37,16 +37,18 @@ public class Student_Profile {
     public Student_Profile() {
     }
 
-    public Student_Profile(int id, Major major_id, String year_of_study) {
+    public Student_Profile(int id, Major major_id, String year_of_study, int wallet) {
         this.id = id;
         this.major_id = major_id;
         this.year_of_study = year_of_study;
+        this.wallet = wallet;
     }
 
-    public Student_Profile(User student_id, Major major_id, String year_of_study) {
+    public Student_Profile(User student_id, Major major_id, String year_of_study, int wallet) {
         this.student_id = student_id;
         this.major_id = major_id;
         this.year_of_study = year_of_study;
+        this.wallet = wallet;
     }
 
     public Student_Profile(User student_id, Major major_id, String year_of_study, String full_name, Date date_of_birth, String phone_number, String email, String gender, String student_code, String address, String emergency_contact, String photo, String national_id, String class_id, int enrollment_year, int graduation_year, double gpa, boolean scholarship_status, String medical_conditions, int ưa) {
@@ -232,12 +234,5 @@ public class Student_Profile {
         this.year_of_study = year_of_study;
     }
 
-    public void setStudent_id(int studentId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void setMajor_id(int majorId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
 }
