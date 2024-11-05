@@ -7,6 +7,8 @@ package Controller.Student;
 import DAO.AssignmentsDAO;
 import DAO.ClassDAO;
 import DAO.SubjectsDAO;
+import DAO.AssignmentSubmissionsDAO;
+import Model.Assignment_Submissions;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,6 +20,12 @@ import java.util.List;
 import Model.Assignments;
 import Model.Subjects;
 import Model.Class;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Date;
 
 /**
  *
@@ -29,6 +37,7 @@ public class ViewAssignments extends HttpServlet {
     private final AssignmentsDAO assignmentsDAO = new AssignmentsDAO();
     private final ClassDAO classDAO = new ClassDAO();
     private final SubjectsDAO subjectsDAO = new SubjectsDAO();
+    private final AssignmentSubmissionsDAO assignmentSubmissionsDAO = new AssignmentSubmissionsDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -109,9 +118,37 @@ public class ViewAssignments extends HttpServlet {
                 request.getRequestDispatcher("Student/SubmitAssignment.jsp").forward(request, response);
                 break;
             case "submit":
-                doAsm(request, response);
-                response.sendRedirect("assignments");
+                int submittedAssignmentId = Integer.parseInt(request.getParameter("assignmentId"));
+                int studentId = Integer.parseInt(request.getParameter("studentId"));
+                int classId = Integer.parseInt(request.getParameter("classId"));
+                String submissionContent = request.getParameter("submissionContent");
+
+                // Nhận file từ form
+                Part filePart = request.getPart("fileUpload");
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                String uploadPath = getServletContext().getRealPath("/uploads");
+                Files.createDirectories(Paths.get(uploadPath));
+
+                try (InputStream fileContent = filePart.getInputStream()) {
+                    Files.copy(fileContent, Paths.get(uploadPath).resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                String filePath = request.getContextPath() + "/uploads/" + fileName;
+
+                Assignment_Submissions submission = Assignment_Submissions.builder()
+                        .AssignmentID(submittedAssignmentId)
+                        .StudentID(studentId)
+                        .ClassID(classId)
+                        .SubmissionDate(new Date())
+                        .SubmissionContent(filePath)
+                        .build();
+
+                assignmentSubmissionsDAO.saveSubmission(submission);
+
+                request.setAttribute("message", "Bài làm đã được nộp thành công!");
+                request.getRequestDispatcher("Student/submitAssignment.jsp").forward(request, response);
                 break;
+
             default:
                 response.sendRedirect("assignments");
         }
@@ -141,10 +178,6 @@ public class ViewAssignments extends HttpServlet {
 
     public List<Integer> getAllClassIds() {
         return classDAO.getAllClassIds();
-    }
-
-    private void doAsm(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
