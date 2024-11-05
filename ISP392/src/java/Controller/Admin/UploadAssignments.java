@@ -158,7 +158,7 @@ public class UploadAssignments extends HttpServlet {
                     .AssignmentDecription(description)
                     .AssignedDate(assignedDate)
                     .DueDate(dueDate)
-                    .filePath(uploadPath)
+                    .filePath(request.getContextPath() + "/uploads/" + fileName)
                     .build();
 
             assignmentsDAO.insert(assignment);

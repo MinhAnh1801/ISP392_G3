@@ -62,26 +62,47 @@ public class SubjectsDAO {
 
         return code;
     }
-    
+
     public List<Integer> getAllSubjectIds() {
-    List<Integer> subjectIds = new ArrayList<>();
-    String sql = "SELECT id FROM Subjects";
-    DBContext dbContext = new DBContext();
+        List<Integer> subjectIds = new ArrayList<>();
+        String sql = "SELECT id FROM Subjects";
+        DBContext dbContext = new DBContext();
 
-    try (Connection conn = dbContext.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
-        while (rs.next()) {
-            subjectIds.add(rs.getInt("id"));
+            while (rs.next()) {
+                subjectIds.add(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return subjectIds;
     }
 
-    return subjectIds;
-}
+    public Subjects getSubjectById(int subjectId) {
+        String sql = "SELECT * FROM Subjects WHERE id = ?";
+        DBContext dbContext = new DBContext();
+        Subjects subject = null;
 
+        try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, subjectId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                subject = Subjects.builder()
+                        .id(rs.getInt("id"))
+                        .code(rs.getString("code"))
+                        .name(rs.getString("name"))
+                        .description(rs.getString("description"))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return subject;
+    }
 
     public static void main(String[] args) {
         SubjectsDAO subjectsDAO = new SubjectsDAO();
@@ -94,7 +115,7 @@ public class SubjectsDAO {
 //        } else {
 //            System.out.println("No subject found for ID " + subjectId);
 //        }
-subjectsDAO.getAllSubjectIds().stream().forEach(item -> {System.out.println(item);});
+        System.out.println(subjectsDAO.getSubjectById(19));
     }
 
 }

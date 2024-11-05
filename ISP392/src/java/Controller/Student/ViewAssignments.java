@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import Model.Assignments;
 import Model.Subjects;
+import Model.Class;
 
 /**
  *
@@ -46,7 +47,6 @@ public class ViewAssignments extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -127,12 +127,12 @@ public class ViewAssignments extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public String getSubjectCode(int subjectId) {
-        return subjectsDAO.getSubjectCodeById(subjectId);
+    public Subjects getSubjectById(int subjectId) {
+        return subjectsDAO.getSubjectById(subjectId);
     }
 
-    public String getClassName(int classId) {
-        return classDAO.getClassNameById(classId);
+    public Class getClassById(int classId) {
+        return classDAO.getClassById(classId);
     }
 
     public List<Integer> getAllSubjectIds() {

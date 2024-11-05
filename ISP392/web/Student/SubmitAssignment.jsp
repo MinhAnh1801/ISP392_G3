@@ -85,11 +85,7 @@
                 <div class="form-group mb-3">
                     <label>Subject Code</label>
                     <div>
-                        <c:forEach items="${listSubjects}" var="subjectItem">
-                            <c:if test="${subjectItem.getId() == a.getSubjectID()}">
-                                ${subjectItem.getCode()}
-                            </c:if>
-                        </c:forEach>
+                        ${servletA.getSubjectById(assignment.getSubjectID()).getCode()}
                     </div>
                 </div>
 
@@ -97,11 +93,7 @@
                 <div class="form-group mb-3">
                     <label>Class</label>
                     <div>
-                        <c:forEach items="${listClass}" var="classItem"> 
-                            <c:if test="${classItem.ID == a.getClassID()}">
-                                ${classItem.getClassName()}
-                            </c:if>
-                        </c:forEach>
+                        ${servletA.getClassById(assignment.getClassID()).getClassName()}
                     </div>
                 </div>
 

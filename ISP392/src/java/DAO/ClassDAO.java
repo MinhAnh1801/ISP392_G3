@@ -60,26 +60,45 @@ public class ClassDAO {
 
         return className;
     }
-    
+
     public List<Integer> getAllClassIds() {
-    List<Integer> classIds = new ArrayList<>();
-    String sql = "SELECT class_id FROM Class";
-    DBContext dbContext = new DBContext();
+        List<Integer> classIds = new ArrayList<>();
+        String sql = "SELECT class_id FROM Class";
+        DBContext dbContext = new DBContext();
 
-    try (Connection conn = dbContext.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
-        while (rs.next()) {
-            classIds.add(rs.getInt("class_id"));
+            while (rs.next()) {
+                classIds.add(rs.getInt("class_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return classIds;
     }
 
-    return classIds;
-}
+    public Class getClassById(int classId) {
+        String sql = "SELECT * FROM Class WHERE class_id = ?";
+        DBContext dbContext = new DBContext();
+        Class clazz = null;
 
+        try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, classId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                clazz = Class.builder()
+                        .ID(rs.getInt("class_id"))
+                        .ClassName(rs.getString("class_name"))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return clazz;
+    }
 
     public static void main(String[] args) {
         ClassDAO classDAO = new ClassDAO();
@@ -92,6 +111,6 @@ public class ClassDAO {
 //        } else {
 //            System.out.println("No class found for ID " + classId);
 //        }
-classDAO.getAllClassIds().stream().forEach(item -> {System.out.println(item);});
+        System.out.println(classDAO.getClassById(1));
     }
 }
