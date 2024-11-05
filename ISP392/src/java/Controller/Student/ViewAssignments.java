@@ -5,6 +5,8 @@
 package Controller.Student;
 
 import DAO.AssignmentsDAO;
+import DAO.ClassDAO;
+import DAO.SubjectsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import Model.Assignments;
+import Model.Subjects;
 
 /**
  *
@@ -23,6 +26,8 @@ import Model.Assignments;
 public class ViewAssignments extends HttpServlet {
 
     private final AssignmentsDAO assignmentsDAO = new AssignmentsDAO();
+    private final ClassDAO classDAO = new ClassDAO();
+    private final SubjectsDAO subjectsDAO = new SubjectsDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,40 +58,93 @@ public class ViewAssignments extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
         List<Assignments> listAssignments = assignmentsDAO.findAll();
-        request.setAttribute("listAssignments", listAssignments);   
-       
+        List<Model.Class> listClass = classDAO.findAllClasses();
+        List<Subjects> listSubjects = subjectsDAO.findAllSubjects();
+
+        request.setAttribute("listAssignments", listAssignments);
+        request.setAttribute("listClass", listClass);
+        request.setAttribute("listSubjects", listSubjects);
+        request.setAttribute("servletA", this);
+
         request.getRequestDispatcher("Student/assignments.jsp").forward(request, response);
     }
-        /**
-         * Handles the HTTP <code>POST</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doPost
-        (HttpServletRequest request, HttpServletResponse response)
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+
+        List<Assignments> listAssignments = assignmentsDAO.findAll();
+        List<Model.Class> listClass = classDAO.findAllClasses();
+        List<Subjects> listSubjects = subjectsDAO.findAllSubjects();
+
+        request.setAttribute("listClass", listClass);
+        request.setAttribute("listSubjects", listSubjects);
+        request.setAttribute("servletA", this);
+        request.setAttribute("listAssignments", listAssignments);
+
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+
+        switch (action) {
+            case "do":
+                int assignmentId = Integer.parseInt(request.getParameter("assignmentId"));
+                Assignments assignment = assignmentsDAO.getAssignmentById(assignmentId);
+                request.setAttribute("assignment", assignment);
+                request.getRequestDispatcher("Student/SubmitAssignment.jsp").forward(request, response);
+                break;
+            case "submit":
+                doAsm(request, response);
+                response.sendRedirect("assignments");
+                break;
+            default:
+                response.sendRedirect("assignments");
         }
-
-        /**
-         * Returns a short description of the servlet.
-         *
-         * @return a String containing servlet description
-         */
-        @Override
-        public String getServletInfo
-        
-            () {
-        return "Short description";
-        }// </editor-fold>
-
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+    public String getSubjectCode(int subjectId) {
+        return subjectsDAO.getSubjectCodeById(subjectId);
+    }
+
+    public String getClassName(int classId) {
+        return classDAO.getClassNameById(classId);
+    }
+
+    public List<Integer> getAllSubjectIds() {
+        return subjectsDAO.getAllSubjectIds();
+    }
+
+    public List<Integer> getAllClassIds() {
+        return classDAO.getAllClassIds();
+    }
+
+    private void doAsm(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+}

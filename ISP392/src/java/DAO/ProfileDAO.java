@@ -130,8 +130,8 @@ public class ProfileDAO {
     public void updateStudentProfile(Student_Profile profile) throws SQLException {
         String sql = "UPDATE Student_Profile SET wallet = ? WHERE student_id = ?";
         try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, profile.getWallet()); // Cập nhật số dư ví
-            ps.setInt(2, profile.getStudent_id());
+            ps.setInt(1, profile.getWallet()); 
+            ps.setInt(2, profile.getStudent_id().getId());
             ps.executeUpdate();
         }
     }

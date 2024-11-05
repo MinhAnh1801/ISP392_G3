@@ -357,6 +357,9 @@
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses hover:underline"><a href="dashboardPayments">Pay paid items / Thanh toán các khoản nộp</a></li>
                             <li><a href="transactionHistory" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
+                            <li class="register-courses hover:underline">
+                                <a href="addWallet">Add Money / Nạp tiền</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Classroom Facilities Details</title>
+        <title>List Assignments</title>
 
         <!-- Bootstrap CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -50,18 +50,17 @@
                 color: white;
             }
 
-            .btn-back {
-                background-color: #FF8C00;
+            .btn-view {
+                background-color: #28a745;
                 color: white;
                 border: none;
-                padding: 10px 20px;
-                margin-top: 20px;
-                border-radius: 5px;
+                padding: 5px 10px;
+                border-radius: 3px;
                 cursor: pointer;
             }
 
-            .btn-back:hover {
-                background-color: #e67e22;
+            .btn-view:hover {
+                background-color: #218838;
             }
         </style>
     </head>
@@ -76,46 +75,51 @@
 
         <!-- Main content -->
         <div class="main-content">
-            <h2>List assignments</h2>
+            <h2>List Assignments</h2>
 
-            <!-- Classroom Facilities Table -->
+            <!-- Assignments Table -->
             <div class="table-responsive">
                 <table id="facilitiesTable" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Assignment Name</th>
-                            <th>Subject</th>
+                            <th>Subject Code</th>
                             <th>Class</th>
                             <th>Due Date</th>
-                            <th>Student Progress</th>
-                            <th>Instructor Review/th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Tables</td>
-                            <td>${facilities.numberOfTables}/${facilities.totalTables}</td>
-                            <td>${facilities.tableCondition}</td>
-                        </tr>
-                        <tr>
-                            <td>Chairs</td>
-                            <td>${facilities.numberOfChairs}/${facilities.totalChairs}</td>
-                            <td>${facilities.chairCondition}</td>
-                        </tr>
-                        <tr>
-                            <td>Lights</td>
-                            <td>${facilities.numberOfLights}/${facilities.totalLights}</td>
-                            <td>${facilities.lightCondition}</td>
-                        </tr>
-                        <tr>
-                            <td>Projectors</td>
-                            <td>${facilities.numberOfProjectors}/${facilities.totalProjectors}</td>
-                            <td>${facilities.projectorCondition}</td>
-                        </tr>
+                        <c:forEach items="${listAssignments}" var="a">
+                            <tr>
+                                <td>${a.getAssignmentName()}</td>
+                                <td>
+                                    <c:forEach items="${listSubjects}" var="subjectItem">
+                                        <c:if test="${subjectItem.getId() == a.getSubjectID()}">
+                                            ${subjectItem.getCode()}
+                                        </c:if>
+                                    </c:forEach>
+                                </td>
+                                <td>
+                                    <c:forEach items="${listClass}" var="classItem"> 
+                                        <c:if test="${classItem.ID == a.getClassID()}">
+                                            ${classItem.getClassName()}
+                                        </c:if>
+                                    </c:forEach>
+                                </td>
+                                <td>${a.getDueDate()}</td>
+                                <td>
+                                    <form action="assignments" method="post" style="display: inline;">
+                                        <input type="hidden" name="assignmentId" value="${a.getID()}">
+                                        <input type="hidden" name="action" value="do">
+                                        <button type="submit" class="btn-view">View</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
-
         </div>
 
         <!-- Bootstrap JS -->

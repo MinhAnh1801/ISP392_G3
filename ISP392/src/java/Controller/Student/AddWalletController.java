@@ -33,7 +33,7 @@ import java.util.TimeZone;
  */
 public class AddWalletController extends HttpServlet {
 
-    private static final String HASH_SECRET = "T3B56PHJUPRMF62RRZKYN4B5KH8G73V6";
+    private static final String HASH_SECRET = " FVXNXK48QL0TWLRFNSBL1XDPZU4P9D22";
     private static final String VNPAY_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
