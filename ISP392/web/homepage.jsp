@@ -282,7 +282,7 @@
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
                             <li class="register-courses hover:underline"><a href="">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
-                            <li class="register-courses hover:underline"><a href="">Assignment / Bài tập</a></li>
+                            <li class="register-courses hover:underline"><a href="assignments">Assignment / Bài tập</a></li>
                             <li class="register-courses hover:underline"><a href="exam">View exam schedule / Xem lịch thi</a></li>
                             <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
                         </ul>

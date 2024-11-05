@@ -63,7 +63,7 @@ public class ClassDAO {
     
     public List<Integer> getAllClassIds() {
     List<Integer> classIds = new ArrayList<>();
-    String sql = "SELECT ID FROM Class";
+    String sql = "SELECT class_id FROM Class";
     DBContext dbContext = new DBContext();
 
     try (Connection conn = dbContext.getConnection();
@@ -71,7 +71,7 @@ public class ClassDAO {
          ResultSet rs = stmt.executeQuery()) {
 
         while (rs.next()) {
-            classIds.add(rs.getInt("ID"));
+            classIds.add(rs.getInt("class_id"));
         }
     } catch (SQLException e) {
         e.printStackTrace();
@@ -85,12 +85,13 @@ public class ClassDAO {
         ClassDAO classDAO = new ClassDAO();
 
         int classId = 1; // Thay thế bằng classId mong muốn để kiểm tra
-        String className = classDAO.getClassNameById(classId);
-
-        if (className != null) {
-            System.out.println("Class Name for ID " + classId + ": " + className);
-        } else {
-            System.out.println("No class found for ID " + classId);
-        }
+//        String className = classDAO.getClassNameById(classId);
+//
+//        if (className != null) {
+//            System.out.println("Class Name for ID " + classId + ": " + className);
+//        } else {
+//            System.out.println("No class found for ID " + classId);
+//        }
+classDAO.getAllClassIds().stream().forEach(item -> {System.out.println(item);});
     }
 }

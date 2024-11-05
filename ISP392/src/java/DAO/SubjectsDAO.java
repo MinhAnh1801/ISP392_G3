@@ -86,14 +86,15 @@ public class SubjectsDAO {
     public static void main(String[] args) {
         SubjectsDAO subjectsDAO = new SubjectsDAO();
 
-        int subjectId = 19; // Thay thế bằng subjectId mong muốn để kiểm tra
-        String subjectCode = subjectsDAO.getSubjectCodeById(subjectId);
-
-        if (subjectCode != null) {
-            System.out.println("Subject Code for ID " + subjectId + ": " + subjectCode);
-        } else {
-            System.out.println("No subject found for ID " + subjectId);
-        }
+//        int subjectId = 19; // Thay thế bằng subjectId mong muốn để kiểm tra
+//        String subjectCode = subjectsDAO.getSubjectCodeById(subjectId);
+//
+//        if (subjectCode != null) {
+//            System.out.println("Subject Code for ID " + subjectId + ": " + subjectCode);
+//        } else {
+//            System.out.println("No subject found for ID " + subjectId);
+//        }
+subjectsDAO.getAllSubjectIds().stream().forEach(item -> {System.out.println(item);});
     }
 
 }

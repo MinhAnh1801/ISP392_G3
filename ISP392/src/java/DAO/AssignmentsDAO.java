@@ -36,7 +36,7 @@ public class AssignmentsDAO {
         }
     }
 
-    // Hàm findAll
+    
     public List<Assignments> findAll() {
         List<Assignments> assignments = new ArrayList<>();
         String sql = "SELECT * FROM Assignments";
@@ -46,13 +46,15 @@ public class AssignmentsDAO {
 
             while (rs.next()) {
                 Assignments assignment = Assignments.builder()
-                        .ID(rs.getInt("ID"))
-                        .LecturerID(rs.getInt("LecturerID"))
-                        .SubjectID(rs.getInt("SubjectID"))
-                        .ClassID(rs.getInt("ClassID"))
-                        .AssignmentDecription(rs.getString("AssignmentDescription"))
-                        .AssignedDate(rs.getTimestamp("AssignedDate"))
-                        .DueDate(rs.getTimestamp("DueDate"))
+                        .ID(rs.getInt("assignment_id"))
+                        .LecturerID(rs.getInt("lecturer_id"))
+                        .SubjectID(rs.getInt("subject_id"))
+                        .ClassID(rs.getInt("class_id"))
+                        .AssignmentName(rs.getString("assignment_name"))
+                        .AssignmentDecription(rs.getString("assignment_description"))
+                        .AssignedDate(rs.getTimestamp("assigned_date"))
+                        .DueDate(rs.getTimestamp("due_date"))
+                        .filePath(rs.getString("fil_path"))
                         .build();
 
                 assignments.add(assignment);
