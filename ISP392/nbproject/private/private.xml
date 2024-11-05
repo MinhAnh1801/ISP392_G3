@@ -3,34 +3,67 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/SubjectDAO.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/ScheduleDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/HomeControl.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/TimetableController/ViewTimetableServlet.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Student_Subjects.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ViewSchedule.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/lecturer/materialsLect.jsp</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/MaterialsController.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/UploadNews.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/homepage.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/news.jsp</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ResetPassword.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/UserDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/assignLecturer.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/availableSchedules.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Student_Profile.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/TimetableDAO.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/LecturerScheduleDAO.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Lecturer_Wishlist.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ViewAvailableSubjects.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/UpdateClass.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Lecturer_Timetable.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/LecturerServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/viewCurriculum.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Timetable.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/SubjectScheduleGroup.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/RegisterScheduleServlet.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/availableSubjects.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/viewSchedule.jsp</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Subjects.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Materials.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/createSchedule.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Filter/StatusUpdateFilter.java</file>
-            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/changePassword.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/CreateScheduleServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/AssignLecturerServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/ViewListDormRoom.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/SubjectDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/StudentTimetable.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/LoginGoogleHandler.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/viewApplications.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/importstudent.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/ScheduleDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/DownloadServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/lecturer/materialsLect.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/MaterialsController.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ChangePassword.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ResetPassword.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Classrooms.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/WEB-INF/web.xml</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ImportServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/UpdateSubjects.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/UploadNotification.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/TimetableDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/LecturerScheduleDAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/MaterialAddServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Lecturer_Wishlist.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ViewAvailableSubjects.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/ViewExams.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/RegisterScheduleServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/NewsServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Class.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Subjects.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/applicationForm.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/lecturerList.jsp</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/changePassword.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Schedule.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Model/Lecturer_Profile.java</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/lecturer/wishlist.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/DAO/DAO.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/web/ViewAvailableDormRooms.jsp</file>
             <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/Controller/ViewAvailableSchedulesServlet.java</file>
+            <file>file:/E:/NetBeans-22/ISP392_G3/ISP392/src/java/models/Classes.java</file>
         </group>
     </open-files>
 </project-private>

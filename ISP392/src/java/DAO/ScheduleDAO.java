@@ -128,6 +128,7 @@ public class ScheduleDAO {
         }
         return available_slot;
     }
+
     public int getCLassCapacity(int id) {
         int available_slot = 1;
         try (Connection conn = new DBContext().getConnection(); PreparedStatement p = conn.prepareStatement(GET_CLASS);) {
@@ -147,7 +148,7 @@ public class ScheduleDAO {
         try {
             int available_slot = getCapacity(classroomId);
             int classcapacity = getCLassCapacity(classId);
-            if(available_slot<classcapacity){
+            if (available_slot < classcapacity) {
                 return false;
             }
             // Check for duplicate schedule
@@ -222,6 +223,28 @@ public class ScheduleDAO {
         return scheduleList;
     }
 
+    public Schedule getScheduleById(int id, int cid) {
+        String query = "Select * from Schedule s\n"
+                + "JOIN Class c on s.class_id=c.class_id\n"
+                + "where id = ? and s.class_id = ?";
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+            ps.setInt(1, id);
+            ps.setInt(2, cid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Timestamp start = rs.getTimestamp("start_time");
+                Timestamp end = rs.getTimestamp("end_time");
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                String start_time = sdf.format(start);
+                String end_time = sdf.format(end);
+                return new Schedule(rs.getInt("id"), rs.getString("day_of_week"), start_time, end_time);
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
     // Method to update expired schedules
     public void updateExpiredSchedules() {
         try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(UPDATE_EXPIRED_SCHEDULES)) {
@@ -259,7 +282,7 @@ public class ScheduleDAO {
             + "  and t.id is null-- Only active schedules\n"
             + "ORDER BY cl.class_id,s.day_of_week, s.start_time;";
 
-    public Map<Integer,List<Schedule>> getSchedulesForStudentMajor(int studentId, int subject_id) {
+    public Map<Integer, List<Schedule>> getSchedulesForStudentMajor(int studentId, int subject_id) {
         List<Schedule> schedules = new ArrayList<>();
         Map<Integer, List<Schedule>> classSchedulesMap = new HashMap<>();
         try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(GET_SCHEDULES_BY_MAJOR)) {
@@ -267,7 +290,7 @@ public class ScheduleDAO {
             ps.setInt(1, studentId);
             ps.setInt(2, subject_id);
             try (ResultSet rs = ps.executeQuery()) {
-                
+
                 while (rs.next()) {
                     int classId = rs.getInt("class_id");
                     Timestamp start = rs.getTimestamp("start_time");
@@ -319,45 +342,40 @@ public class ScheduleDAO {
     // Method to get all schedule IDs by class ID
     public List<Integer> getScheduleIdsByClassId(int classId, int subjectId) throws SQLException {
         List<Integer> scheduleIds = new ArrayList<>();
-        String query = "SELECT id FROM Schedule WHERE class_id = ? and subject_id = ?";
-        
-        try (Connection conn = new DBContext().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        String query = "SELECT id FROM Schedule WHERE class_id = ? and subject_id = ? and status = 1";
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, classId);
             ps.setInt(2, subjectId);
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 scheduleIds.add(rs.getInt("id"));
             }
         }
-        
+
         return scheduleIds;
     }
-    
+
     // New method to get tuition by subject_id
     public int getTuitionBySubjectId(int subjectId) throws SQLException {
         String query = "SELECT tuition FROM Subjects WHERE id = ?";
         int tuition = 0;
 
-        try (Connection conn = new DBContext().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, subjectId);
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 tuition = rs.getInt("tuition");
             }
-        }    
+        }
         return tuition;
     }
-    
+
     public static void main(String[] args) {
         ScheduleDAO dao = new ScheduleDAO();
-        try {
-            System.out.println(dao.getScheduleIdsByClassId(4, 1));
-        } catch (SQLException ex) {
-            Logger.getLogger(ScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+
     }
 }

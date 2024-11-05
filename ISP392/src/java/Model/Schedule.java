@@ -16,6 +16,13 @@ public class Schedule {
     String due_date;
     String status;
 
+    public Schedule(int id, String day_of_week, String start_time, String end_time) {
+        this.id = id;
+        this.day_of_week = day_of_week;
+        this.start_time = start_time;
+        this.end_time = end_time;
+    }
+
     public Schedule(int id, int available_slot, int subject_id, String class_name, String classroom_name, String subject_code, String day_of_week, String start_time, String end_time, String due_date, String status) {
         this.id = id;
         this.available_slot = available_slot;

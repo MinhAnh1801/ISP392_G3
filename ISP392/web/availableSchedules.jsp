@@ -35,6 +35,14 @@
         }
     </style>
     <script>
+        // Function to display alert if there is an overlap message
+        function showAlert(message) {
+            if (message) {
+                alert(message);
+                window.location.href = "availableSubjects"; // Replace with the actual URL of available subjects
+                return;
+            }
+        }
         // Function to confirm registration and submit form
         function confirmRegistration(event) {
             event.preventDefault(); // Prevent default form submission
@@ -43,12 +51,7 @@
             const confirmed = confirm("Are you sure you want to register for all schedules of the selected class?");
             if (confirmed) {
                 // If confirmed, submit the form
-                event.target.submit();
-                // After form submission, display success message and redirect
-                setTimeout(() => {
-                    alert("Registered successfully! Redirecting to available subjects...");
-                    window.location.href = "availableSubjects"; // Replace with the actual URL of available subjects
-                }, 100); // Small delay to ensure form submission completes before redirect
+                event.target.submit();              
             } else {
                 // Alert cancellation
                 alert("Registration cancelled.");
@@ -56,9 +59,17 @@
         }
     </script>
     <body class="bg-gray-100">
+        <!-- Check for overlap error message -->
+        <c:if test="${not empty msg}">
+            <script>
+                // Call showAlert with the error message
+                showAlert("${msg}");
+            </script>
+        </c:if>
+        <p>${error}</p>
         <div class="login-child">
         </div>
-        <a href="/ISP392/availableSubjects" class="login-item bg-white flex hover:bg-slate-200 duration-200">
+        <a href="/ISP392/home" class="login-item bg-white flex hover:bg-slate-200 duration-200">
             <svg class="ml-[14px] mt-[14px]" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 12H20" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
             <path d="M11.0325 4.33936L4.45961 10.9122C4.31606 11.0546 4.20206 11.224 4.12432 11.4108C4.04646 11.5975 4.00641 11.7977 4.00641 12C4.00641 12.2023 4.04646 12.4025 4.12432 12.5892C4.20206 12.776 4.31606 12.9454 4.45961 13.0877L11.0325 19.6606" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

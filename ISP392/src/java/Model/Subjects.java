@@ -85,6 +85,11 @@ public class Subjects {
         this.semester = semester;
     }
 
+    @Override
+    public String toString() {
+        return "Subjects{" + "id=" + id + ", code=" + code + ", name=" + name + ", credits=" + credits + ", description=" + description + ", tuition=" + tuition + ", semester=" + semester + '}';
+    }
+
 
    
 }

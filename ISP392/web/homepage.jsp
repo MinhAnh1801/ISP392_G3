@@ -192,7 +192,7 @@
                     <div class="subject-settings">Lecturer management</div>
                     <div class="assign-lecturer">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="hover:underline"> <a href="">Assign lecturer</a></li>
+                            <li class="hover:underline"> <a href="lecturers">Assign lecturer</a></li>
                         </ul>
                     </div>
                 </div>
@@ -268,7 +268,7 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses">
-                                <a href="" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
+                                <a href="viewtimetable" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
                             </li>
                             <li>
                                 <a href="" class="hover:underline">Check attendance / Điểm danh</a>
@@ -286,7 +286,7 @@
                     <div class="registrationng-k">Information access/Tra cứu thông tin</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
-                            <li class="register-courses hover:underline"><a href="">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
+                            <li class="register-courses hover:underline"><a href="viewTimetable">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
                             <li class="register-courses hover:underline"><a href="">Assignment / Bài tập</a></li>
                             <li class="register-courses hover:underline"><a href="exam">View exam schedule / Xem lịch thi</a></li>
                             <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
