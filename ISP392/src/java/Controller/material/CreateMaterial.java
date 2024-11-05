@@ -6,10 +6,8 @@ import DAO.UserDAO;
 import Model.Lecturer_Profile;
 import Model.Subjects;
 import Model.Materials;
-import Model.User;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Level;
@@ -138,9 +136,9 @@ public class CreateMaterial extends HttpServlet {
         Lecturer_Profile userr = udao.getLecturerProfileById(userId);
         material.setUploaded_by(userr);
 
-        // Lấy URL để lưu vào biến
-        String url = request.getContextPath() + "/" + SAVE_DIR + "/" + fileName;
-        material.setMaterial_file(url);  // Lưu URL vào đối tượng Material
+        // Lấy URL tương đối để lưu vào biến
+        String relativeUrl = "/" + SAVE_DIR + "/" + new File(filePath).getName();
+        material.setMaterial_file(relativeUrl);  // Lưu URL tương đối vào đối tượng Material
 
         // Lưu Material vào cơ sở dữ liệu
         MaterialDAO materialDAO = new MaterialDAO();

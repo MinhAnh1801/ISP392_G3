@@ -88,9 +88,10 @@
                                 <td>${material.uploaded_at}</td>
                                 <td>${material.description}</td>
                                 <td>
-                                    <c:if test="${not empty material.material_file}">
-                                        <a href="download?filePath=${fn:escapeXml(material.material_file)}" class="btn btn-primary btn-sm">Download</a>
-                                    </c:if>
+                                   <c:if test="${not empty material.material_file}">
+    <a href="download?filePath=${fn:replace(fn:escapeXml(material.material_file), ' ', '%20')}" class="btn btn-primary btn-sm">Download</a>
+</c:if>
+
                                     <c:if test="${empty material.material_file}">
                                         <button class="btn btn-secondary btn-sm" disabled>No File</button>
                                     </c:if>
