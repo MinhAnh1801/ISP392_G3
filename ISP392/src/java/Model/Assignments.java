@@ -31,4 +31,5 @@ public class Assignments {
     private String AssignmentDecription;
     private Date AssignedDate;
     private Date DueDate;
+    private String filePath;
 }

@@ -16,8 +16,8 @@ import java.util.List;
 public class AssignmentsDAO {
 
     public void insert(Assignments assignment) {
-        String sql = "INSERT INTO Assignments (LecturerID, SubjectID, ClassID, AssignmentName, AssignmentDescription, AssignedDate, DueDate) VALUES (?, ?, ?, ?, ?, ?)";
-        DBContext dbContext = new DBContext(); // Khởi tạo đối tượng DBContext
+        String sql = "INSERT INTO Assignments (lecturer_id, subject_id, class_id, assignment_name, assignment_description, assigned_date, due_date, file_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        DBContext dbContext = new DBContext(); 
 
         try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -28,6 +28,7 @@ public class AssignmentsDAO {
             stmt.setString(5, assignment.getAssignmentDecription());
             stmt.setDate(6, new java.sql.Date(assignment.getAssignedDate().getTime()));
             stmt.setDate(7, new java.sql.Date(assignment.getDueDate().getTime()));
+            stmt.setString(8, assignment.getFilePath()); 
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -39,7 +40,7 @@ public class AssignmentsDAO {
     public List<Assignments> findAll() {
         List<Assignments> assignments = new ArrayList<>();
         String sql = "SELECT * FROM Assignments";
-        DBContext dbContext = new DBContext(); // Khởi tạo đối tượng DBContext
+        DBContext dbContext = new DBContext(); 
 
         try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 

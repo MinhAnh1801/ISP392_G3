@@ -1,12 +1,17 @@
 package Model;
 
+import lombok.Builder;
+
+@Builder
+
 public class Subjects {
-    private int id; 
-    private String code; 
+
+    private int id;
+    private String code;
     private String name;
-    private int credits; 
-    private String description; 
-    private int semester; 
+    private int credits;
+    private String description;
+    private int semester;
 
     // Constructor
     public Subjects() {
@@ -74,6 +79,4 @@ public class Subjects {
         this.semester = semester;
     }
 
-
-   
 }

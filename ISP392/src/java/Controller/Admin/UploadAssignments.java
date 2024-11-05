@@ -5,9 +5,12 @@
 package Controller.Admin;
 
 import DAO.AssignmentsDAO;
+import DAO.SubjectsDAO;
+import DAO.ClassDAO;
 import Model.Assignments;
+import Model.Subjects;
+import Model.Class;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,6 +18,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 15)   // 15 MB
 
 /**
  *
@@ -23,7 +36,9 @@ import java.util.List;
 @WebServlet(name = "DashboardAssignments", urlPatterns = {"/uploadAssignment"})
 public class UploadAssignments extends HttpServlet {
 
-    private AssignmentsDAO assignmentsDAO = new AssignmentsDAO();
+    private final AssignmentsDAO assignmentsDAO = new AssignmentsDAO();
+    private final ClassDAO classDAO = new ClassDAO();
+    private final SubjectsDAO subjectsDAO = new SubjectsDAO();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -42,8 +57,14 @@ public class UploadAssignments extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
-        List<Assignments> listAssignments = assignmentsDAO.findAll();
-        request.setAttribute("listAssignments", listAssignments);
+//        List<Assignments> listAssignments = assignmentsDAO.findAll();
+//        request.setAttribute("listAssignments", listAssignments);
+        List<Class> listClass = classDAO.findAllClasses();
+        List<Subjects> listSubjects = subjectsDAO.findAllSubjects();
+
+        request.setAttribute("listClass", listClass);
+        request.setAttribute("listSubjects", listSubjects);
+        request.setAttribute("servletA", this);
 
         request.getRequestDispatcher("lecturer/uploadAssigntments.jsp").forward(request, response);
     }
@@ -68,7 +89,7 @@ public class UploadAssignments extends HttpServlet {
         switch (action) {
             case "add":
                 uploadAsm(request, response);
-                response.sendRedirect("uploadAssignment");
+                response.sendRedirect("home");
                 break;
             default:
                 response.sendRedirect("uploadAssignment");
@@ -85,10 +106,26 @@ public class UploadAssignments extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public String getSubjectCode(int subjectId) {
+        return subjectsDAO.getSubjectCodeById(subjectId);
+    }
+
+    public String getClassName(int classId) {
+        return classDAO.getClassNameById(classId);
+    }
+
+    public List<Integer> getAllSubjectIds() {
+        return subjectsDAO.getAllSubjectIds(); 
+    }
+
+    public List<Integer> getAllClassIds() {
+        return classDAO.getAllClassIds(); 
+    }
+
     private void uploadAsm(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession();
-            Integer lecturerID = (Integer) session.getAttribute("lecturerID");
+            Integer lecturerID = (Integer) session.getAttribute("user");
 
             int subjectID = Integer.parseInt(request.getParameter("subjectID"));
             int classID = Integer.parseInt(request.getParameter("classID"));
@@ -97,6 +134,22 @@ public class UploadAssignments extends HttpServlet {
             java.sql.Date assignedDate = java.sql.Date.valueOf(request.getParameter("assignedDate"));
             java.sql.Date dueDate = java.sql.Date.valueOf(request.getParameter("dueDate"));
 
+            Part filePart = request.getPart("assignmentFile");
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String uploadPath = getServletContext().getRealPath("/uploads");
+
+            Files.createDirectories(Paths.get(uploadPath));
+
+            try (InputStream fileContent = filePart.getInputStream()) {
+                Files.copy(fileContent, Paths.get(uploadPath).resolve(fileName),
+                        StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            // Xử lý file tải lên
+//            Part filePart = request.getPart("assignmentFile");
+//            String fileName = filePart.getSubmittedFileName();
+//            String uploadPath = "uploads/" + fileName;
+//            filePart.write(uploadPath); // Lưu file vào thư mục "uploads"
             Assignments assignment = Assignments.builder()
                     .LecturerID(lecturerID)
                     .SubjectID(subjectID)
@@ -105,21 +158,16 @@ public class UploadAssignments extends HttpServlet {
                     .AssignmentDecription(description)
                     .AssignedDate(assignedDate)
                     .DueDate(dueDate)
+                    .filePath(uploadPath)
                     .build();
 
             assignmentsDAO.insert(assignment);
 
             request.setAttribute("message", "Assignment uploaded successfully!");
-            request.getRequestDispatcher("success.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "Error uploading assignment. Please try again.");
-            try {
-                request.getRequestDispatcher("uploadAssignments.jsp").forward(request, response);
-            } catch (ServletException | IOException ex) {
-                ex.printStackTrace();
-            }
         }
     }
 
