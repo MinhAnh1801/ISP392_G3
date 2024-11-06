@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author FPT University - PRJ30X
+ * @author DELL
  */
 public class DBcontext {
     protected Connection connection;

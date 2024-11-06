@@ -1,6 +1,7 @@
 package DAL;
 
 import Model.DormRooms;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
@@ -10,14 +11,12 @@ import java.sql.SQLException;
 
 public class DormRoomsDAO extends DBcontext {
 
-    // Lấy tất cả các phòng dorm
     public List<DormRooms> getAllDormRooms() {
         List<DormRooms> dormRooms = new ArrayList<>();
         String query = "SELECT * FROM DormRooms";
 
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+        try ( PreparedStatement ps = connection.prepareStatement(query);  ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
                 DormRooms dormRoom = new DormRooms();
                 dormRoom.setId(rs.getInt("id"));
@@ -26,13 +25,10 @@ public class DormRoomsDAO extends DBcontext {
                 dormRoom.setAvailableCapacity(rs.getInt("available_capacity"));
                 dormRoom.setBuilding(rs.getString("building"));
                 dormRoom.setRoomType(rs.getString("room_type"));
-                dormRoom.setDetail(rs.getString("detail"));
-                dormRoom.setPrice(rs.getInt("price"));
-
                 dormRooms.add(dormRoom);
             }
-        } catch (Exception e) {
-            System.out.println("Get dorm:" + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error retrieving dorm rooms: " + e.getMessage());
         }
         return dormRooms;
     }
@@ -64,6 +60,24 @@ public class DormRoomsDAO extends DBcontext {
 
     public void insertDormRoom(DormRooms dormRoom) {
         String query = "INSERT INTO DormRooms (room_number, capacity, available_capacity, building, room_type, detail, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, dormRoom.getRoomNumber());
+            ps.setInt(2, dormRoom.getCapacity());
+            ps.setInt(3, dormRoom.getAvailableCapacity());
+            ps.setString(4, dormRoom.getBuilding());
+            ps.setString(5, dormRoom.getRoomType());
+            ps.setString(6, dormRoom.getDetail()); 
+            ps.setDouble(7, dormRoom.getPrice());  
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+    }
+    public void insertDormTemp(DormRooms dormRoom) {
+        String query = "INSERT INTO Dorm_Temp (room_number, capacity, available_capacity, building, room_type, detail, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -183,6 +197,20 @@ public List<DormRooms> getAvailableDormRooms() {
 
         return availableDormRooms;
     }
+public BigDecimal getDormRoomPrice(int dormRoomId) {
+    String query = "SELECT price FROM DormRooms WHERE id = ?";
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setInt(1, dormRoomId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getBigDecimal("price");
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching Dorm Room price: " + e.getMessage());
+    }
+    return BigDecimal.ZERO; // Trả về 0 nếu có lỗi hoặc không tìm thấy
+}
+
 
 
 
