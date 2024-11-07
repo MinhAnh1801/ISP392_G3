@@ -4,10 +4,32 @@
  */
 package Model;
 
-/**
- *
- * @author khucx
- */
+import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+
 public class Assignments {
-    
+
+    private int ID;
+    private int LecturerID;
+    private int SubjectID;
+    private int ClassID;
+    private String AssignmentName;
+    private String AssignmentDecription;
+    private Date AssignedDate;
+    private Date DueDate;
+    private String filePath;
 }

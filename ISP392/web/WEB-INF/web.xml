@@ -173,6 +173,46 @@
         <servlet-name>SendApplication</servlet-name>
         <url-pattern>/SendApplication</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DashboardPayments</servlet-name>
+        <servlet-class>Controller.Student.DashboardPayments</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VNPayServlet</servlet-name>
+        <servlet-class>VNPay.VNPayServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TransactionHistory</servlet-name>
+        <servlet-class>Controller.Student.TransactionHistory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddWalletController</servlet-name>
+        <servlet-class>Controller.Student.AddWalletController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardClassrooms</servlet-name>
+        <servlet-class>Controller.Admin.DashboardClassrooms</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DashboardClassrooms</servlet-name>
+        <url-pattern>/Admin/dashboardClassrooms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardPayments</servlet-name>
+        <url-pattern>/dashboardPayments</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VNPayServlet</servlet-name>
+        <url-pattern>/VNPayServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransactionHistory</servlet-name>
+        <url-pattern>/transactionHistory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddWalletController</servlet-name>
+        <url-pattern>/addWallet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>

@@ -9,8 +9,9 @@ package Model;
  * @author khucx
  */
 public class Transactions {
-    int id,user_id,amount;
-    String transaction_type,description,transaction_date;
+
+    int id, user_id, amount;
+    String transaction_type, description, transaction_date;
 
     public Transactions(int id, int user_id, int amount, String transaction_type, String description, String transaction_date) {
         this.id = id;

@@ -11,19 +11,20 @@ import java.util.Date;
  * @author khucx
  */
 public class Student_Profile {
+
     private int id;
     private User student_id;
     private Major major_id;
     private String year_of_study;
     private String full_name;
-    private Date date_of_birth; 
+    private Date date_of_birth;
     private String phone_number;
     private String email;
     private String gender;
     private String student_code;
     private String address;
     private String emergency_contact;
-    private String photo; 
+    private String photo;
     private String national_id;
     private String class_id;
     private int enrollment_year;
@@ -31,22 +32,26 @@ public class Student_Profile {
     private double gpa;
     private boolean scholarship_status;
     private String medical_conditions;
+    int wallet;
+
     public Student_Profile() {
     }
 
-    public Student_Profile(int id, Major major_id, String year_of_study) {
+    public Student_Profile(int id, Major major_id, String year_of_study, int wallet) {
         this.id = id;
         this.major_id = major_id;
         this.year_of_study = year_of_study;
+        this.wallet = wallet;
     }
-    
-    public Student_Profile(User student_id, Major major_id, String year_of_study) {
+
+    public Student_Profile(User student_id, Major major_id, String year_of_study, int wallet) {
         this.student_id = student_id;
         this.major_id = major_id;
         this.year_of_study = year_of_study;
+        this.wallet = wallet;
     }
 
-    public Student_Profile(User student_id, Major major_id, String year_of_study, String full_name, Date date_of_birth, String phone_number, String email, String gender, String student_code, String address, String emergency_contact, String photo, String national_id, String class_id, int enrollment_year, int graduation_year, double gpa, boolean scholarship_status, String medical_conditions) {
+    public Student_Profile(User student_id, Major major_id, String year_of_study, String full_name, Date date_of_birth, String phone_number, String email, String gender, String student_code, String address, String emergency_contact, String photo, String national_id, String class_id, int enrollment_year, int graduation_year, double gpa, boolean scholarship_status, String medical_conditions, int ưa) {
         this.student_id = student_id;
         this.major_id = major_id;
         this.year_of_study = year_of_study;
@@ -66,6 +71,7 @@ public class Student_Profile {
         this.gpa = gpa;
         this.scholarship_status = scholarship_status;
         this.medical_conditions = medical_conditions;
+        this.wallet = wallet;
     }
 
     @Override
@@ -87,6 +93,14 @@ public class Student_Profile {
 
     public void setDate_of_birth(Date date_of_birth) {
         this.date_of_birth = date_of_birth;
+    }
+
+    public int getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(int wallet) {
+        this.wallet = wallet;
     }
 
     public String getPhone_number() {
@@ -201,8 +215,6 @@ public class Student_Profile {
         this.medical_conditions = medical_conditions;
     }
 
-    
-
     public User getStudent_id() {
         return student_id;
     }
@@ -227,8 +239,5 @@ public class Student_Profile {
         this.year_of_study = year_of_study;
     }
 
-   
-    
-    
-    
+
 }
