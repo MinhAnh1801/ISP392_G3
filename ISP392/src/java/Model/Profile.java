@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class Profile {
     private int id;
+    int user_Id; 
     private User user_id;
     private String full_name;
     private Date date_of_birth;

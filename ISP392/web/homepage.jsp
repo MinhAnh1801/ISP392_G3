@@ -211,8 +211,7 @@
                     <div class="view-list-of-container2">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
-                                <a href="">View list of classrooms</a></li>
-                            <li class="hover:underline"><a href="">Add new classroom</a></li>
+                                <a href="dashboardClassrooms">View list of classrooms</a></li>
                         </ul>
                     </div>
                 </div>
@@ -274,7 +273,9 @@
                                 <a href="" class="hover:underline">Check attendance / Điểm danh</a>
                             </li>
                             <li>
-                                <a href="lecturer/wishlist.jsp" class="hover:underline">Work time preference / Lịch làm việc mong muốn</a>
+
+                                <a href="Admin/dashboardClassrooms" class="hover:underline">View Classes / Xem lớp học</a>
+
                             </li>
                         </ul>
                     </div>
@@ -286,8 +287,10 @@
                     <div class="registrationng-k">Information access/Tra cứu thông tin</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
+
                             <li class="register-courses hover:underline"><a href="viewTimetable">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
-                            <li class="register-courses hover:underline"><a href="">Assignment / Bài tập</a></li>
+                            <li class="register-courses hover:underline"><a href="assignments">Assignment / Bài tập</a></li>
+
                             <li class="register-courses hover:underline"><a href="exam">View exam schedule / Xem lịch thi</a></li>
                             <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
                         </ul>
@@ -300,8 +303,9 @@
                     <div class="registrationng-k">Assignment/Bài tập</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
-                            <li class="register-courses hover:underline"><a href="">Upload assignment / Giao bài tập</a></li>
+                            <li class="register-courses hover:underline"><a href="uploadAssignment">Upload assignment / Giao bài tập</a></li>
                             <li class="register-courses hover:underline"><a href="classgrade">Grade assignments / Chấm điểm</a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -360,8 +364,11 @@
                     <div class="registrationng-k">Finance/Tài chính</div>
                     <div class="pay-paid-items-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Pay paid items / Thanh toán các khoản nộp</a></li>
-                            <li><a href="" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
+                            <li class="register-courses hover:underline"><a href="dashboardPayments">Pay paid items / Thanh toán các khoản nộp</a></li>
+                            <li><a href="transactionHistory" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
+                            <li class="register-courses hover:underline">
+                                <a href="addWallet">Add Money / Nạp tiền</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

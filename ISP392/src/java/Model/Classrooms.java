@@ -4,11 +4,28 @@
  */
 package Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  *
  * @author khucx
  */
+@ToString
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+
 public class Classrooms {
+
     int id,capacity;
     String name,location;
 
@@ -55,5 +72,5 @@ public class Classrooms {
     public void setLocation(String location) {
         this.location = location;
     }
-    
+
 }
