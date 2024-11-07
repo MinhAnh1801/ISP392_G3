@@ -66,13 +66,14 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">University Academic Portal</a>
+                <a class="navbar-brand" href="">University Academic Portal</a>
             </div>
         </nav>
 
         <!-- Main content -->
         <div class="main-content">
             <h2>Assignment Details</h2>
+
 
             <form action="assignments" method="post" enctype="multipart/form-data">
                 <!-- Assignment Name -->
@@ -117,19 +118,31 @@
                     </div>
                 </div>
 
-                <!-- File Upload for Submission -->
+<!--                 File Upload for Submission 
                 <div class="form-group mb-3">
                     <label for="fileUpload">Upload Assignment File</label>
                     <input type="file" class="form-control" id="fileUpload" name="fileUpload" required>
-                </div>
+                </div>-->
 
-                <!-- Hidden fields for assignment ID and action -->
-                <input type="hidden" name="assignmentId" value="${assignment.ID}">
-                <input type="hidden" name="action" value="submit">
+                <c:if test="${isGraded}">
+                    <p class="text-danger">This assignment has already been graded and cannot be resubmitted.</p>
+                </c:if>
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn-submit">Submit Assignment</button>
-            </form>
+                <c:if test="${not isGraded}">
+                    <form action="assignments" method="post" enctype="multipart/form-data">
+                        <div class="form-group mb-3">
+                            <label for="fileUpload">Upload Assignment File</label>
+                            <input type="file" class="form-control" id="fileUpload" name="fileUpload" required>
+                        </div>
+
+                        <!-- Hidden fields for assignment ID and action -->
+                        <input type="hidden" name="assignmentId" value="${assignment.getID()}">
+                        <input type="hidden" name="action" value="submit">
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn-submit">Submit Assignment</button>
+                    </form>
+                </c:if>
         </div>
 
         <!-- Bootstrap JS -->

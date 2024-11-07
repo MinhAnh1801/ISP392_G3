@@ -77,44 +77,48 @@
         <!-- Main content -->
         <div class="main-content">
             <h2>Classroom Facilities Details</h2>
+<!--            <form action="dashboardClassrooms" method="post">
+                <input type="hidden" name="action" value="updateFacilities">
+                <input type="hidden" name="id" value="${facilities.classroomID}">-->
+                <!-- Classroom Facilities Table -->
+                <div class="table-responsive">
+                    <table id="facilitiesTable" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Facility</th>
+                                <th>Quantity</th>
+                                <th>Condition</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tables</td>
+                                <td>${facilities.numberOfTables}/${facilities.totalTables}</td>
+                                <td>${facilities.tableCondition}</td>
+                            </tr>
+                            <tr>
+                                <td>Chairs</td>
+                                <td>${facilities.numberOfChairs}/${facilities.totalChairs}</td>
+                                <td>${facilities.chairCondition}</td>
+                            </tr>
+                            <tr>
+                                <td>Lights</td>
+                                <td>${facilities.numberOfLights}/${facilities.totalLights}</td>
+                                <td>${facilities.lightCondition}</td>
+                            </tr>
+                            <tr>
+                                <td>Projectors</td>
+                                <td>${facilities.numberOfProjectors}/${facilities.totalProjectors}</td>
+                                <td>${facilities.projectorCondition}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- Classroom Facilities Table -->
-            <div class="table-responsive">
-                <table id="facilitiesTable" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Facility</th>
-                            <th>Quantity</th>
-                            <th>Condition</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Tables</td>
-                            <td>${facilities.numberOfTables}/${facilities.totalTables}</td>
-                            <td>${facilities.tableCondition}</td>
-                        </tr>
-                        <tr>
-                            <td>Chairs</td>
-                            <td>${facilities.numberOfChairs}/${facilities.totalChairs}</td>
-                            <td>${facilities.chairCondition}</td>
-                        </tr>
-                        <tr>
-                            <td>Lights</td>
-                            <td>${facilities.numberOfLights}/${facilities.totalLights}</td>
-                            <td>${facilities.lightCondition}</td>
-                        </tr>
-                        <tr>
-                            <td>Projectors</td>
-                            <td>${facilities.numberOfProjectors}/${facilities.totalProjectors}</td>
-                            <td>${facilities.projectorCondition}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Back Button -->
-            <a href="dashboardClassrooms" class="btn btn-back">Back to Classrooms</a>
+<!--                <button type="submit" class="btn btn-primary mt-3">Update Facilities</button>-->
+                <!-- Back Button -->
+                <a href="dashboardClassrooms" class="btn btn-back">Back to Classrooms</a>
+<!--            </form>-->
         </div>
 
         <!-- Bootstrap JS -->

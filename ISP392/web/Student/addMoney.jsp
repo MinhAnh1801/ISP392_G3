@@ -115,7 +115,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">University Academic Portal</a>
+                <a class="navbar-brand" href="home">University Academic Portal</a>
             </div>
         </nav>
 
@@ -123,16 +123,25 @@
         <div class="container main-content">
             <h1 class="header-title">Create Deposit Request</h1>
 
-            <!-- Balance card -->
-            <div class="balance-card">
-                Current Account Balance: 
-                <fmt:formatNumber value="${studentProfile.wallet}" minFractionDigits="0" /> VND
-            </div>
+            <!-- Notification messages -->
+            <c:if test="${not empty sessionScope.successMessage}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    ${sessionScope.successMessage}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </c:if>
+
+            <!--             Balance card 
+                        <div class="balance-card">
+                            Current Account Balance: 
+                            <fmt:formatNumber value="${studentProfile.wallet}" minFractionDigits="0" /> VND
+                        </div>-->
 
             <!-- Deposit form -->
             <div class="deposit-form">
                 <!-- Form to submit to VNPayServlet for processing -->
-                <form action="${pageContext.request.contextPath}/addWallet" method="post" id="moneyForm">
+                <form action="addWallet" method="post">
+                    <label for="amount">Amount:</label>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -170,6 +179,20 @@
             </div>
         </div>
 
+        <script>
+            window.onload = function () {
+            <% if (session.getAttribute("successMessage") != null) { %>
+                sessionStorage.setItem('displaySuccess', 'true');
+            <% session.removeAttribute("successMessage"); %>
+            <% } %>
+
+                if (sessionStorage.getItem('displaySuccess') === 'true') {
+                    sessionStorage.removeItem('displaySuccess');
+                } else {
+                    document.querySelector('.alert-success').style.display = 'none';
+                }
+            };
+        </script>
         <!-- Bootstrap JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     </body>

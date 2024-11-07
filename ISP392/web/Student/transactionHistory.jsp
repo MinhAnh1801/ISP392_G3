@@ -97,6 +97,7 @@
                             <option value="Fee" ${transactionType == 'Fee' ? 'selected' : ''}>Fee</option>
                             <option value="Other" ${transactionType == 'Other' ? 'selected' : ''}>Other</option>
                             <option value="Tuition" ${transactionType == 'Tuition' ? 'selected' : ''}>Tuition</option>
+<!--                            <option value="Tuition" ${transactionType == 'Add Money' ? 'selected' : ''}>Add Money</option>-->
                         </select>
                     </div>
                     <div class="col-md-6 d-flex align-items-end">

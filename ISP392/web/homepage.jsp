@@ -271,6 +271,9 @@
                             <li>
                                 <a href="" class="hover:underline">Check attendance / Điểm danh</a>
                             </li>
+                            <li>
+                                <a href="Admin/dashboardClassrooms" class="hover:underline">View Classes / Xem lớp học</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -77,6 +77,15 @@
         <div class="main-content">
             <h2>List Assignments</h2>
 
+
+            <c:if test="${not empty sessionScope.message}">
+                <div class="alert alert-success" role="alert" id="messageAlert">
+                    ${sessionScope.message}
+                </div>
+                <!-- Xóa thông báo khỏi session sau khi hiển thị -->
+                <c:set var="sessionScope.message" value="" scope="session"/>
+            </c:if>
+
             <!-- Assignments Table -->
             <div class="table-responsive">
                 <table id="facilitiesTable" class="table table-bordered">
@@ -86,6 +95,8 @@
                             <th>Subject Code</th>
                             <th>Class</th>
                             <th>Due Date</th>
+                            <th>Student Progress</th>
+                            <th>Instructor Review</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -108,6 +119,8 @@
                                     </c:forEach>
                                 </td>
                                 <td>${a.getDueDate()}</td>
+                                <td>${progressMap[a.getID()]}</td>
+                                <td>${reviewStatusMap[a.getID()]}</td>
                                 <td>
                                     <form action="assignments" method="post" style="display: inline;">
                                         <input type="hidden" name="assignmentId" value="${a.getID()}">
@@ -122,6 +135,15 @@
             </div>
         </div>
 
+        <script>
+            // Ẩn phần tử thông báo sau 5 giây
+            setTimeout(function () {
+                var messageAlert = document.getElementById("messageAlert");
+                if (messageAlert) {
+                    messageAlert.style.display = "none";
+                }
+            }, 5000);
+        </script>
         <!-- Bootstrap JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     </body>

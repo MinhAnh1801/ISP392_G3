@@ -126,7 +126,6 @@ public class UploadAssignments extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Integer lecturerID = (Integer) session.getAttribute("user");
-
             int subjectID = Integer.parseInt(request.getParameter("subjectID"));
             int classID = Integer.parseInt(request.getParameter("classID"));
             String assignmentName = request.getParameter("assignmentName");

@@ -106,7 +106,6 @@
                     </select>
                 </div>
 
-                <!-- Dropdown cho Class ID -->
                 <div class="form-group mb-3">
                     <label for="classID">Class</label>
                     <select class="form-control" id="classID" name="classID" required>

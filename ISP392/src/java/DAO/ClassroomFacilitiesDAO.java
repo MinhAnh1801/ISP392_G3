@@ -39,5 +39,32 @@ public class ClassroomFacilitiesDAO extends DBContext {
 
         return facilities;
     }
-}
 
+    public void update(ClassroomFacilities facilities) {
+        String sql = "UPDATE ClassroomFacilities SET "
+                + "numberOfTables = ?, tableCondition = ?, "
+                + "numberOfChairs = ?, chairCondition = ?, "
+                + "numberOfLights = ?, lightCondition = ?, "
+                + "numberOfProjectors = ?, projectorCondition = ? "
+                + "WHERE classroomID = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            // Set parameters for the update statement
+            statement.setInt(1, facilities.getNumberOfTables());
+            statement.setString(2, facilities.getTableCondition());
+            statement.setInt(3, facilities.getNumberOfChairs());
+            statement.setString(4, facilities.getChairCondition());
+            statement.setInt(5, facilities.getNumberOfLights());
+            statement.setString(6, facilities.getLightCondition());
+            statement.setInt(7, facilities.getNumberOfProjectors());
+            statement.setString(8, facilities.getProjectorCondition());
+            statement.setInt(9, facilities.getClassroomID());
+
+            // Execute the update
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+}

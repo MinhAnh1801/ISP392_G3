@@ -64,6 +64,9 @@ public class DashboardClassrooms extends HttpServlet {
             case "detail":
                 viewDetails(request, response);
                 break;
+//            case "updateFacilities":
+//                updateFacilities(request, response);
+//                break;
             default:
                 response.sendRedirect("dashboardClassrooms");
         }
@@ -109,7 +112,7 @@ public class DashboardClassrooms extends HttpServlet {
             request.setAttribute("errorMessage", "Classroom name already exists. Please choose a different name.");
             request.setAttribute("classroom", currentClassroom); // Trả về thông tin phòng học hiện tại để điền vào form
             request.getRequestDispatcher("editClassroom.jsp").forward(request, response);
-            return; 
+            return;
         }
 
         // Nếu không trùng tên, tiến hành cập nhật thông tin phòng học
@@ -146,5 +149,33 @@ public class DashboardClassrooms extends HttpServlet {
         // Chuyển đến trang JSP chi tiết cơ sở vật chất
         request.getRequestDispatcher("detailsClassroom.jsp").forward(request, response);
     }
+
+//    private void updateFacilities(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        int classroomID = Integer.parseInt(request.getParameter("id"));
+//        int numberOfTables = Integer.parseInt(request.getParameter("numberOfTables"));
+//        String tableCondition = request.getParameter("tableCondition");
+//        int numberOfChairs = Integer.parseInt(request.getParameter("numberOfChairs"));
+//        String chairCondition = request.getParameter("chairCondition");
+//        int numberOfLights = Integer.parseInt(request.getParameter("numberOfLights"));
+//        String lightCondition = request.getParameter("lightCondition");
+//        int numberOfProjectors = Integer.parseInt(request.getParameter("numberOfProjectors"));
+//        String projectorCondition = request.getParameter("projectorCondition");
+//
+//        ClassroomFacilities facilities = new ClassroomFacilities();
+//        facilities.setClassroomID(classroomID);
+//        facilities.setNumberOfTables(numberOfTables);
+//        facilities.setTableCondition(tableCondition);
+//        facilities.setNumberOfChairs(numberOfChairs);
+//        facilities.setChairCondition(chairCondition);
+//        facilities.setNumberOfLights(numberOfLights);
+//        facilities.setLightCondition(lightCondition);
+//        facilities.setNumberOfProjectors(numberOfProjectors);
+//        facilities.setProjectorCondition(projectorCondition);
+//
+//        ClassroomFacilitiesDAO facilitiesDAO = new ClassroomFacilitiesDAO();
+//        facilitiesDAO.update(facilities);
+//
+//        response.sendRedirect("dashboardClassrooms?action=detail&id=" + classroomID);
+//    }
 
 }
