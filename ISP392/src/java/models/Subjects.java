@@ -4,14 +4,45 @@
  */
 package models;
 
+import java.util.List;
+
 /**
  *
  * @author admin
  */
 public class Subjects {
-    String id,code,name,credits,description,semester;
+
+    String id, code, name, credits, description, semester;
+    int subjectid;
+    private List<Classes> classes;
+
+    public List<Classes> getClasses() {
+        return classes;
+    }
+
+    public Subjects(String code, List<Classes> classes) {
+        this.code = code;
+        this.classes = classes;
+    }
+
+    public void setClasses(List<Classes> classes) {
+        this.classes = classes;
+    }
 
     public Subjects() {
+    }
+
+    public Subjects(int subjectid, String code) {
+        this.subjectid = subjectid;
+        this.code = code;
+    }
+
+    public int getSubjectid() {
+        return subjectid;
+    }
+
+    public void setSubjectid(int subjectid) {
+        this.subjectid = subjectid;
     }
 
     public Subjects(String id, String code, String name, String credits, String description, String semester) {
@@ -71,5 +102,4 @@ public class Subjects {
         this.semester = semester;
     }
 
-    
 }
