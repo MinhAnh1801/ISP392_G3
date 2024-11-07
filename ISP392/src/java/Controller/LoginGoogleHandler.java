@@ -45,21 +45,27 @@ public class LoginGoogleHandler extends HttpServlet {
         String code = request.getParameter("code");
         String accessToken = getToken(code);
         UserGoogleDto user = getUserInfo(accessToken);
-        List<User> list = dao.getAllUser();       
+        List<User> list = dao.getAllUser();
         Boolean exist = false;
         for (User u : list) {
             if (user.getEmail().equals(u.getEmail())) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", u.getId());
-                session.setAttribute("role", u.getRole());
+                if (u.getRole().equalsIgnoreCase("student")) {
+                    session.setAttribute("role", 1);
+                } else if (u.getRole().equalsIgnoreCase("lecturer")) {
+                    session.setAttribute("role", 2);
+                } else {
+                    session.setAttribute("role", 0);
+                }
                 exist = true;
             }
         }
-        if(exist){           
-                response.sendRedirect("home");
-        }else{
+        if (exist) {
+            response.sendRedirect("home");
+        } else {
             request.getSession().setAttribute("loginfail", "Account not in organization");
-                response.sendRedirect("login.jsp");
+            response.sendRedirect("login.jsp");
         }
 
     }

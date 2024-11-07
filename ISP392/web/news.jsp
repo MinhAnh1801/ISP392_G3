@@ -229,7 +229,14 @@
                             <th class="border-b-2 w-[204px] h-[50px] font-normal"><img src="image?name=${news.img}"></th>
                             <th class="border-b-2 w-[306px] h-[50px] font-normal trumcate">${news.content}</th>
                             <th class="border-b-2 w-[306px] h-[50px] font-normal">${news.uploadDate}</th>
-                            <th class="border-b-2 w-[116px] h-[50px] font-normal"><button>Action</button></th>
+                            <th class="border-b-2 w-[116px] h-[50px] font-normal"><form action="news" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="${news.id}">
+                                    <button type="submit" name="action" value="delete" class="text-red-500">Delete</button>
+                                </form>
+                                <form action="editNews.jsp" method="get" style="display:inline;">
+                                    <input type="hidden" name="id" value="${news.id}">
+                                    <button type="submit" class="text-blue-500">Edit</button>
+                                </form></th>
                         </tr>
                     </c:forEach>
                 </tbody>

@@ -170,11 +170,12 @@
             <c:if test="${sessionScope.role == 0}">
                 <div class="registraion1">
                     <div class="subject-settings">Subject settings</div>
-                    <div class="view-list-of-container">
+                    <div class="view-list-of-container w-[200px]">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
                                 <a href="subject">View list of subjects</a></li>
                             <li class="hover:underline"><a href="">Add new subject</a></li>
+                            <li class="hover:underline"><a href="viewSchedules">Manage subject schedule</a></li>
                         </ul>
                     </div>
                 </div>
@@ -191,7 +192,7 @@
                     <div class="subject-settings">Lecturer management</div>
                     <div class="assign-lecturer">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="hover:underline"> <a href="">Assign lecturer</a></li>
+                            <li class="hover:underline"> <a href="lecturers">Assign lecturer</a></li>
                         </ul>
                     </div>
                 </div>
@@ -250,7 +251,7 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses">
-                                <a href="" class="hover:underline">Register courses / Đăng ký môn học</a>
+                                <a href="availableSubjects" class="hover:underline">Register courses / Đăng ký môn học</a>
                             </li>
                             <li>
                                 <a href="availableDormRooms" class="hover:underline">Register dorm room / Đăng ký phòng ký túc xá</a>
@@ -266,13 +267,15 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses">
-                                <a href="" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
+                                <a href="viewtimetable" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
                             </li>
                             <li>
                                 <a href="" class="hover:underline">Check attendance / Điểm danh</a>
                             </li>
                             <li>
+
                                 <a href="Admin/dashboardClassrooms" class="hover:underline">View Classes / Xem lớp học</a>
+
                             </li>
                         </ul>
                     </div>
@@ -284,8 +287,10 @@
                     <div class="registrationng-k">Information access/Tra cứu thông tin</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
-                            <li class="register-courses hover:underline"><a href="">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
+
+                            <li class="register-courses hover:underline"><a href="viewTimetable">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
                             <li class="register-courses hover:underline"><a href="assignments">Assignment / Bài tập</a></li>
+
                             <li class="register-courses hover:underline"><a href="exam">View exam schedule / Xem lịch thi</a></li>
                             <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
                         </ul>
@@ -322,7 +327,7 @@
                     <div class="registrationng-k">Subject materials/Tài liệu môn học</div>
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Upload materials / Tải lên tài liệu</a></li>
+                            <li class="register-courses hover:underline"><a href="lecturer/materials">Upload materials / Tải lên tài liệu</a></li>
                             <li><a class="hover:underline" href="lecturer/materials">View materials / Xem tài liệu</a></li>
                         </ul>
                     </div>

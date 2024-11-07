@@ -286,6 +286,14 @@ public class UserDAO extends DBContext {
         UserDAO userDAO = new UserDAO();
 
         System.out.println(userDAO.getUserById(2));
+
+
+//    if (isUpdated) {
+//        System.out.println("Cập nhật thông tin sinh viên thành công.");
+//    } else {
+//        System.out.println("Cập nhật thông tin sinh viên thất bại.");
+//    }
+
     }
 
 }

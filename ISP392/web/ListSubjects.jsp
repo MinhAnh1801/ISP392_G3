@@ -5,7 +5,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>List Subject</title>
-            
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -121,14 +120,11 @@
     <body>
         <!-- Taskbar -->
         <div class="taskbar">
-            <h1>University Academic Portal</h1>
-            <a href="#" class="logout-button">
-                <img src="https://img.icons8.com/ios-filled/20/000000/logout-rounded--v1.png" alt="Logout Icon"> Log out
-            </a>
+            <a href="home" style="text-decoration: none;"><h1>University Academic Portal</h1></a>
         </div>
 
         <div class="container">
-            <h1>List Subject</h1>
+            <h1 class="text-3xl">List Subject</h1>
 
             <br><a href="subject?mod=1" class="button">Create new Subject</a>
             

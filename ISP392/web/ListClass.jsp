@@ -4,6 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <title>List Class</title>
         <style>
             body {
@@ -13,7 +14,6 @@
                 padding: 0;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
                 align-items: center;
                 height: 52vh;
             }
@@ -37,8 +37,6 @@
             }
 
             .logout-button {
-                background-color: white;
-                border: 2px solid white;
                 padding: 5px 15px;
                 border-radius: 20px;
                 font-size: 14px;
@@ -48,12 +46,9 @@
                 align-items: center;
             }
 
-            .logout-button:hover {
-                background-color: #e6e6e6;
-                border-color: #e6e6e6;
-            }
 
             .container {
+                margin-top: 20px;
                 background-color: white;
                 padding: 20px;
                 border-radius: 8px;
@@ -64,6 +59,7 @@
             h1 {
                 text-align: center;
                 color: #333;
+                
             }
 
             .button {
@@ -111,13 +107,13 @@
                 text-decoration: underline;
             }
         </style>
+        
     </head>
     <body>
         <!-- Taskbar -->
         <div class="taskbar">
-            <h1>University Academic Portal</h1>
-            <a href="#" class="logout-button">
-                <img src="https://img.icons8.com/ios-filled/20/000000/logout-rounded--v1.png" alt="Logout Icon"> Log out
+            <a href="home" class="logout-button">
+                <h1>University Academic Portal</h1>
             </a>
         </div>
 
@@ -135,12 +131,14 @@
                 <tr>
                     <th>Class ID</th>
                     <th>Class Name</th>
+                    <th>Class Capacity</th>
                     <th>Delete</th>
                 </tr>
                 <c:forEach items="${data}" var="c">
                     <tr>
                         <td><a href="class?mod=3&id=${c.getClass_id()}">${c.getClass_id()}</a></td>
                         <td>${c.getClass_name()}</td>
+                        <td>${c.getCapacity()}</td>
                         <td><a href="class?mod=2&id=${c.getClass_id()}" style="color: red;" onclick="return confirm('Are you sure you want to delete this subject?');">Delete</a></td>
                     </tr>
                 </c:forEach>

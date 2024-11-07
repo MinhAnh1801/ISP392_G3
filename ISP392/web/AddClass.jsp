@@ -83,6 +83,13 @@
                 border-radius: 4px;
                 font-size: 14px;
             }
+            input[type="number"] {
+                padding: 8px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+            }
 
             input[type="submit"] {
                 padding: 10px;
@@ -113,7 +120,7 @@
             <form action="class" method="post">
                 <label for="class_name">Class Name:</label>
                 <input type="text" id="class_name" name="class_name" required>
-
+                <input type="number" id="capacity" name="capacity" required>
                 <input type="submit" name="add" value="ADD">
             </form>
         </div>

@@ -130,6 +130,7 @@
                 <input type="text" id="id" name="id" value="${c.getClass_id()}">
                 <label for="class_name">Class Name:</label>
                 <input type="text" id="class_name" name="class_name" value="${c.getClass_name()}">
+                <input type="text" id="capacity" name="capacity" value="${c.getCapacity()}">
                 <input type="submit" name="update" value="UPDATE">
             </form>
         </div>

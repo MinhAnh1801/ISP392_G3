@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://cdn.tailwindcss.com"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Notification</title>
         <style>
@@ -80,9 +81,9 @@
     </head>
     <body>
         <div class="taskbar">
-            <h1>University Academic Portal</h1>
-            <a href="home" class="logout-button">
-                <img src="https://img.icons8.com/ios-filled/20/FFFFFF/logout-rounded--v1.png" alt="Logout Icon"> Log out
+            
+            <a href="home"  class="no-underline text-3xl">
+               <h1>University Academic Portal</h1>
             </a>
         </div>
         <div class="container">

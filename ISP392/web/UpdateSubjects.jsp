@@ -99,16 +99,13 @@
         <!-- Taskbar -->
         <div class="taskbar">
             <h1>University Academic Portal</h1>
-            <a href="#" class="logout-button">
-                <img src="https://img.icons8.com/ios-filled/20/000000/logout-rounded--v1.png" alt="Logout Icon"> Log out
-            </a>
         </div>
 
         <div class="container">
             <h2>Update Subject</h2>
             <form action="subject" method="post">
                 <label for="id">ID:</label>
-                <input type="text" id="id" name="id" value="${s.getId()}"><br>
+                <input type="text" id="id" name="id" value="${s.getId()}" readonly><br>
                 <label for="code">Code:</label>
                 <input type="text" id="code" name="code" value="${s.getCode()}"><br>
                 <label for="name">Name:</label>

@@ -10,8 +10,11 @@ package Model;
  */
 public class Timetable {
     int id,student_id,subject_id,classroom_id;
-    String day_of_week,start_time,end_time;
+    String day_of_week,start_time,end_time,subjectName,classroomName;
     float attendance_percentage;
+
+    public Timetable() {
+    }
 
     public Timetable(int id, int student_id, int subject_id, int classroom_id, String day_of_week, String start_time, String end_time, float attendance_percentage) {
         this.id = id;
@@ -22,6 +25,33 @@ public class Timetable {
         this.start_time = start_time;
         this.end_time = end_time;
         this.attendance_percentage = attendance_percentage;
+    }
+
+    public Timetable(int id, int student_id, String day_of_week, String start_time, String end_time, String subjectName, String classroomName, float attendance_percentage) {
+        this.id = id;
+        this.student_id = student_id;
+        this.day_of_week = day_of_week;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.subjectName = subjectName;
+        this.classroomName = classroomName;
+        this.attendance_percentage = attendance_percentage;
+    }
+    
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public String getClassroomName() {
+        return classroomName;
+    }
+
+    public void setClassroomName(String classroomName) {
+        this.classroomName = classroomName;
     }
 
     public int getId() {
@@ -86,5 +116,10 @@ public class Timetable {
 
     public void setAttendance_percentage(float attendance_percentage) {
         this.attendance_percentage = attendance_percentage;
+    }
+
+    @Override
+    public String toString() {
+        return "Timetable{" + "id=" + id + ", student_id=" + student_id + ", subject_id=" + subject_id + ", classroom_id=" + classroom_id + ", day_of_week=" + day_of_week + ", start_time=" + start_time + ", end_time=" + end_time + ", subjectName=" + subjectName + ", classroomName=" + classroomName + ", attendance_percentage=" + attendance_percentage + '}';
     }
 }

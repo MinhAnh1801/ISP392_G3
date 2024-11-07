@@ -127,10 +127,6 @@
                     <label for="semester">Semester:</label>
                     <input type="text" id="semester" name="semester" required>
                 </div>
-                <div class="form-group">
-                    <label for="lecturer_id">Lecturer ID:</label>
-                    <input type="text" id="lecturer_id" name="lecturer_id" required>
-                </div>
                 <div class="form-actions">
                     <input type="submit" name="add" value="ADD">
                 </div>
