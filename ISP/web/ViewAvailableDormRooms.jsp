@@ -74,7 +74,7 @@
                                         <td>${dormRoom.roomType}</td>
                                         <td>${dormRoom.detail}</td>
                                         <td>${dormRoom.price}</td>
-                                        <td><a href="Register.jsp" class="btn btn-primary btn-sm">Đăng kí</a></td>
+                                      
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -84,6 +84,10 @@
                  <!--   <a href="ViewListDormRoom.jsp" class="btn btn-secondary">Back to All Rooms</a> -->
                 </div>
             </div>
+            <div class="text-center mt-4">
+    <a href="registerDormResident" class="btn btn-success">Register for a Dorm Room</a>
+</div>
+
         </div>
 
         <!-- Bootstrap JS -->
