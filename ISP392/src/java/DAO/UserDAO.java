@@ -157,7 +157,7 @@ public class UserDAO extends DBContext {
                 + "      ,[trang_thai_den]\n"
                 + "      ,[chuyen_nganh]\n"
                 + "      ,[photo]\n"
-                + "  FROM [TEST].[dbo].[Student_Profile] WHERE [student_id] = ?";
+                + "  FROM [dbo].[Student_Profile] WHERE [student_id] = ?";
         Student_Profile studentProfile = new Student_Profile();
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {

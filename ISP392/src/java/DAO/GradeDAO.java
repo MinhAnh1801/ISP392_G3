@@ -25,7 +25,7 @@ public class GradeDAO extends DBContext {
     public List<Grades> getGradeById(Integer studentId) {
         List<Grades> gradesList = new ArrayList<>();
         String sql = "SELECT [id], [student_id], [subject_id], [grade], [upload_date], [comments] "
-                + "FROM [TEST].[dbo].[Grades] "
+                + "FROM [dbo].[Grades] "
                 + "WHERE [student_id] = ?";
 
         try {
@@ -91,7 +91,7 @@ public class GradeDAO extends DBContext {
     }
 
 public void insertGrade(int studentId, int subjectId, double grade, String comments, int typeId, int percentId) {
-    String query = "INSERT INTO [TEST].[dbo].[Grades] (student_id, subject_id, grade, comments, type, percentId, upload_date) "
+    String query = "INSERT INTO [dbo].[Grades] (student_id, subject_id, grade, comments, type, percentId, upload_date) "
                  + "VALUES (?, ?, ?, ?, ?, ?, GETDATE())";
 
     try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {

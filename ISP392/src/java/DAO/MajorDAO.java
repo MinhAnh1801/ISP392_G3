@@ -76,9 +76,9 @@ public class MajorDAO extends DBContext {
                 + "    c.condition_subject_1,\n"
                 + "    c.condition_subject_2\n"
                 + "FROM\n"
-                + "    [TEST].[dbo].[Subjects] s\n"
+                + "    [dbo].[Subjects] s\n"
                 + "JOIN\n"
-                + "    [TEST].[dbo].[Curriculum] c ON s.id = c.subject_id\n"
+                + "    [dbo].[Curriculum] c ON s.id = c.subject_id\n"
                 + "WHERE\n"
                 + "    c.major_id = ?\n"
                 + "ORDER BY\n"
@@ -192,8 +192,8 @@ public class MajorDAO extends DBContext {
     }
 
     public boolean updateByMajorIdSubjectId(int majorId, int subjectId, int conditionSubject1, int conditionSubject2, int credits) {
-        String checkSql = "SELECT COUNT(*) FROM [TEST].[dbo].[Curriculum] WHERE [major_id] = ? AND [subject_id] = ?";
-        String updateSql = "UPDATE [TEST].[dbo].[Curriculum] "
+        String checkSql = "SELECT COUNT(*) FROM [dbo].[Curriculum] WHERE [major_id] = ? AND [subject_id] = ?";
+        String updateSql = "UPDATE [dbo].[Curriculum] "
                 + "SET [condition_subject_1] = ?, "
                 + "[condition_subject_2] = ?, "
                 + "[credits] = ? "
@@ -281,8 +281,8 @@ public class MajorDAO extends DBContext {
                         rs.getInt("id"),
                         rs.getString("code"),
                         rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getInt("lecturer_id")
+                        rs.getString("description")
+//                        rs.getInt("lecturer_id")
                 );
                 subjectList.add(subject);
             }
@@ -291,6 +291,16 @@ public class MajorDAO extends DBContext {
         }
 
         return subjectList;
+    }
+    
+    public static void main(String[] args) {
+        MajorDAO mdao = new MajorDAO();
+        
+        List<Subjects> subjectList = mdao.getAllSubjects();
+        for (Subjects subjects : subjectList) {
+            System.out.println(subjects.getName());
+            
+        }
     }
 
     public boolean deleteCurriculum(int majorId, int subjectId) {
@@ -335,7 +345,7 @@ public class MajorDAO extends DBContext {
 
     public Subjects getSubjectById(int subjectId) {
         Subjects subject = null; // Khởi tạo biến subject
-        String sql = "SELECT id, code, name, description, lecturer_id FROM [dbo].[Subjects] WHERE id = ?"; // Truy vấn SQL
+        String sql = "SELECT id, code, name, description FROM [dbo].[Subjects] WHERE id = ?"; // Truy vấn SQL
 
         try (Connection connection = getConnection(); // Kết nối cơ sở dữ liệu
                  PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -349,7 +359,6 @@ public class MajorDAO extends DBContext {
                 subject.setCode(rs.getString("code")); // Thiết lập mã môn học
                 subject.setName(rs.getString("name")); // Thiết lập tên môn học
                 subject.setDescription(rs.getString("description")); // Thiết lập mô tả
-                subject.setLecturerId(rs.getInt("lecturer_id")); // Thiết lập ID giảng viên
             }
         } catch (SQLException e) {
             e.printStackTrace(); // In ra lỗi nếu có
@@ -453,13 +462,5 @@ public class MajorDAO extends DBContext {
         return percentOptions;
     }
 
-    public static void main(String[] args) {
-        MajorDAO mdao = new MajorDAO();
-        List<PercentOption> percentOptions = mdao.getAllPercent();
-        for (PercentOption percentOption : percentOptions) {
-            System.out.println(percentOption.getPercentId());
-            System.out.println(percentOption.getPercent_value());
-        }
-    }
-
+    
 }

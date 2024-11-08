@@ -33,7 +33,7 @@ public class MaterialDAO extends DBContext {
                 + "      ,[uploaded_at]\n"
                 + "      ,[uploaded_by]\n"
                 + "      ,[description]\n"
-                + "  FROM [TEST].[dbo].[Materials] ORDER BY \n"
+                + "  FROM [dbo].[Materials] ORDER BY \n"
                 + "      [id] DESC;";
 
         try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {

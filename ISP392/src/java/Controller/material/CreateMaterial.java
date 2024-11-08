@@ -140,7 +140,7 @@ public class CreateMaterial extends HttpServlet {
         material.setUploaded_by(userr);
 
         // Lấy URL tương đối để lưu vào biến
-        String relativeUrl = "/" + SAVE_DIR + "/" + new File(filePath).getName();
+        String relativeUrl = "\\" + SAVE_DIR + "\\" + new File(filePath).getName();
         material.setMaterial_file(relativeUrl);  // Lưu URL tương đối vào đối tượng Material
 
         // Lưu Material vào cơ sở dữ liệu
