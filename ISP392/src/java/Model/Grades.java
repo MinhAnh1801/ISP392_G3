@@ -11,15 +11,27 @@ import java.util.Date;
  * @author khucx
  */
 public class Grades {
-    private int  id;
+
+    private int id;
     private Student_Profile studentId;
     private Subjects subjectId;
-    private double grade; 
+    private double grade;
     private Date date;
     private String comment;
-    
+
     // thêm 
     private typeGrade type;
+
+    //thêm 
+    private int percentId;
+
+    public int getPercentId() {
+        return percentId;
+    }
+
+    public void setPercentId(int percentId) {
+        this.percentId = percentId;
+    }
 
     public Grades(int id, Student_Profile studentId, Subjects subjectId, double grade, Date date, String comment, typeGrade type) {
         this.id = id;
@@ -38,7 +50,6 @@ public class Grades {
     public void setType(typeGrade type) {
         this.type = type;
     }
-    
 
     public Grades() {
     }
@@ -104,5 +115,5 @@ public class Grades {
     public String toString() {
         return "Grades{" + "id=" + id + ", studentId=" + studentId + ", subjectId=" + subjectId + ", grade=" + grade + ", date=" + date + ", comment=" + comment + '}';
     }
-    
+
 }

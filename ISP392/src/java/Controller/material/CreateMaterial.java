@@ -6,6 +6,7 @@ import DAO.UserDAO;
 import Model.Lecturer_Profile;
 import Model.Subjects;
 import Model.Materials;
+import Model.PercentOption;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -46,6 +47,8 @@ public class CreateMaterial extends HttpServlet {
 
         MajorDAO mdao = new MajorDAO();
         List<Subjects> listSubject = mdao.getAllSubjects();
+
+                
         request.setAttribute("listSubject", listSubject);
         request.setAttribute("userId", id);
 

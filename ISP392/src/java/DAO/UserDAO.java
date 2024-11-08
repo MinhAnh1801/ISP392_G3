@@ -388,16 +388,51 @@ public class UserDAO extends DBContext {
         }
     }
 
+    public int getStudentIdByMSV(String studentMSV) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int studentId = -1;
+
+        try {
+            Connection connection = getConnection();
+
+            // SQL query to retrieve the student_id based on the MSV
+            String query = "SELECT student_id FROM Student_Profile WHERE student_code = ?";
+
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, studentMSV);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studentId = rs.getInt("student_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return studentId;
+    }
+    
     public static void main(String[] args) {
-        UserDAO userDAO = new UserDAO();
-
-        int studentId = 2; // Thay đổi ID sinh viên mà bạn muốn cập nhật
-        String newPhoneNumber = "0123456789";
-        String newAddress = "123 Đường ABC, Quận XYZ";
-
-        Student_Profile getStudentProfile = userDAO.getStudentProfile(studentId);
-
-        System.out.println(getStudentProfile.toString());
+        UserDAO udao = new UserDAO();
+        System.out.println(udao.getStudentIdByMSV("SV2024"));
+            
     }
 
 }

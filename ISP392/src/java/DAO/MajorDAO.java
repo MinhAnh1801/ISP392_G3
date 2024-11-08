@@ -16,6 +16,7 @@ import java.util.List;
 import Model.GuideDetails;
 import Model.Guidelines;
 import Model.Major;
+import Model.PercentOption;
 import Model.Student_Profile;
 import Model.Subjects;
 import Model.User;
@@ -431,13 +432,33 @@ public class MajorDAO extends DBContext {
         return classList;
     }
 
+    public List<PercentOption> getAllPercent() {
+        List<PercentOption> percentOptions = new ArrayList<>();
+        String query = "SELECT percentId, percent_value FROM PercentOptions";
+
+        try (Connection connection = getConnection(); 
+                 PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                PercentOption option = new PercentOption();
+                option.setPercentId(resultSet.getInt("percentId"));
+                option.setPercent_value(resultSet.getInt("percent_value"));
+                percentOptions.add(option);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return percentOptions;
+    }
+
     public static void main(String[] args) {
         MajorDAO mdao = new MajorDAO();
-        List<Subjects> getListSubjectByUserId = mdao.getListSubjectByUserId(2);
-
-        for (Subjects subjects : getListSubjectByUserId) {
-            System.out.println(subjects.getId());
-
+        List<PercentOption> percentOptions = mdao.getAllPercent();
+        for (PercentOption percentOption : percentOptions) {
+            System.out.println(percentOption.getPercentId());
+            System.out.println(percentOption.getPercent_value());
         }
     }
 
