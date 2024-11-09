@@ -103,4 +103,54 @@ public class AssignmentsDAO {
         return assignment;
     }
 
+    public List<Assignments> getAssignmentByLecturerId(int lecturerId) {
+        List<Assignments> assignments = new ArrayList<>();
+        String sql = "SELECT * FROM Assignments WHERE lecturer_id = ?";
+        DBContext dbContext = new DBContext();
+
+        try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Thiết lập giá trị cho tham số lecturer_id
+            stmt.setInt(1, lecturerId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Assignments assignment = Assignments.builder()
+                            .ID(rs.getInt("assignment_id"))
+                            .LecturerID(rs.getInt("lecturer_id"))
+                            .SubjectID(rs.getInt("subject_id"))
+                            .ClassID(rs.getInt("class_id"))
+                            .AssignmentName(rs.getString("assignment_name"))
+                            .AssignmentDecription(rs.getString("assignment_description"))
+                            .AssignedDate(rs.getTimestamp("assigned_date"))
+                            .DueDate(rs.getTimestamp("due_date"))
+                            .filePath(rs.getString("fileName"))
+                            .build();
+
+                    assignments.add(assignment);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return assignments;
+    }
+
+    public void updateAssignment(Assignments assignment) {
+        String sql = "UPDATE Assignments SET assignment_name = ?, assignment_description = ?, fileName = ?, due_date = ? WHERE assignment_id = ?";
+        DBContext dbContext = new DBContext();
+
+        try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, assignment.getAssignmentName());
+            stmt.setString(2, assignment.getAssignmentDecription());
+            stmt.setString(3, assignment.getFilePath());
+            stmt.setDate(4, new java.sql.Date(assignment.getDueDate().getTime()));
+            stmt.setInt(5, assignment.getID());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
