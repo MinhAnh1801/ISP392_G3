@@ -1,7 +1,7 @@
 
 
-import DAO.ApplicationDAO;
-import DAO.ApplicationTypeDAO;
+import DAL.ApplicationDAO;
+import DAL.ApplicationTypeDAO;
 import Model.Applications;
 import Model.ApplicationType;
 import Utils.FileHandler;
@@ -29,21 +29,25 @@ public class ApplicationController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         action = action != null ? action : "viewApplications";
-        HttpSession session = request.getSession(false);
         if (action == null || action.equals("showForm")) {
             showApplicationForm(request, response);
         } else if (action.equals("viewApplications")) {
-            viewApplicationsByStudent(request, response,(int)session.getAttribute("user"));
+            viewApplicationsByStudent(request, response);
+        }else if (action.equals("viewAllApplications")) {
+            viewAllApplications(request, response);
         }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        HttpSession session = request.getSession(false);
+
         if (action != null && action.equals("submitApplication")) {
-            submitApplication(request, response,(int)session.getAttribute("user"));
-        }
+            submitApplication(request, response);
+        }else if (action != null && action.equals("updateStatus")) {
+        updateApplicationStatus(request, response);
+    }
     }
 
     private void showApplicationForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,12 +57,14 @@ public class ApplicationController extends HttpServlet {
         request.getRequestDispatcher("applicationForm.jsp").forward(request, response);
     }
 
-    private void submitApplication(HttpServletRequest request, HttpServletResponse response,int user) throws ServletException, IOException {
+    private void submitApplication(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int studentId = (int)session.getAttribute("user");
         int applicationTypeId = Integer.parseInt(request.getParameter("applicationType"));
         String content = request.getParameter("content");
 
         Applications application = new Applications();
-        application.setStudentId(user);
+        application.setStudentId(studentId);
         application.setApplicationType(applicationTypeId);
         application.setContent(content);
         application.setCreatedAt(new Date());
@@ -79,10 +85,33 @@ public class ApplicationController extends HttpServlet {
         response.sendRedirect("ApplicationController?action=viewApplications");
     }
 
-    private void viewApplicationsByStudent(HttpServletRequest request, HttpServletResponse response,int user) throws ServletException, IOException {
+    private void viewApplicationsByStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         ApplicationDAO applicationDAO = new ApplicationDAO();
-        List<Applications> applications = applicationDAO.getApplicationsByStudentId(user);
+        List<Applications> applications = applicationDAO.getApplicationsByStudentId((int)session.getAttribute("user"));
         request.setAttribute("applications", applications);
         request.getRequestDispatcher("viewApplications.jsp").forward(request, response);
     }
+
+    private void viewAllApplications(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ApplicationDAO applicationDAO = new ApplicationDAO();
+        List<Applications> applications = applicationDAO.getAllApplications();
+        request.setAttribute("applications", applications);
+        request.getRequestDispatcher("viewAllApplications.jsp").forward(request, response);
+    }    
+
+   private void updateApplicationStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    try {
+        int applicationId = Integer.parseInt(request.getParameter("applicationId"));
+        String status = request.getParameter("status");
+        String responseText = request.getParameter("response");
+
+        ApplicationDAO applicationDAO = new ApplicationDAO();
+        applicationDAO.updateApplicationStatus(applicationId, status, responseText);
+        
+        response.sendRedirect("ApplicationController?action=viewAllApplications");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 }

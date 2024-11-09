@@ -98,20 +98,9 @@
                 <div class="form-group mb-3">
                     <label for="subjectID">Subject</label>
                     <select class="form-control" id="subjectID" name="subjectID" required>
-                        <c:forEach var="subjectId" items="${servletA.getAllSubjectIds()}">
-                            <option value="${subjectId}">
-                                ${servletA.getSubjectCode(subjectId)}
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="classID">Class</label>
-                    <select class="form-control" id="classID" name="classID" required>
-                        <c:forEach var="classId" items="${servletA.getAllClassIds()}">
-                            <option value="${classId}">
-                                ${servletA.getClassName(classId)}
+                        <c:forEach var="schedule" items="${schedule}">
+                            <option value="${schedule.subject_id}-${schedule.class_id}">
+                                ${schedule.subject_code} - ${schedule.class_name}
                             </option>
                         </c:forEach>
                     </select>

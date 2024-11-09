@@ -4,7 +4,7 @@
  */
 package models;
 
-import dal.DBContext;
+import Context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +44,7 @@ public class ClassesDAO extends DBContext {
                 String class_id = rs.getString(1);
                 String class_name = rs.getString(2);
                 int capacity = rs.getInt(3);
-                Classes c = new Classes(class_id, class_name,capacity);
+                Classes c = new Classes(class_id, class_name, capacity);
                 data.add(c);
             }
 
@@ -57,10 +57,10 @@ public class ClassesDAO extends DBContext {
 
     public void insert(Classes c) {
         try {
-            String strSQL = "insert into Class(class_name)" + "values(?) ";
+            String strSQL = "insert into Class(class_name,capacity)" + "values(?,?) ";
             stm = cnn.prepareStatement(strSQL);
             stm.setString(1, c.class_name);
-
+            stm.setInt(2, c.capacity);
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("insert:" + e.getMessage());
@@ -89,7 +89,7 @@ public class ClassesDAO extends DBContext {
             while (rs.next()) {
                 String class_name = rs.getString(2);
                 int capacity = rs.getInt(3);
-                c = new Classes(id, class_name,capacity);
+                c = new Classes(id, class_name, capacity);
             }
 
         } catch (Exception e) {
@@ -101,18 +101,34 @@ public class ClassesDAO extends DBContext {
 
     public void update(Classes c) {
         try {
-            String strSQL = "UPDATE Class SET class_name=? WHERE class_id=?";
+            String strSQL = "UPDATE Class SET class_name=?, capacity = ? WHERE class_id=?";
 
             PreparedStatement stm = connection.prepareStatement(strSQL);
 
-            
             stm.setString(1, c.class_name);
-            stm.setString(2, c.class_id); 
+            stm.setString(2, c.class_id);
+            stm.setInt(3, c.capacity);
             int rowsAffected = stm.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
         } catch (Exception e) {
             System.out.println("update: " + e.getMessage());
         }
+    }
+
+    public boolean isDuplicated(String name) {
+        try {
+            String query = "SELECT *\n"
+                    + "FROM Class\n"
+                    + "WHERE class_name = '?'";
+            stm = cnn.prepareStatement(query);
+            stm.setString(1, name);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
     }
 
     public ArrayList<Classes> getClassByName(String class_name) {
@@ -127,16 +143,20 @@ public class ClassesDAO extends DBContext {
                 String class_id = rs.getString(1);
                 String Class_name = rs.getString(2);
                 int capacity = rs.getInt(3);
-                Classes c = new Classes(class_id,Class_name,capacity);
+                Classes c = new Classes(class_id, Class_name, capacity);
                 data.add(c);
             }
-            
+
         } catch (Exception e) {
-           System.out.println("getClassByName:" + e.getMessage()); 
+            System.out.println("getClassByName:" + e.getMessage());
         }
         return data;
     }
-    
-    
 
+    public static void main(String[] args) {
+        ClassesDAO dao = new ClassesDAO();
+        if (dao.isDuplicated("IS1701")) {
+            System.out.println("1");
+        }
+    }
 }

@@ -11,7 +11,21 @@ package Model;
 public class ApplicationType {
      private int id;
      private String typeName;
+     private String template;
 
+    public ApplicationType(int id, String typeName, String template) {
+        this.id = id;
+        this.typeName = typeName;
+        this.template = template;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
     public ApplicationType() {
     }
 
@@ -38,8 +52,9 @@ public class ApplicationType {
 
     @Override
     public String toString() {
-        return "ApplicationType{" + "id=" + id + ", typeName=" + typeName + '}';
+        return "ApplicationType{" + "id=" + id + ", typeName=" + typeName + ", template=" + template + '}';
     }
+
 
      
 }

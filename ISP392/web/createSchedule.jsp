@@ -97,7 +97,7 @@
                         <label for="classroomId" class="block text-gray-700 font-bold mb-2">Select Classroom<p class="text-sm font-normal text-red-600"> *Capacity must be > Class capacity</p></label>
                         <select id="classroomId" name="classroomId" class="w-full p-2 border rounded">
                             <c:forEach var="classroom" items="${classroomList}">
-                                <option value="${classroom.id}">
+                                <option value="${classroom.ID}">
                                     ${classroom.name} - ${classroom.location} (Capacity: ${classroom.capacity})
                                 </option>
                             </c:forEach>

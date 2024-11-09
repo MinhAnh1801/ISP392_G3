@@ -247,7 +247,7 @@
                         <tr class="text-center">
                             <td class="border-y-2 w-[160px] h-[50px]"><div class="w-[160px]">${material.subjectCode}</div></td>
                             <td class="border-y-2 h-[50px]"><div class="w-[200px] mx-2 truncate">${material.materialName}</div></td>
-                            <td class="border-y-2 w-[240px] h-[50px] text-[#0c59ff]"><div class="w-[240px] mx-2 truncate"><a class="hover:underline" href="download?file=${material.materialFile}">${material.materialFile}</a></div></td>
+                            <td class="border-y-2 w-[240px] h-[50px] text-[#0c59ff]"><div class="w-[240px] mx-2 truncate"><a class="hover:underline" href="downloadfile?file=${material.materialFile}">${material.materialFile}</a></div></td>
                             <td class="border-y-2 w-[130px] h-[50px]">${material.uploadedAt}</td>
                             <td class="border-y-2 w-[300px] h-[50px] truncate"><div class="w-[300px] mx-2 truncate">${material.description}</div></td>
                             <th class="border-y-2 w-[116px] h-[50px]">

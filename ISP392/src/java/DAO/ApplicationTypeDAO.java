@@ -33,7 +33,7 @@ public class ApplicationTypeDAO {
                 ApplicationType applicationType = new ApplicationType();
                 applicationType.setId(rs.getInt("id"));
                 applicationType.setTypeName(rs.getString("type_name"));
-
+                applicationType.setTemplate(rs.getString("template"));
                 applicationTypes.add(applicationType);
             }
         } catch (Exception e) {
@@ -63,13 +63,14 @@ public class ApplicationTypeDAO {
     }
 
     public void insertApplicationType(ApplicationType applicationType) {
-        String query = "INSERT INTO application_type (id, type_name) VALUES (?, ?)";
+        String query = "INSERT INTO application_type (id, type_name, template) VALUES (?, ?,?)";
 
         try {
             connection = new DBContext().getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, applicationType.getId());
             ps.setString(2, applicationType.getTypeName());
+            ps.setString(3, applicationType.getTemplate());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error inserting application type: " + e.getMessage());
@@ -77,13 +78,14 @@ public class ApplicationTypeDAO {
     }
 
     public void updateApplicationType(ApplicationType applicationType) {
-        String query = "UPDATE application_type SET type_name = ? WHERE id = ?";
+        String query = "UPDATE application_type SET type_name = ?, template = ? WHERE id = ?";
 
         try {
             connection = new DBContext().getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, applicationType.getTypeName());
-            ps.setInt(2, applicationType.getId());
+            ps.setString(2, applicationType.getTemplate());
+            ps.setInt(3, applicationType.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error updating application type: " + e.getMessage());
@@ -139,7 +141,7 @@ public class ApplicationTypeDAO {
     }
 
     public boolean isApplicationTypeExists(String typeName) {
-        String query = "SELECT COUNT(*) FROM ApplicationType WHERE type_name = ?";
+        String query = "SELECT COUNT(*) FROM application_type WHERE type_name = ?";
         try {
             connection = new DBContext().getConnection();
             PreparedStatement ps = connection.prepareStatement(query);

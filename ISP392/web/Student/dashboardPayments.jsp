@@ -122,7 +122,7 @@
 
                 <!-- Account balance display -->
                 <div class="account-balance">
-                    Account balance: <fmt:formatNumber value="${studentProfile.wallet}" minFractionDigits="0" /> VND
+                    Account balance: <fmt:formatNumber value="${studentProfile.so_du_tai_khoan}" minFractionDigits="0" /> VND
                 </div>
 
                 <!-- Payment Table -->

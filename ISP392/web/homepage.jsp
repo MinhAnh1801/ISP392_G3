@@ -69,13 +69,13 @@
                     </div>
                     <div class="name">${profile.full_name}</div>
                     <c:if test="${sessionScope.role == 1}">
-                        <div class="roll-number">SV${rollnumber}</div>
+                        <div class="roll-number">${profile.student_code}</div>
                     </c:if>
                     <c:if test="${sessionScope.role == 2}">
                         <div class="roll-number">${lecturer_id}</div>
                     </c:if>              
 
-                    <img class="photo-4-1682302453807184190466-icon" alt="" src="${profile.profile_picture}">
+                    <img class="photo-4-1682302453807184190466-icon" alt="" src="image?name=${profile.photo}">
                 </div>
                 <a href="profile" class="profile-detail">
                     <div class="profile-detail-child">
@@ -174,8 +174,9 @@
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
                                 <a href="subject">View list of subjects</a></li>
-                            <li class="hover:underline"><a href="">Add new subject</a></li>
+                            <li class="hover:underline"><a href="subject?mod=1">Add new subject</a></li>
                             <li class="hover:underline"><a href="viewSchedules">Manage subject schedule</a></li>
+                            <li class="hover:underline"><a href="exam">Exams schedule</a></li>
                         </ul>
                     </div>
                 </div>
@@ -211,7 +212,7 @@
                     <div class="view-list-of-container2">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
-                                <a href="dashboardClassrooms">View list of classrooms</a></li>
+                                <a href="Admin/dashboardClassrooms">View list of classrooms</a></li>
                         </ul>
                     </div>
                 </div>
@@ -229,8 +230,7 @@
                     <div class="view-list-of-container3">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline"><a href="ViewListApplicationType.jsp">View list of types of application</a></li>
-                            <li class="view-notifications hover:underline"><a href="">Add new type of application</a></li>
-                            <li class="hover:underline"><a href="">View list of applications</a></li>
+                            <li class="hover:underline"><a href="ApplicationController?action=viewAllApplications">View list of applications</a></li>
                         </ul>
                     </div>
                 </div>
@@ -270,12 +270,7 @@
                                 <a href="viewtimetable" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
                             </li>
                             <li>
-                                <a href="" class="hover:underline">Check attendance / Điểm danh</a>
-                            </li>
-                            <li>
-
-                                <a href="Admin/dashboardClassrooms" class="hover:underline">View Classes / Xem lớp học</a>
-
+                                <a href="checkAttendance" class="hover:underline">Check attendance / Điểm danh</a>
                             </li>
                         </ul>
                     </div>
@@ -293,6 +288,7 @@
 
                             <li class="register-courses hover:underline"><a href="exam">View exam schedule / Xem lịch thi</a></li>
                             <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
+                            <li><a class="hover:underline" href="tuitionpercourse">Tuition fee per course / Biểu học phí</a></li>
                         </ul>
                     </div>
                 </div>
@@ -341,7 +337,7 @@
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses hover:underline"><a href="">Attendance report / Báo cáo điểm danh</a></li>
-                            <li class="register-courses hover:underline"><a href="">Mark report / Báo cáo điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="markreport">Mark report / Báo cáo điểm</a></li>
                             <li><a href="viewCurriculum" class="hover:underline">Curriculum / Khung chương trình</a></li>
                         </ul>
                     </div>
@@ -353,7 +349,7 @@
                     <div class="registrationng-k">Report/Báo cáo</div>
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Upload grades / Cập nhật điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="uploadGrade">Upload grades / Cập nhật điểm</a></li>
                             <li class="register-courses hover:underline"><a href="">Check grades / Xem điểm sinh viên</a></li>
                         </ul>
                     </div>

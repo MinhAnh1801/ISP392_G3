@@ -162,7 +162,7 @@
                             <td>
                                 <c:choose>                             
                                     <c:when test="${not empty as.getSubmissionContent()}">
-                                        <a class="text-blue-500 underline" href="download?file=${as.getSubmissionContent()}">Tải xuống bài làm</a>
+                                        <a class="text-blue-500 underline" href="${as.getSubmissionContent()}">Tải xuống bài làm</a>
                                     </c:when>
                                     <c:otherwise>
                                         Chưa nộp

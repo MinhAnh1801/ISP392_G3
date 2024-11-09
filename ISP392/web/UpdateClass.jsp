@@ -4,6 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
         <title>Update Class</title>
         <style>
             * {
@@ -57,12 +58,14 @@
             }
 
             .container {
+                margin-top: 100px;
                 background-color: #fff;
                 padding: 30px;
                 border-radius: 8px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                 max-width: 400px;
                 width: 100%;
+                height: 100%;
             }
 
             h2 {
@@ -94,12 +97,12 @@
             }
 
             input[type="submit"] {
-                width: 100%;
-                padding: 10px;
+                width: 50%;
+                padding: 6px;
                 background-color: #007bff;
                 color: white;
                 border: none;
-                border-radius: 4px;
+                border-radius: 5px;
                 font-size: 16px;
                 cursor: pointer;
                 transition: background-color 0.3s;
@@ -115,14 +118,6 @@
         </style>
     </head>
     <body>
-        <!-- Taskbar -->
-        <div class="taskbar">
-            <h1>University Academic Portal</h1>
-            <a href="#" class="logout-button">
-                <img src="https://img.icons8.com/ios-filled/20/000000/logout-rounded--v1.png" alt="Logout Icon"> Log out
-            </a>
-        </div>
-
         <div class="container">
             <h2>Update Class</h2>
             <form action="class" method="post">
@@ -132,6 +127,7 @@
                 <input type="text" id="class_name" name="class_name" value="${c.getClass_name()}">
                 <input type="text" id="capacity" name="capacity" value="${c.getCapacity()}">
                 <input type="submit" name="update" value="UPDATE">
+                <a class="btn btn-danger" href="class">Cancel</a>
             </form>
         </div>
     </body>

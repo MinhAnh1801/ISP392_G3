@@ -1,3 +1,4 @@
+
 import DAO.ScheduleDAO;
 import DAO.TimetableDAO;
 import jakarta.servlet.ServletException;
@@ -26,14 +27,14 @@ public class RegisterScheduleServlet extends HttpServlet {
 
         // Debugging parameters
         request.getParameterMap().forEach((key, value) -> log("Parameter: " + key + " = " + String.join(", ", value)));
-        
+
         String classIdParam = request.getParameter("classId");
-        log("class "+classIdParam);
+        log("class " + classIdParam);
         int classId = (classIdParam != null && !classIdParam.isEmpty()) ? Integer.parseInt(classIdParam) : -1;
         String subjectIdParam = request.getParameter("subject_id");
-        log("sid "+subjectIdParam);
+        log("sid " + subjectIdParam);
         int subjectId = (subjectIdParam != null && !subjectIdParam.isEmpty()) ? Integer.parseInt(subjectIdParam) : -1;
-        
+
         if (classId == -1) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write("Invalid class selection. Please try again.");
@@ -51,11 +52,11 @@ public class RegisterScheduleServlet extends HttpServlet {
             // Check for overlapping schedules before registration
             for (int scheduleId : scheduleIds) {
                 log(String.valueOf(scheduleId));
-                String dayOfWeek = scheduleDAO.getScheduleById(scheduleId,classId).getDay_of_week();
+                String dayOfWeek = scheduleDAO.getScheduleById(scheduleId, classId).getDay_of_week();
                 log(dayOfWeek);
-                String startTime = scheduleDAO.getScheduleById(scheduleId,classId).getStart_time();
+                String startTime = scheduleDAO.getScheduleById(scheduleId, classId).getStart_time();
                 log(startTime);
-                String endTime = scheduleDAO.getScheduleById(scheduleId,classId).getEnd_time();
+                String endTime = scheduleDAO.getScheduleById(scheduleId, classId).getEnd_time();
                 log(endTime);
                 // Check if this schedule would overlap with the student's existing schedules
                 boolean hasOverlap = timetableDAO.hasOverlap(studentId, dayOfWeek, startTime, endTime);
@@ -67,26 +68,18 @@ public class RegisterScheduleServlet extends HttpServlet {
                     String check = "overlap";
                     log(check);
                     return;
-                }
-                else{
+                } else {
+                    // Add payment entry
+                    int amount = scheduleDAO.getTuitionBySubjectId(subjectId);
+                    timetableDAO.addScheduleToTimetable(studentId, scheduleId);
+                    timetableDAO.updateSchedule(scheduleId);
+                    timetableDAO.addPayment(studentId, amount, "Pending", "Tuition");
+                    timetableDAO.addStu_Sub(studentId, subjectId,classId);
+                    timetableDAO.addtoClass(studentId, classId,subjectId);
                     request.setAttribute("msg", "Register successfully, please check paid item.");
                     request.getRequestDispatcher("availableSchedules.jsp").forward(request, response);
                 }
             }
-
-            // Register each non-overlapping schedule for the student
-            for (int scheduleId : scheduleIds) {
-                timetableDAO.addScheduleToTimetable(studentId, scheduleId);
-                timetableDAO.updateSchedule(scheduleId);
-            }
-            
-            // Add payment entry
-            int amount = scheduleDAO.getTuitionBySubjectId(subjectId);
-            timetableDAO.addPayment(studentId, amount, "Pending", "Tuition");
-            timetableDAO.addStu_Sub(studentId, subjectId);
-            timetableDAO.addtoClass(studentId, classId);
-            
-            response.sendRedirect("availableSubjects");
 
         } catch (Exception e) {
             e.printStackTrace();

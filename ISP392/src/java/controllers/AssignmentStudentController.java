@@ -5,8 +5,15 @@
 package controllers;
 
 import java.io.IOException;
-
+import java.io.PrintWriter;
+import java.io.IOException;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +27,15 @@ import models.AssignmentStudentDAO;
  * @author admin
  */
 @WebServlet("/assignment")
+@MultipartConfig
 public class AssignmentStudentController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
         AssignmentStudentDAO d = new AssignmentStudentDAO();
 
         // Lấy class_name từ tham số yêu cầu
@@ -37,7 +48,6 @@ public class AssignmentStudentController extends HttpServlet {
             request.setAttribute("className", className); // Truyền tên lớp vào để hiển thị
             request.setAttribute("subject_name", subjectName); // Truyền tên lớp vào để hiển thị
         }
-        
 
         request.getRequestDispatcher("AssignmentStudentGrade.jsp").forward(request, response);
     }

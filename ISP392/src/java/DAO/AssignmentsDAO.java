@@ -16,7 +16,7 @@ import java.util.List;
 public class AssignmentsDAO {
 
     public void insert(Assignments assignment) {
-        String sql = "INSERT INTO Assignments (lecturer_id, subject_id, class_id, assignment_name, assignment_description, assigned_date, due_date, file_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Assignments (lecturer_id, subject_id, class_id, assignment_name, assignment_description, assigned_date, due_date, fileName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         DBContext dbContext = new DBContext();
 
         try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -36,13 +36,17 @@ public class AssignmentsDAO {
         }
     }
 
-    public List<Assignments> findAll() {
+    public List<Assignments> findAll(int uid) {
         List<Assignments> assignments = new ArrayList<>();
-        String sql = "SELECT * FROM Assignments";
+        String sql = "SELECT *\n"
+                + "FROM Assignments a\n"
+                + "JOIN Student_Subjects ss ON ss.subject_id = a.subject_id AND ss.class_id = a.class_id\n"
+                + "WHERE ss.student_id = ?";
         DBContext dbContext = new DBContext();
 
-        try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
-
+        try (Connection conn = dbContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Assignments assignment = Assignments.builder()
                         .ID(rs.getInt("assignment_id"))
@@ -53,7 +57,7 @@ public class AssignmentsDAO {
                         .AssignmentDecription(rs.getString("assignment_description"))
                         .AssignedDate(rs.getTimestamp("assigned_date"))
                         .DueDate(rs.getTimestamp("due_date"))
-                        .filePath(rs.getString("file_path"))
+                        .filePath(rs.getString("fileName"))
                         .build();
 
                 assignments.add(assignment);
@@ -65,8 +69,13 @@ public class AssignmentsDAO {
         return assignments;
     }
 
+    public static void main(String[] args) {
+        AssignmentsDAO dao = new AssignmentsDAO();
+        System.out.println(dao.getAssignmentById(1));
+    }
+
     public Assignments getAssignmentById(int assignmentId) {
-        String sql = "SELECT * FROM Assignments WHERE assignment_id = ?";
+        String sql = "SELECT * FROM assignments WHERE assignment_id = ?";
         DBContext dbContext = new DBContext();
         Assignments assignment = null;
 
@@ -84,7 +93,7 @@ public class AssignmentsDAO {
                             .AssignmentDecription(rs.getString("assignment_description"))
                             .AssignedDate(rs.getTimestamp("assigned_date"))
                             .DueDate(rs.getTimestamp("due_date"))
-                            .filePath(rs.getString("file_path"))
+                            .filePath(rs.getString("fileName"))
                             .build();
                 }
             }

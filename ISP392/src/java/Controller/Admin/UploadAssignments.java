@@ -7,9 +7,11 @@ package Controller.Admin;
 import DAO.AssignmentsDAO;
 import DAO.SubjectsDAO;
 import DAO.ClassDAO;
+import DAO.SubjectDAO;
 import Model.Assignments;
 import Model.Subjects;
 import Model.Class;
+import Model.Schedule;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -52,10 +54,21 @@ public class UploadAssignments extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
+
+        int id = (int) session.getAttribute("user");
+
+        try {
+            log(String.valueOf(id));
+            SubjectDAO dao = new SubjectDAO();
+            List<Schedule> schedule = dao.getSubjectsByLecturer(id);
+            log(schedule.toString());
+            request.setAttribute("schedule", schedule);
+        } catch (Exception e) {
+        }
 
 //        List<Assignments> listAssignments = assignmentsDAO.findAll();
 //        request.setAttribute("listAssignments", listAssignments);
@@ -115,19 +128,23 @@ public class UploadAssignments extends HttpServlet {
     }
 
     public List<Integer> getAllSubjectIds() {
-        return subjectsDAO.getAllSubjectIds(); 
+        return subjectsDAO.getAllSubjectIds();
     }
 
     public List<Integer> getAllClassIds() {
-        return classDAO.getAllClassIds(); 
+        return classDAO.getAllClassIds();
     }
 
     private void uploadAsm(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession();
             Integer lecturerID = (Integer) session.getAttribute("user");
-            int subjectID = Integer.parseInt(request.getParameter("subjectID"));
-            int classID = Integer.parseInt(request.getParameter("classID"));
+            String subjectClass = request.getParameter("subjectID");
+            log(subjectClass);
+// Split the subject_id and class_id
+            String[] parts = subjectClass.split("-");
+            int subjectID = Integer.parseInt(parts[0]);
+            int classID = Integer.parseInt(parts[1]);
             String assignmentName = request.getParameter("assignmentName");
             String description = request.getParameter("assignmentDescription");
             java.sql.Date assignedDate = java.sql.Date.valueOf(request.getParameter("assignedDate"));

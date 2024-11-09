@@ -104,6 +104,7 @@ public class SubjectsDAO {
         return subject;
     }
 
+    
     public static void main(String[] args) {
         SubjectsDAO subjectsDAO = new SubjectsDAO();
 

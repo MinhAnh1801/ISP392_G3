@@ -4,7 +4,7 @@
  */
 package models;
 
-import dal.DBContext;
+import Context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,22 +37,34 @@ public class ExamsDAO extends DBContext {
         }
     }
 
-    public ArrayList<Exams> getExams() {
+    public ArrayList<Exams> getExams(int uid) {
         ArrayList<Exams> data = new ArrayList<Exams>();
         try {
-            String strSQL = "select*from Exams";
+            String strSQL = "SELECT \n"
+                    + "    e.exam_date,\n"
+                    + "    e.start_time,\n"
+                    + "    e.end_time,\n"
+                    + "	e.exam_room,\n"
+                    + "    sj.code\n"
+                    + "FROM \n"
+                    + "    Exams e\n"
+                    + "JOIN \n"
+                    + "    Schedule s ON e.subject_id = s.subject_id\n"
+                    + "JOIN \n"
+                    + "    Timetable t ON t.schedule_id = s.id\n"
+                    + "	JOIN Subjects sj on s.subject_id = sj.id\n"
+                    + "WHERE \n"
+                    + "    t.student_id = ?; ";
             stm = cnn.prepareStatement(strSQL);
+            stm.setInt(1, uid);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String id = rs.getString(1);
-                String subject_id = rs.getString(2);
-                String exam_date = rs.getString(3);
-                String start_time = rs.getString(4);
-                String end_time = rs.getString(5);
-                String exam_room = rs.getString(6);
-                String exam_type = rs.getString(7);
-                Exams e = new Exams(id, subject_id, exam_date,
-                        start_time, end_time, exam_room, exam_type);
+                String subject_name = rs.getString("code");
+                String exam_date = rs.getString("exam_date");
+                String start_time = rs.getString("start_time");
+                String end_time = rs.getString("end_time");
+                String exam_room = rs.getString("exam_room");
+                Exams e = new Exams(exam_date, start_time, end_time, exam_room, subject_name);
                 data.add(e);
             }
         } catch (Exception e) {
@@ -79,4 +91,9 @@ public class ExamsDAO extends DBContext {
             System.out.println("upload exams:" + ec.getMessage());
         }
     }
+    public static void main(String[] args) {
+        ExamsDAO dao = new ExamsDAO();
+        System.out.println(dao.getExams(29));
+    }
+    
 }

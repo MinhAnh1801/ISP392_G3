@@ -25,6 +25,11 @@ public class Lecturer_Profile {
     int major_id;
     // Constructor
 
+    @Override
+    public String toString() {
+        return "Lecturer_Profile{" + "lecturerId=" + lecturerId + ", expertise=" + expertise + ", office=" + office + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber + ", department=" + department + ", joiningDate=" + joiningDate + ", bio=" + bio + ", photoUrl=" + photoUrl + ", researchInterest=" + researchInterest + ", publications=" + publications + ", awards=" + awards + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", researchSkill=" + researchSkill + ", teachingSkill=" + teachingSkill + ", mentoringSkill=" + mentoringSkill + ", major_id=" + major_id + '}';
+    }
+    
     public Lecturer_Profile() {
     }
     public Lecturer_Profile(int lecturerId, String fullName,String email,String department,String office, int major_id) {

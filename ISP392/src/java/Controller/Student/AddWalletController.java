@@ -44,12 +44,12 @@ public class AddWalletController extends HttpServlet {
             int idUser = (Integer) session.getAttribute("user");
             if (idUser < 0) {
                 // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                response.sendRedirect(request.getContextPath() + "/authen?action=login");
+                response.sendRedirect("login");
                 return;
             }
             ProfileDAO profileDAO = new ProfileDAO();
-            Student_Profile studentProfile = profileDAO.getStudentProfileByUserId(idUser);
-
+            Student_Profile studentProfile = profileDAO.getStudentProfile(session);
+            log(String.valueOf(studentProfile.getWallet()));
             request.setAttribute("studentProfile", studentProfile);
             request.getRequestDispatcher("Student/addMoney.jsp").forward(request, response);
         }

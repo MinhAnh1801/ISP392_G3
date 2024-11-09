@@ -92,7 +92,7 @@
                                     <c:if test="${fn:trim(fn:toUpperCase(schedule.day_of_week)) == day &&
                                                   fn:substring(schedule.start_time, 0, 5) == '07:30' &&
                                                   fn:substring(schedule.end_time, 0, 5) == '09:50'}">
-                                          Subject: <a href="" class="text-blue-500 underline">${schedule.subjectName}</a>
+                                          Subject: <a href="viewSubjectDetail?subject_id=${schedule.subject_id}" class="text-blue-500 underline">${schedule.subjectName}</a>
                                           <div>Classroom: ${schedule.classroomName}</div>
                                     </c:if>
                                 </c:forEach>
@@ -109,7 +109,7 @@
                                     <c:if test="${fn:trim(fn:toUpperCase(schedule.day_of_week)) == day &&
                                                   fn:substring(schedule.start_time, 0, 5) == '10:00' &&
                                                   fn:substring(schedule.end_time, 0, 5) == '12:20'}">
-                                          Subject: <a href="" class="text-blue-500 underline">${schedule.subjectName}</a>
+                                          Subject: <a href="viewSubjectDetail?subject_id=${schedule.subject_id}" class="text-blue-500 underline">${schedule.subjectName}</a>
                                           <div>Classroom: ${schedule.classroomName}</div>
                                     </c:if>
                                 </c:forEach>
@@ -126,7 +126,7 @@
                                     <c:if test="${fn:trim(fn:toUpperCase(schedule.day_of_week)) == day &&
                                                   fn:substring(schedule.start_time, 0, 5) == '12:50' &&
                                                   fn:substring(schedule.end_time, 0, 5) == '15:10'}">
-                                          Subject: <a href="" class="text-blue-500 underline">${schedule.subjectName}</a>
+                                          Subject: <a href="viewSubjectDetail?subject_id=${schedule.subject_id}" class="text-blue-500 underline">${schedule.subjectName}</a>
                                           <div>Classroom: ${schedule.classroomName}</div>
                                     </c:if>
                                 </c:forEach>
@@ -143,7 +143,7 @@
                                     <c:if test="${fn:trim(fn:toUpperCase(schedule.day_of_week)) == day &&
                                                   fn:substring(schedule.start_time, 0, 5) == '15:20' &&
                                                   fn:substring(schedule.end_time, 0, 5) == '17:40'}">
-                                          Subject: <a href="" class="text-blue-500 underline">${schedule.subjectName}</a>
+                                          Subject: <a href="viewSubjectDetail?subject_id=${schedule.subject_id}" class="text-blue-500 underline">${schedule.subjectName}</a>
                                           <div>Classroom: ${schedule.classroom_id}</div>
                                     </c:if>
                                 </c:forEach>

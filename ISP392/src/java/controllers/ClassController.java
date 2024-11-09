@@ -45,7 +45,7 @@ public class ClassController extends HttpServlet {
             String class_name = request.getParameter("class_name");
             data = d.getClassByName(class_name);
         }
-        
+
         request.setAttribute("data", data);
         request.getRequestDispatcher("ListClass.jsp").forward(request, response);
     }
@@ -59,11 +59,19 @@ public class ClassController extends HttpServlet {
         ClassDAO d = new ClassDAO();
 
         if (request.getParameter("add") != null) {
-            d.insert(new Classes("", class_name,capacity));
+            if (!d.isDuplicated(class_name)) {
+                d.insert(new Classes("", class_name, capacity));
+            } else {
+                request.setAttribute("msg", "Duplicated class name");
+            }
         }
         if (request.getParameter("update") != null) {
             String id1 = request.getParameter("id");
-            d.update(new Classes(id1, class_name,capacity));
+            if (!d.isDuplicated(class_name)) {
+                d.update(new Classes(id1, class_name, capacity));
+            } else {
+                request.setAttribute("msg", "Duplicated class name");
+            }
         }
         doGet(request, response);
     }

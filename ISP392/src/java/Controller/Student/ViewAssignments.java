@@ -76,8 +76,9 @@ public class ViewAssignments extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
-
-        List<Assignments> listAssignments = assignmentsDAO.findAll();
+        HttpSession session = request.getSession();
+        int id = (int) session.getAttribute("user");
+        List<Assignments> listAssignments = assignmentsDAO.findAll(id);
         List<Model.Class> listClass = classDAO.findAllClasses();
         List<Subjects> listSubjects = subjectsDAO.findAllSubjects();
 
@@ -117,11 +118,12 @@ public class ViewAssignments extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
-
-        List<Assignments> listAssignments = assignmentsDAO.findAll();
+        HttpSession session = request.getSession();
+        int id = (int) session.getAttribute("user");
+        List<Assignments> listAssignments = assignmentsDAO.findAll(id);
         List<Model.Class> listClass = classDAO.findAllClasses();
         List<Subjects> listSubjects = subjectsDAO.findAllSubjects();
-
+        log(listAssignments.toString());
         request.setAttribute("listClass", listClass);
         request.setAttribute("listSubjects", listSubjects);
         request.setAttribute("servletA", this);
@@ -134,7 +136,7 @@ public class ViewAssignments extends HttpServlet {
                 int assignmentId = Integer.parseInt(request.getParameter("assignmentId"));
                 Assignments assignment = assignmentsDAO.getAssignmentById(assignmentId);
                 int studentId = (int) request.getSession().getAttribute("user");
-                
+
                 boolean isGraded = assignmentSubmissionsDAO.isGraded(assignmentId, studentId);
                 request.setAttribute("isGraded", isGraded);
 

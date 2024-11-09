@@ -54,11 +54,11 @@ public class AddMoney extends HttpServlet {
 
         try {
             // Get student profile
-            Student_Profile studentProfile = profileDAO.getStudentProfileByUserId(userId);
+            Student_Profile studentProfile = profileDAO.getStudentProfile(session);
 
             if (studentProfile != null) {
                 // Update wallet balance
-                int updatedBalance = studentProfile.getWallet() + amountToAdd;
+                int updatedBalance = studentProfile.getWallet()+ amountToAdd;
                 studentProfile.setWallet(updatedBalance);
                 profileDAO.updateStudentProfile(studentProfile);
 

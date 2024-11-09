@@ -21,6 +21,7 @@ public class LecturerTimetable extends HttpServlet {
             throws ServletException, IOException {
 
         int lecturerId = Integer.parseInt(request.getParameter("lecturerId"));
+        log(String.valueOf(lecturerId));
         String[] selectedScheduleIds = request.getParameterValues("scheduleIds");
 
         if (selectedScheduleIds == null || selectedScheduleIds.length == 0) {

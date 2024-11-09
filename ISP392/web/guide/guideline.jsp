@@ -96,9 +96,8 @@
                                 <label for="guidelineCategory" class="form-label">Thể loại</label>
                                 <select name="category" class="form-control" id="guidelineCategory">
                                     <option value="" disabled selected>Chọn danh mục</option>
-                                    <option value="category1">Danh mục 1</option>
-                                    <option value="category2">Danh mục 2</option>
-                                    <option value="category3">Danh mục 3</option>
+                                    <option value="User Guide">User Guide</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
 

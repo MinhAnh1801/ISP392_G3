@@ -1,8 +1,12 @@
 package TimetableController;
 
+import DAO.SubjectDAO;
 import DAO.TimetableDAO;
 import Model.Schedule;
+import Model.Subjects;
 import Model.Timetable;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -30,13 +35,12 @@ public class ViewTimetableServlet extends HttpServlet {
             return;
         }
         int studentId = (int) session.getAttribute("user");
+//        int subject_id = Integer.parseInt(request.getParameter("subject_id"));
         try {
-            log(String.valueOf(studentId));
             // Fetch the student's timetable
             List<Timetable> timetable = timetableDAO.getStudentTimetable(studentId);
-            for (Timetable timetable1 : timetable) {
-                log(timetable1.getDay_of_week());
-            }
+//            Timetable subjectdetail = timetableDAO.getSubjectDetail(subject_id);
+            // Create JSON response
             // Set the timetable as a request attribute and forward to the JSP
             request.setAttribute("timetable", timetable);
             request.getRequestDispatcher("StudentTimetable.jsp").forward(request, response);

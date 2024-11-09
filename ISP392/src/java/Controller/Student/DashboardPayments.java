@@ -51,7 +51,7 @@ public class DashboardPayments extends HttpServlet {
         List<Payments> listPayments = paymentsDAO.findPendingPayments(idUser);
         request.setAttribute("listPayments", listPayments);
 
-        int wallet = studentProfile.getWallet();
+        int wallet = Integer.parseInt(studentProfile.getSo_du_tai_khoan());
         request.setAttribute("wallet", wallet);
 
         request.getRequestDispatcher("Student/dashboardPayments.jsp").forward(request, response);
@@ -89,7 +89,7 @@ public class DashboardPayments extends HttpServlet {
 
         int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
 
-        int wallet = studentProfile.getWallet();
+        int wallet = Integer.parseInt(studentProfile.getSo_du_tai_khoan());
         String[] selectedPayments = request.getParameterValues("payment");
 
         if (wallet >= totalAmount) {

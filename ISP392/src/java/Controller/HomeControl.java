@@ -51,6 +51,7 @@ public class HomeControl extends HttpServlet {
             }
             
             Student_Profile st_profile = udao.getStudentProfile((int)session.getAttribute("user"));
+            request.setAttribute("profile", st_profile);
             List<Notifications> notifications = dao.getNotificationsByRole(role); // Thay "admin" bằng role bạn muốn lấy
             // Gán danh sách thông báo vào request
             request.setAttribute("notifications", notifications);

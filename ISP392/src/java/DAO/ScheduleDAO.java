@@ -47,7 +47,7 @@ public class ScheduleDAO {
             = "UPDATE Schedule SET status = 0 WHERE available_slot = 0 AND status = 1";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private static final String GET_CLASSROOM = "Select capacity from Classrooms where id = ?";
-    private static final String GET_CLASS = "Select capacity from Class where id = ?";
+    private static final String GET_CLASS = "Select capacity from Class where class_id = ?";
 
     // Method to get all classes
     public List<Classes> getAllClasses() {
@@ -276,7 +276,7 @@ public class ScheduleDAO {
             + "JOIN Class cl on cl.class_id = s.class_id\n"
             + "JOIN Classrooms cr on cr.id = s.classroom_id\n"
             + "JOIN Subjects sub ON s.subject_id = sub.id\n"
-            + "JOIN Student_Profile sp ON sp.major_id = sub.major_id and sp.hoc_ki_hien_tai = sub.semester\n"
+            + "JOIN Student_Profile sp ON sp.major_id = sub.major_id and sp.hoc_ky_hien_tai = sub.semester\n"
             + "LEFT JOIN Timetable t ON t.schedule_id = s.id AND t.student_id = ? \n"
             + "WHERE s.status = 1 and s.subject_id = ?\n"
             + "  and t.id is null-- Only active schedules\n"
@@ -375,7 +375,12 @@ public class ScheduleDAO {
 
     public static void main(String[] args) {
         ScheduleDAO dao = new ScheduleDAO();
-
+        try {
+            System.out.println(dao.getTuitionBySubjectId(1));
+        } catch (Exception e) {
+        }
+        
+        
 
     }
 }

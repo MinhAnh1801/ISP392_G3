@@ -51,6 +51,10 @@ public class CreateScheduleServlet extends HttpServlet {
             String endTime = request.getParameter("endTime");
             int classId = Integer.parseInt(request.getParameter("classId"));
             int classroomId = Integer.parseInt(request.getParameter("classroomId"));
+            if(scheduleDAO.getCLassCapacity(classId)>scheduleDAO.getCapacity(classroomId)){
+                response.sendRedirect("createSchedule.jsp?error=invalidInputs");
+                return;
+            }
             int subjectID = Integer.parseInt(request.getParameter("subjectid"));
             String dueDate = request.getParameter("dueDate") + " " + request.getParameter("dueTime");  // Combine date and time
             boolean success = scheduleDAO.createSchedule(dayOfWeek, startTime, endTime, classId, classroomId, subjectID, dueDate, 1);

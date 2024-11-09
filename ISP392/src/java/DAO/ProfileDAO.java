@@ -40,7 +40,7 @@ public class ProfileDAO {
     private final UserDAO userDAO = new UserDAO();
     private final MajorDAO majorDAO = new MajorDAO();
 
-    public Profile getProfileById(HttpSession session) {
+    public Student_Profile getProfileById(HttpSession session) {
         // Lấy id và role từ session
         Integer userId = (Integer) session.getAttribute("user");
 
@@ -50,10 +50,10 @@ public class ProfileDAO {
         }
 
         // Truy vấn SQL để lấy thông tin profile từ cơ sở dữ liệu
-        String sql = "SELECT full_name, date_of_birth, phone_number, address, gender, profile_picture, bio "
-                + "FROM Profile WHERE user_id = ?";
+        String sql = "SELECT * "
+                + "FROM Student_Profile WHERE user_id = ?";
 
-        Profile profile = null;
+        Student_Profile profile = null;
 
         try (Connection connection = new DBContext().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -64,16 +64,11 @@ public class ProfileDAO {
 
             // Lấy kết quả
             if (resultSet.next()) {
-                String fullName = resultSet.getString("full_name");
-                Date dateOfBirth = resultSet.getDate("date_of_birth");
-                String phoneNumber = resultSet.getString("phone_number");
-                String address = resultSet.getString("address");
-                String gender = resultSet.getString("gender");
-                String profilePicture = resultSet.getString("profile_picture");
-                String bio = resultSet.getString("bio");
+                int studentId = resultSet.getInt("student_id");
+                int wallet = resultSet.getInt("so_du_tai_khoan");
 
                 // Tạo đối tượng Profile
-                profile = new Profile(userId, fullName, dateOfBirth, phoneNumber, address, gender, profilePicture, bio);
+                profile = new Student_Profile(studentId, wallet);
             }
 
         } catch (SQLException e) {
@@ -93,11 +88,11 @@ public class ProfileDAO {
                 if (rs.next()) {
 //                    int majorId = rs.getInt("major_id");
                     String yearOfStudy = rs.getString("year_of_study");
-                    int wallet = rs.getInt("wallet");  // Lấy số dư ví
+                    String wallet = rs.getString("so_du_tai_khoan");  // Lấy số dư ví
                     studentProfile = new Student_Profile();
                     studentProfile.setStudent_id(userDAO.getUserById(rs.getInt("student_id")));
                     studentProfile.setMajor_id(majorDAO.getMajorById(rs.getInt("major_id")));
-                    studentProfile.setWallet(wallet);
+                    studentProfile.setSo_du_tai_khoan(wallet);
                     studentProfile.setYear_of_study(yearOfStudy);
                 }
             }
@@ -119,16 +114,9 @@ public class ProfileDAO {
         return rollNumber;
     }
 
-    public String generateLecturerFormattedId(HttpSession session) {
-        // Lấy thông tin profile từ cơ sở dữ liệu
-        Profile profile = getProfileById(session);
-
-        // Sử dụng hàm generateLecturerFormattedId() của Profile để tạo ID
-        return profile.generateLecturerFormattedId();
-    }
 
     public void updateStudentProfile(Student_Profile profile) throws SQLException {
-        String sql = "UPDATE Student_Profile SET wallet = ? WHERE student_id = ?";
+        String sql = "UPDATE Student_Profile SET so_du_tai_khoan = ? WHERE student_id = ?";
         try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, profile.getWallet()); 
             ps.setInt(2, profile.getStudent_id().getId());
@@ -136,50 +124,40 @@ public class ProfileDAO {
         }
     }
 
-    public Student_Profile getStudentProfileByUserId(int userId) {
-        String sql = "SELECT student_id, major_id, year_of_study, wallet FROM Student_Profile WHERE student_id = ?";
-        Student_Profile studentProfile = null;
-
-        try (Connection connection = new DBContext().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setInt(1, userId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-//                int studentId = resultSet.getInt("student_id");
-//                int majorId = resultSet.getInt("major_id");
-                String yearOfStudy = resultSet.getString("year_of_study");
-                int wallet = resultSet.getInt("wallet");
-                studentProfile = new Student_Profile();
-                studentProfile.setStudent_id(userDAO.getUserById(resultSet.getInt("student_id")));
-                studentProfile.setMajor_id(majorDAO.getMajorById(resultSet.getInt("major_id")));
-                studentProfile.setWallet(wallet);
-                studentProfile.setYear_of_study(yearOfStudy);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return studentProfile;
-    }
+//    public Student_Profile getStudentProfileByUserId(int userId) {
+//        String sql = "SELECT student_id, so_du_tai_khoan FROM Student_Profile WHERE student_id = ?";
+//        Student_Profile studentProfile = null;
+//
+//        try (Connection connection = new DBContext().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+//
+//            preparedStatement.setInt(1, userId);
+//
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            if (resultSet.next()) {
+////                int studentId = resultSet.getInt("student_id");
+////                int majorId = resultSet.getInt("major_id");
+//                String yearOfStudy = resultSet.getString("year_of_study");
+//                int wallet = resultSet.getInt("wallet");
+//                studentProfile = new Student_Profile();
+//                studentProfile.setStudent_id(userDAO.getUserById(resultSet.getInt("student_id")));
+//                studentProfile.setMajor_id(majorDAO.getMajorById(resultSet.getInt("major_id")));
+//                studentProfile.setWallet(wallet);
+//                studentProfile.setYear_of_study(yearOfStudy);
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return studentProfile;
+//    }
 
     public static void main(String[] args) {
         ProfileDAO profileDAO = new ProfileDAO();
-
         // Thay thế id của sinh viên với một id hợp lệ trong cơ sở dữ liệu của bạn
-        int testUserId = 2; // Ví dụ: giả sử userId là 1, bạn cần thay thế bằng ID hợp lệ
+        int testUserId = 2; // Ví dụ: giả sử userId là 1, bạn cần thay thế bằ   ng ID hợp lệ
 
-        Student_Profile studentProfile = profileDAO.getStudentProfileByUserId(testUserId);
-        if (studentProfile != null) {
-            System.out.println("Student ID: " + studentProfile.getStudent_id());
-            System.out.println("Major ID: " + studentProfile.getMajor_id());
-            System.out.println("Year of Study: " + studentProfile.getYear_of_study());
-            System.out.println("Wallet Balance: " + studentProfile.getWallet());
-        } else {
-            System.out.println("No student profile found for user ID: " + testUserId);
-        }
     }
 
 }

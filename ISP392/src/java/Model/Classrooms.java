@@ -4,49 +4,38 @@
  */
 package Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  *
  * @author khucx
  */
-@ToString
-@Builder
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+
 
 public class Classrooms {
 
-    int id,capacity;
+    int ID,capacity;
     String name,location;
 
     @Override
     public String toString() {
-        return "Classrooms{" + "id=" + id + ", capacity=" + capacity + ", name=" + name + ", location=" + location + '}';
+        return "Classrooms{" + "id=" + ID + ", capacity=" + capacity + ", name=" + name + ", location=" + location + '}';
     }
 
-    public Classrooms(int id, int capacity, String name, String location) {
-        this.id = id;
+    public Classrooms() {
+    }
+    
+    public Classrooms(int ID, int capacity, String name, String location) {
+        this.ID = ID;
         this.capacity = capacity;
         this.name = name;
         this.location = location;
     }
 
-    public int getId() {
-        return id;
+    public int getID() {
+        return ID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public int getCapacity() {

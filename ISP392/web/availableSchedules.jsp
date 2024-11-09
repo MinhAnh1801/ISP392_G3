@@ -33,6 +33,9 @@
             width: 128px;
             height: 52px;
         }
+        iframe.login-child{
+            display: none;
+        }
     </style>
     <script>
         // Function to display alert if there is an overlap message
@@ -51,7 +54,7 @@
             const confirmed = confirm("Are you sure you want to register for all schedules of the selected class?");
             if (confirmed) {
                 // If confirmed, submit the form
-                event.target.submit();              
+                event.target.submit();
             } else {
                 // Alert cancellation
                 alert("Registration cancelled.");
@@ -78,7 +81,6 @@
         </a>
         <div class="container mx-auto py-8 mt-12">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Select a Class to Register</h2>
-
             <!-- Loop through each class and its schedules -->
             <c:forEach var="entry" items="${classSchedulesMap}">
                 <c:set var="classId" value="${entry.key}" />

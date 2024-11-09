@@ -9,7 +9,6 @@ public class Subjects {
     private int id;
     private String code;
     private String name;
-
     private int credits; 
     private String description; 
     int tuition;
@@ -20,6 +19,13 @@ public class Subjects {
     public Subjects() {
     }
 
+    public Subjects(int id, String code, String name, String description) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.description = description;
+    }
+    
     public Subjects(int id, String code, String name, int credits, String description, int tuition, int semester) {
         this.id = id;
         this.code = code;
@@ -90,6 +96,14 @@ public class Subjects {
 
     public void setSemester(int semester) {
         this.semester = semester;
+    }
+
+    public int getTuition() {
+        return tuition;
+    }
+
+    public void setTuition(int tuition) {
+        this.tuition = tuition;
     }
 
 

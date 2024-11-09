@@ -7,10 +7,12 @@ import Model.Classrooms;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@WebServlet("/dashboardClassrooms")
 public class DashboardClassrooms extends HttpServlet {
 
     private ClassroomsDAO classroomsDAO = new ClassroomsDAO();
@@ -76,7 +78,7 @@ public class DashboardClassrooms extends HttpServlet {
         String name = request.getParameter("name");
         String location = request.getParameter("location");
         int capacity = Integer.parseInt(request.getParameter("capacity"));
-
+        log(location);
         Classrooms classroom = new Classrooms();
         classroom.setName(name);
         classroom.setCapacity(capacity);
