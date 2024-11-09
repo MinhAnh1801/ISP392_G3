@@ -67,26 +67,35 @@
                 <div class="profile-brief">
                     <div class="profile-brief-child">
                     </div>
-                    <div class="name">${profile.full_name}</div>
+                    <c:if test="${sessionScope.role ==1}">
+                        <div class="name">${profile.full_name}</div>
+                    </c:if>
+                    <c:if test="${sessionScope.role ==2}">
+                        <div class="name">${profile.fullName}</div>
+                    </c:if>
                     <c:if test="${sessionScope.role == 1}">
                         <div class="roll-number">${profile.student_code}</div>
                     </c:if>
                     <c:if test="${sessionScope.role == 2}">
-                        <div class="roll-number">${lecturer_id}</div>
+                        <div class="roll-number">${profile.department}</div>
                     </c:if>              
-
-                    <img class="photo-4-1682302453807184190466-icon" alt="" src="image?name=${profile.photo}">
-                </div>
-                <a href="profile" class="profile-detail">
-                    <div class="profile-detail-child">
+                    <c:if test="${sessionScope.role ==1}"> 
+                        <img class="photo-4-1682302453807184190466-icon" alt="" src="image?name=${profile.photo}">
+                    </c:if>
+                    <c:if test="${sessionScope.role ==2}"> 
+                        <img class="photo-4-1682302453807184190466-icon" alt="" src="image?name=${profile.photoUrl}">
+                    </c:if>
                     </div>
-                    <svg class="hs-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19.6177 21.25C19.6177 17.6479 15.6021 14.7206 12 14.7206C8.39791 14.7206 4.38232 17.6479 4.38232 21.25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M11.9999 11.4559C14.4039 11.4559 16.3528 9.50701 16.3528 7.10294C16.3528 4.69888 14.4039 2.75 11.9999 2.75C9.59585 2.75 7.64697 4.69888 7.64697 7.10294C7.64697 9.50701 9.59585 11.4559 11.9999 11.4559Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <a href="profile" class="profile-detail">
+                        <div class="profile-detail-child">
+                        </div>
+                        <svg class="hs-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.6177 21.25C19.6177 17.6479 15.6021 14.7206 12 14.7206C8.39791 14.7206 4.38232 17.6479 4.38232 21.25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11.9999 11.4559C14.4039 11.4559 16.3528 9.50701 16.3528 7.10294C16.3528 4.69888 14.4039 2.75 11.9999 2.75C9.59585 2.75 7.64697 4.69888 7.64697 7.10294C7.64697 9.50701 9.59585 11.4559 11.9999 11.4559Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
 
-                    <div class="xem-h-s">Xem hồ sơ</div>
-                </a>
+                        <div class="xem-h-s">Xem hồ sơ</div>
+                    </a>
             </c:if>
             <c:if test="${sessionScope.role == 0}">
                 <div class="absolute top-[100px] left-[20px] text-sm italic">logged in as admin</div>
