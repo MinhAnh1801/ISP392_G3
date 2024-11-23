@@ -22,9 +22,23 @@ public class Lecturer_Profile {
     private int researchSkill;        // Kỹ năng nghiên cứu
     private int teachingSkill;        // Kỹ năng giảng dạy
     private int mentoringSkill;       // Kỹ năng hướng dẫn
+    int major_id;
     // Constructor
 
+    @Override
+    public String toString() {
+        return "Lecturer_Profile{" + "lecturerId=" + lecturerId + ", expertise=" + expertise + ", office=" + office + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber + ", department=" + department + ", joiningDate=" + joiningDate + ", bio=" + bio + ", photoUrl=" + photoUrl + ", researchInterest=" + researchInterest + ", publications=" + publications + ", awards=" + awards + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", researchSkill=" + researchSkill + ", teachingSkill=" + teachingSkill + ", mentoringSkill=" + mentoringSkill + ", major_id=" + major_id + '}';
+    }
+    
     public Lecturer_Profile() {
+    }
+    public Lecturer_Profile(int lecturerId, String fullName,String email,String department,String office, int major_id) {
+        this.lecturerId = lecturerId;
+        this.fullName = fullName;
+        this.department = department;
+        this.major_id = major_id;
+        this.email = email;
+        this.office = office;
     }
 
     public Lecturer_Profile(int lecturerId, String expertise, String office, String fullName, String email, String phoneNumber, String department, Date joiningDate, String bio, String photoUrl, String researchInterest, String publications, String awards, Date createdAt, Date updatedAt, int researchSkill, int teachingSkill, int mentoringSkill) {
@@ -46,6 +60,14 @@ public class Lecturer_Profile {
         this.researchSkill = researchSkill;
         this.teachingSkill = teachingSkill;
         this.mentoringSkill = mentoringSkill;
+    }
+
+    public int getMajor_id() {
+        return major_id;
+    }
+
+    public void setMajor_id(int major_id) {
+        this.major_id = major_id;
     }
 
     public int getResearchSkill() {

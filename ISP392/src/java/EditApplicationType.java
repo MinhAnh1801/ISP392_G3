@@ -8,16 +8,23 @@ import Model.ApplicationType;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 
 /**
  *
  * @author Dell
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 50, // 50MB
+        maxRequestSize = 1024 * 1024 * 100)   // 100MB
 public class EditApplicationType extends HttpServlet {
-
+private static final String UPLOAD_DIRECTORY = "C:/Users/khucx/OneDrive/Documents/temp"; 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -76,8 +83,19 @@ public class EditApplicationType extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String typeName = request.getParameter("type_name");
-        ApplicationType appType = new ApplicationType(id, typeName);
+
         ApplicationTypeDAO dao = new ApplicationTypeDAO();
+        // Retrieve file data
+        Part filePart = request.getPart("template");
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Get the file name
+        // Save the file to the server
+        File uploadDir = new File(UPLOAD_DIRECTORY);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();  // Create directory if it doesn't exist
+        }
+        String filePath = UPLOAD_DIRECTORY + File.separator + fileName;
+        filePart.write(filePath);  // Write the file to the server
+                ApplicationType appType = new ApplicationType(id, typeName,fileName);
         dao.updateApplicationType(appType);
         response.sendRedirect("ViewListApplicationType.jsp");
     }

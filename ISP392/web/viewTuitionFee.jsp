@@ -37,6 +37,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
+                        <th>Major</th>
                         <th>Course Code</th>
                         <th>Course Name</th>
                         <th>Description</th>
@@ -46,10 +47,11 @@
                 <tbody>
                     <c:forEach var="subject" items="${subjects}">
                         <tr>
+                            <td>${subject.major_name}</td>
                             <td>${subject.code}</td>
                             <td>${subject.name}</td>
                             <td>${subject.description}</td>
-                            <td>${subject.price}</td>
+                            <td>${subject.tu}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

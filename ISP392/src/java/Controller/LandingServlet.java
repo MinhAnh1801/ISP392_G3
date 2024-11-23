@@ -37,8 +37,8 @@ public class LandingServlet extends HttpServlet {
         DAO dao = new DAO();
         // Get the list of all news from the database
         List<News> newsList = dao.getTop3News();
-        
-        // Set the list of news as an attribute in the request
+//        
+//        // Set the list of news as an attribute in the request
         request.setAttribute("news1", newsList.get(0));
         request.setAttribute("news2", newsList.get(1));
         request.setAttribute("news3", newsList.get(2));

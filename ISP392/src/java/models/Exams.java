@@ -10,8 +10,24 @@ package models;
  */
 public class Exams {
     String id,subjectID,exam_date,start_time,end_time,exam_room,exam_type;
-
+    String subject_name;
     public Exams() {
+    }
+
+    public String getSubject_name() {
+        return subject_name;
+    }
+
+    public Exams(String exam_date, String start_time, String end_time, String exam_room, String subject_name) {
+        this.exam_date = exam_date;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.exam_room = exam_room;
+        this.subject_name = subject_name;
+    }
+
+    public void setSubject_name(String subject_name) {
+        this.subject_name = subject_name;
     }
 
     public Exams(String id, String subjectID, String exam_date, String start_time, String end_time, String exam_room, String exam_type) {
@@ -78,6 +94,11 @@ public class Exams {
 
     public void setExam_type(String exam_type) {
         this.exam_type = exam_type;
+    }
+
+    @Override
+    public String toString() {
+        return "Exams{" + "id=" + id + ", subjectID=" + subjectID + ", exam_date=" + exam_date + ", start_time=" + start_time + ", end_time=" + end_time + ", exam_room=" + exam_room + ", exam_type=" + exam_type + ", subject_name=" + subject_name + '}';
     }
     
     

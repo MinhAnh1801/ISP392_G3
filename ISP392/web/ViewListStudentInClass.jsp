@@ -21,23 +21,11 @@
 </head>
 <body>
 
-    <!-- Navigation bar -->
-    <nav class="navbar navbar-light bg-warning mb-4">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">University Academic Portal</a>
-            <div class="d-flex">
-                <img src="path_to_avatar_image" alt="Avatar" class="rounded-circle" width="40" height="40">
-                <span class="navbar-text mx-3">Khúc Xuân Hào</span>
-                <a href="logout" class="btn btn-outline-dark">Log out</a>
-            </div>
-        </div>
-    </nav>
-
     <!-- Main content -->
     <div class="container">
         <div class="card">
             <div class="card-header bg-warning text-white text-center">
-                <h4>Students in Class: ${classId}</h4>
+                <h4>Students in Class: ${class_id}</h4>
             </div>
             <div class="card-body">
 
@@ -64,7 +52,7 @@
                     </table>
                 </c:if>
 
-                <a href="index.jsp" class="btn btn-secondary">Back to Home</a>
+                <a href="viewTimetable" class="btn btn-secondary">Back to Home</a>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import models.Exams;
 import models.ExamsDAO;
@@ -20,19 +21,17 @@ import models.ExamsDAO;
  * @author admin
  */
 public class ExamsController extends HttpServlet {
-   
-   
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     ExamsDAO d = new ExamsDAO();
-    
+        HttpSession session = request.getSession();
     if (request.getParameter("mod") != null && request.getParameter("mod").equals("1")) {
             request.getRequestDispatcher("UploadExams.jsp").forward(request, response);
         }
-        ArrayList<Exams> data = d.getExams();
+    int uid = (int) session.getAttribute("user");
+        ArrayList<Exams> data = d.getExams(uid);
         request.setAttribute("data", data);
         request.getRequestDispatcher("ViewExams.jsp").forward(request, response);
     } 
@@ -54,7 +53,6 @@ public class ExamsController extends HttpServlet {
             d.upload(new Exams(id,subjectID,exam_date,start_time,end_time,
                     exam_room,exam_type));
         }
-        doGet(request, response);
         
     }
 

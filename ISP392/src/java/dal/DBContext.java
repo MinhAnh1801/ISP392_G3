@@ -1,22 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package dal;
+package DAL;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
 /**
  *
- * @author admin
+ * @author DELL
  */
-public class DBContext {
+public class DBcontext {
     protected Connection connection;
-
-    public DBContext() {
+    public DBcontext()
+    {
         //@Students: You are allowed to edit user, pass, url variables to fit 
         //your system configuration
         //You can also add more methods for Database Interaction tasks. 
@@ -26,26 +29,23 @@ public class DBContext {
         try {
             String user = "sa";
             String pass = "123456";
-            String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=TEST";
+            String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=TEST2";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     public static void main(String[] args) {
-        DBContext context = new DBContext();
-        if (context.connection != null) {
-            System.out.println("Connected to the database successfully.");
-            try {
-                context.connection.close(); // Đóng kết nối sau khi kiểm tra
-            } catch (SQLException ex) {
-                System.out.println("Error while closing the connection: " + ex.getMessage());
-            }
+    public static void main(String[] args) {
+        // Tạo một đối tượng DBcontext để kiểm tra kết nối
+        DBcontext dbContext = new DBcontext();
+        
+        // Kiểm tra xem connection có null không
+        if (dbContext.connection != null) {
+            System.out.println("Kết nối thành công tới cơ sở dữ liệu!");
         } else {
-            System.out.println("Failed to connect to the database.");
+            System.out.println("Kết nối thất bại!");
         }
     }
-    
 }
+

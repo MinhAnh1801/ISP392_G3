@@ -25,6 +25,11 @@ public class Applications {
     public Applications() {
     }
 
+    @Override
+    public String toString() {
+        return "Applications{" + "id=" + id + ", studentId=" + studentId + ", applicationType=" + applicationType + ", content=" + content + ", createdAt=" + createdAt + ", status=" + status + ", lastUpdated=" + lastUpdated + ", response=" + response + ", type=" + type + ", attachedFile=" + attachedFile + '}';
+    }
+
     public Applications(int id, int studentId, int applicationType, String content, Date createdAt, String status, Date lastUpdated, String response) {
         this.id = id;
         this.studentId = studentId;

@@ -53,7 +53,7 @@
                     <h4>Edit Application Type</h4>
                 </div>
                 <div class="card-body">
-                    <form action="editapplicationtype" method="post" class="needs-validation" novalidate>
+                    <form action="editapplicationtype" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
                         <!-- Hidden input for Application Type ID -->
                         <input type="hidden" name="id" value="${applicationType.id}">
 
@@ -61,6 +61,8 @@
                         <div class="mb-3">
                             <label for="type_name" class="form-label">Application Type Name</label>
                             <input type="text" class="form-control" id="type_name" name="type_name" value="${applicationType.typeName}" required>
+                            <label for="template" class="form-label">Template</label>
+                            <input type="file" class="form-control" id="template" name="template">
                             <div class="invalid-feedback">Please provide the application type name.</div>
                         </div>
 

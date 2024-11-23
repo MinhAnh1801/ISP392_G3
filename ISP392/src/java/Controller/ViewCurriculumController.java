@@ -6,7 +6,7 @@ package Controller;
 
 import DAO.MajorDAO;
 import Model.Major;
-import Model.Subjects;
+import Model.Subjects1;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -68,7 +68,7 @@ public class ViewCurriculumController extends HttpServlet {
         
         
         MajorDAO mdao = new MajorDAO();
-        List<Subjects> listSubject = mdao.getListSubjectByUserId(id);    
+        List<Subjects1> listSubject = mdao.getListSubjectByUserId(id);    
         request.setAttribute("listSubject", listSubject);
         request.getRequestDispatcher("viewCurriculum.jsp").forward(request, response);
     }

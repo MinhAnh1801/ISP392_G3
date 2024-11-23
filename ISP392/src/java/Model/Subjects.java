@@ -1,15 +1,39 @@
 package Model;
 
+import lombok.Builder;
+
+@Builder
+
 public class Subjects {
-    private int id; 
-    private String code; 
+
+    private int id;
+    private String code;
     private String name;
     private int credits; 
     private String description; 
+    int tuition;
     private int semester; 
+
 
     // Constructor
     public Subjects() {
+    }
+
+    public Subjects(int id, String code, String name, String description) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.description = description;
+    }
+    
+    public Subjects(int id, String code, String name, int credits, String description, int tuition, int semester) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.credits = credits;
+        this.description = description;
+        this.tuition = tuition;
+        this.semester = semester;
     }
 
     public Subjects(int id, String code) {
@@ -74,6 +98,21 @@ public class Subjects {
         this.semester = semester;
     }
 
+    public int getTuition() {
+        return tuition;
+    }
+
+    public void setTuition(int tuition) {
+        this.tuition = tuition;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Subjects{" + "id=" + id + ", code=" + code + ", name=" + name + ", credits=" + credits + ", description=" + description + ", tuition=" + tuition + ", semester=" + semester + '}';
+    }
+
 
    
 }
+

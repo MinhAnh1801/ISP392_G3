@@ -11,14 +11,17 @@ import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Dell
  */
+@WebServlet("/viewmydorm")
 public class ViewMyDormRoom extends HttpServlet {
    
     /** 
@@ -57,7 +60,8 @@ public class ViewMyDormRoom extends HttpServlet {
  protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-     int userId = 2; // Lấy userId từ session hoặc request
+        HttpSession session = request.getSession();
+     int userId = (int)session.getAttribute("user"); // Lấy userId từ session hoặc request
 
         // Gọi DAO để lấy thông tin phòng ký túc xá của người dùng
         DormResidentDAO dormResidentDAO = new DormResidentDAO();

@@ -16,12 +16,55 @@ public class Materials {
     private String materialFile;
     private String uploadedAt;
     private String description;
+    Lecturer_Profile upload_by;
+    String uploaded_by;
 
     @Override
     public String toString() {
-        return "Materials{" + "id=" + id + ", subjectCode=" + subjectCode + ", materialName=" + materialName + ", materialFile=" + materialFile + ", uploadedAt=" + uploadedAt + ", description=" + description + '}';
+        return "Materials{" + "id=" + id + ", subjectCode=" + subjectCode + ", materialName=" + materialName + ", materialFile=" + materialFile + ", uploadedAt=" + uploadedAt + ", description=" + description + ", upload_by=" + upload_by + ", uploaded_by=" + uploaded_by + '}';
     }
 
+    
+    public Materials(int id, String subjectCode, String materialName, String materialFile, String uploadedAt, String description, String uploaded_by) {
+        this.id = id;
+        this.subjectCode = subjectCode;
+        this.materialName = materialName;
+        this.materialFile = materialFile;
+        this.uploadedAt = uploadedAt;
+        this.description = description;
+        this.uploaded_by = uploaded_by;
+    }
+    
+    public String getUploaded_by() {
+        return uploaded_by;
+    }
+
+    public void setUploaded_by(String uploaded_by) {
+        this.uploaded_by = uploaded_by;
+    }
+   
+
+    public Lecturer_Profile getUpload_by() {
+        return upload_by;
+    }
+
+    public void setUpload_by(Lecturer_Profile upload_by) {
+        this.upload_by = upload_by;
+    }
+
+    public Materials() {
+    }
+
+    public Materials(int id, String subjectCode, String materialName, String materialFile, String uploadedAt, String description, Lecturer_Profile upload_by) {
+        this.id = id;
+        this.subjectCode = subjectCode;
+        this.materialName = materialName;
+        this.materialFile = materialFile;
+        this.uploadedAt = uploadedAt;
+        this.description = description;
+        this.upload_by = upload_by;
+    }
+    
     public Materials(int id, String subjectCode, String materialName, String materialFile, String uploadedAt, String description) {
         this.id = id;
         this.subjectCode = subjectCode;

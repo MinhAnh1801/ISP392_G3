@@ -67,26 +67,35 @@
                 <div class="profile-brief">
                     <div class="profile-brief-child">
                     </div>
-                    <div class="name">${profile.full_name}</div>
+                    <c:if test="${sessionScope.role ==1}">
+                        <div class="name">${stprofile.full_name}</div>
+                    </c:if>
+                    <c:if test="${sessionScope.role ==2}">
+                        <div class="name">${profile.fullName}</div>
+                    </c:if>
                     <c:if test="${sessionScope.role == 1}">
-                        <div class="roll-number">SV${rollnumber}</div>
+                        <div class="roll-number">${stprofile.student_code}</div>
                     </c:if>
                     <c:if test="${sessionScope.role == 2}">
-                        <div class="roll-number">${lecturer_id}</div>
+                        <div class="roll-number">${profile.department}</div>
                     </c:if>              
-
-                    <img class="photo-4-1682302453807184190466-icon" alt="" src="${profile.profile_picture}">
-                </div>
-                <a href="profile" class="profile-detail">
-                    <div class="profile-detail-child">
+                    <c:if test="${sessionScope.role ==1}"> 
+                        <img class="photo-4-1682302453807184190466-icon" alt="" src="image?name=${stprofile.photo}">
+                    </c:if>
+                    <c:if test="${sessionScope.role ==2}"> 
+                        <img class="photo-4-1682302453807184190466-icon" alt="" src="image?name=${profile.photoUrl}">
+                    </c:if>
                     </div>
-                    <svg class="hs-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19.6177 21.25C19.6177 17.6479 15.6021 14.7206 12 14.7206C8.39791 14.7206 4.38232 17.6479 4.38232 21.25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M11.9999 11.4559C14.4039 11.4559 16.3528 9.50701 16.3528 7.10294C16.3528 4.69888 14.4039 2.75 11.9999 2.75C9.59585 2.75 7.64697 4.69888 7.64697 7.10294C7.64697 9.50701 9.59585 11.4559 11.9999 11.4559Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <a href="profile" class="profile-detail">
+                        <div class="profile-detail-child">
+                        </div>
+                        <svg class="hs-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.6177 21.25C19.6177 17.6479 15.6021 14.7206 12 14.7206C8.39791 14.7206 4.38232 17.6479 4.38232 21.25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11.9999 11.4559C14.4039 11.4559 16.3528 9.50701 16.3528 7.10294C16.3528 4.69888 14.4039 2.75 11.9999 2.75C9.59585 2.75 7.64697 4.69888 7.64697 7.10294C7.64697 9.50701 9.59585 11.4559 11.9999 11.4559Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
 
-                    <div class="xem-h-s">Xem hồ sơ</div>
-                </a>
+                        <div class="xem-h-s">Xem hồ sơ</div>
+                    </a>
             </c:if>
             <c:if test="${sessionScope.role == 0}">
                 <div class="absolute top-[100px] left-[20px] text-sm italic">logged in as admin</div>
@@ -170,11 +179,13 @@
             <c:if test="${sessionScope.role == 0}">
                 <div class="registraion1">
                     <div class="subject-settings">Subject settings</div>
-                    <div class="view-list-of-container">
+                    <div class="view-list-of-container w-[200px]">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
                                 <a href="subject">View list of subjects</a></li>
-                            <li class="hover:underline"><a href="">Add new subject</a></li>
+                            <li class="hover:underline"><a href="subject?mod=1">Add new subject</a></li>
+                            <li class="hover:underline"><a href="viewSchedules">Manage subject schedule</a></li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -191,7 +202,7 @@
                     <div class="subject-settings">Lecturer management</div>
                     <div class="assign-lecturer">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="hover:underline"> <a href="">Assign lecturer</a></li>
+                            <li class="hover:underline"> <a href="lecturers">Assign lecturer</a></li>
                         </ul>
                     </div>
                 </div>
@@ -210,8 +221,7 @@
                     <div class="view-list-of-container2">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
-                                <a href="">View list of classrooms</a></li>
-                            <li class="hover:underline"><a href="">Add new classroom</a></li>
+                                <a href="Admin/dashboardClassrooms">View list of classrooms</a></li>
                         </ul>
                     </div>
                 </div>
@@ -229,8 +239,7 @@
                     <div class="view-list-of-container3">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline"><a href="ViewListApplicationType.jsp">View list of types of application</a></li>
-                            <li class="view-notifications hover:underline"><a href="">Add new type of application</a></li>
-                            <li class="hover:underline"><a href="">View list of applications</a></li>
+                            <li class="hover:underline"><a href="ApplicationController?action=viewAllApplications">View list of applications</a></li>
                         </ul>
                     </div>
                 </div>
@@ -251,7 +260,7 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses">
-                                <a href="" class="hover:underline">Register courses / Đăng ký môn học</a>
+                                <a href="availableSubjects" class="hover:underline">Register courses / Đăng ký môn học</a>
                             </li>
                             <li>
                                 <a href="availableDormRooms" class="hover:underline">Register dorm room / Đăng ký phòng ký túc xá</a>
@@ -267,10 +276,10 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses">
-                                <a href="" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
+                                <a href="viewtimetable" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
                             </li>
                             <li>
-                                <a href="" class="hover:underline">Check attendance / Điểm danh</a>
+                                <a href="checkAttendance" class="hover:underline">Check attendance / Điểm danh</a>
                             </li>
                         </ul>
                     </div>
@@ -282,10 +291,14 @@
                     <div class="registrationng-k">Information access/Tra cứu thông tin</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
-                            <li class="register-courses hover:underline"><a href="">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
-                            <li class="register-courses hover:underline"><a href="">Assignment / Bài tập</a></li>
+
+                            <li class="register-courses hover:underline"><a href="viewTimetable">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
+                            <li class="register-courses hover:underline"><a href="assignments">Assignment / Bài tập</a></li>
+
                             <li class="register-courses hover:underline"><a href="exam">View exam schedule / Xem lịch thi</a></li>
                             <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
+                            <li><a class="hover:underline" href="tuitionpercourse">Tuition fee per course / Biểu học phí</a></li>
+                            <li><a class="hover:underline" href="viewmydorm">View my dorm room / Xem phòng ký túc xá</a></li>
                         </ul>
                     </div>
                 </div>
@@ -296,8 +309,10 @@
                     <div class="registrationng-k">Assignment/Bài tập</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
-                            <li class="register-courses hover:underline"><a href="">Upload assignment / Giao bài tập</a></li>
-                            <li class="register-courses hover:underline"><a href="">Grade assignments / Chấm điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="dashboardAssignments">View uploaded assignments / Xem bài tập đã giao</a></li>
+                            <li class="register-courses hover:underline"><a href="uploadAssignment">Upload assignment / Giao bài tập</a></li>
+                            <li class="register-courses hover:underline"><a href="classgrade">Grade assignments / Chấm điểm</a></li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -320,7 +335,7 @@
                     <div class="registrationng-k">Subject materials/Tài liệu môn học</div>
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Upload materials / Tải lên tài liệu</a></li>
+                            <li class="register-courses hover:underline"><a href="lecturer/materials">Upload materials / Tải lên tài liệu</a></li>
                             <li><a class="hover:underline" href="lecturer/materials">View materials / Xem tài liệu</a></li>
                         </ul>
                     </div>
@@ -333,7 +348,7 @@
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses hover:underline"><a href="">Attendance report / Báo cáo điểm danh</a></li>
-                            <li class="register-courses hover:underline"><a href="">Mark report / Báo cáo điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="markreport">Mark report / Báo cáo điểm</a></li>
                             <li><a href="viewCurriculum" class="hover:underline">Curriculum / Khung chương trình</a></li>
                         </ul>
                     </div>
@@ -345,7 +360,7 @@
                     <div class="registrationng-k">Report/Báo cáo</div>
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Upload grades / Cập nhật điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="uploadGrade">Upload grades / Cập nhật điểm</a></li>
                             <li class="register-courses hover:underline"><a href="">Check grades / Xem điểm sinh viên</a></li>
                         </ul>
                     </div>
@@ -356,8 +371,11 @@
                     <div class="registrationng-k">Finance/Tài chính</div>
                     <div class="pay-paid-items-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Pay paid items / Thanh toán các khoản nộp</a></li>
-                            <li><a href="" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
+                            <li class="register-courses hover:underline"><a href="dashboardPayments">Pay paid items / Thanh toán các khoản nộp</a></li>
+                            <li><a href="transactionHistory" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
+                            <li class="register-courses hover:underline">
+                                <a href="addWallet">Add Money / Nạp tiền</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

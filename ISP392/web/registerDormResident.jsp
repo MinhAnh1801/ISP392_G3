@@ -69,8 +69,14 @@
                     <c:if test="${not empty successMessage}">
                         <div class="success-message">${successMessage}</div>
                     </c:if>
-
-                    <button type="submit" class="btn btn-custom">Submit</button>
+                    <c:if test="${empty redirectmsg}">
+                        <button type="submit" class="btn btn-custom">Submit</button>
+                    </c:if>
+                    <c:if test="${not empty redirectmsg}">
+                        <div class="success-message">${redirectmsg}</div>
+                        <a href="dashboardPayments" class="btn-primary p-2">Go to payment</a>
+                        <a href="home" class="btn-danger p-2 ml-2">Go back homepage</a>
+                    </c:if>
                 </form>
             </div>
         </div>

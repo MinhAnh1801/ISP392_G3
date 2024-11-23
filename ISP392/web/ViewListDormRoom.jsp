@@ -12,7 +12,7 @@
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+        <script src="https://cdn.tailwindcss.com"></script>
         <!-- Custom styles for this page -->
         <style>
             body {
@@ -47,13 +47,10 @@
     <body>
 
         <!-- Navigation bar -->
-        <nav class="navbar navbar-light bg-warning mb-4">
+        <nav class="navbar navbar-light bg-[#d76325] mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">University Academic Portal</a>
+                <a class="navbar-brand text-3xl text-white" href="home">University Academic Portal</a>
                 <div class="d-flex">
-                    <img src="path_to_avatar_image" alt="Avatar" class="rounded-circle" width="40" height="40">
-                    <span class="navbar-text mx-3">Khúc Xuân Hào</span>
-                    <a href="logout" class="btn btn-outline-dark">Log out</a>
                 </div>
             </div>
         </nav>
