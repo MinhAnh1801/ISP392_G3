@@ -1,10 +1,12 @@
 package Controller.Grade;
 
 import DAO.GradeDAO;
+import DAO.SubjectDAO;
 import DAO.UserDAO;
 import Model.Grades;
 import Model.Student_Profile;
 import Model.Subjects;
+import Model.Subjects1;
 import Model.typeGrade;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,15 +31,14 @@ public class UploadGradeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
         Integer id = (Integer) session.getAttribute("user");
         if (id == null) {
             response.sendRedirect("login");
             return;
 
-        }
-
+        }     
+        
         request.getRequestDispatcher("grade/uploadGrade.jsp").forward(request, response);
     }
 
@@ -64,11 +65,9 @@ public class UploadGradeController extends HttpServlet {
                 
                 // lấy ra mã sinh viên từ cột 0
                 String studentMSV = row.getCell(0).getStringCellValue();
+                log(studentMSV);
                 UserDAO userDao = new UserDAO();
-                int sp = userDao.getStudentIdByMSV(studentMSV);
-                
-                
-                
+                int sp = userDao.getStudentIdByMSV(studentMSV);                             
                 int subjectId = (int) row.getCell(2).getNumericCellValue();
                 double grade = row.getCell(5).getNumericCellValue();
                 String comments = row.getCell(6).getStringCellValue();
@@ -76,7 +75,9 @@ public class UploadGradeController extends HttpServlet {
                 int percentId = (int) row.getCell(4).getNumericCellValue();
 
                 gdao.insertGrade(sp, subjectId, grade, comments, typeId, percentId);
-
+                log(String.valueOf(sp));
+                log(String.valueOf(subjectId));
+                log(String.valueOf(grade));
             }
 
             response.getWriter().write("<!DOCTYPE html>\n"
@@ -138,7 +139,7 @@ public class UploadGradeController extends HttpServlet {
                     + "<body>\n"
                     + "    <div class=\"upload-container\">\n"
                     + "        <h1>File uploaded and data inserted successfully.</h1>\n"
-                    + "        <a>\n"
+                    + "        <a  href=\"home\">\n"
                     + "            <input type=\"submit\" class=\"btn\" value=\"Home\">\n"
                     + "        </a>\n"
                     + "                    \n"

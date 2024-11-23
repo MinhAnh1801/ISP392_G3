@@ -70,9 +70,9 @@
         <form action="checkAttendance" method="post">
             <input name="action" value="chooseSubject" type="hidden">
             <select name="subjects" id="subjects" onchange="this.form.submit()">
-                <option value="">Select Subject</option>
+                <option value="0">Select Subject</option>
                 <c:forEach items="${listSubjectBylecture}" var="subject">
-                    <option value="${subject.id}" <c:if test="${subject.id == subjectId}">selected</c:if>>${subject.name} - ${subject.id}</option>
+                    <option value="${subject.id}" <c:if test="${subject.id == subjectId}">selected</c:if>>${subject.code}</option>
                 </c:forEach>
             </select>
         </form>
@@ -80,9 +80,9 @@
         <form action="checkAttendance" method="post">
             <input name="action" value="chooseClass" type="hidden">
             <select name="classes" id="classes" onchange="this.form.submit()">
-                <option value="">Select Class</option>
+                <option value="0">Select Class</option>
                 <c:forEach items="${listClassBySubjectId}" var="classItem">
-                    <option value="${classItem.class_id}" <c:if test="${classItem.class_id == classId}">selected</c:if>>${classItem.class_id} - ${classItem.class_name}</option>
+                    <option value="${classItem.class_id}" <c:if test="${classItem.class_id == classId}">selected</c:if>>${classItem.class_name}</option>
                 </c:forEach>
             </select>
 

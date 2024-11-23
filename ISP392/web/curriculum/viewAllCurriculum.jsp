@@ -73,9 +73,32 @@
             }
 
         </style>
-
+    <style>
+                .navbar-brand {
+                color: white;
+                font-size: 24px;
+            }
+               .navbar {
+                background-color: #FF8C00;
+            }
+              .body {
+            background-color: #ffffff; /* Màu nền trắng */
+            font-family: Arial, sans-serif; /* Font chữ */
+        }
+        </style>
     </head>
     <body>
+        
+        
+        
+        
+       
+         <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="home">University Academic Portal</a>
+            </div>
+        </nav>
         <div class="container" style=" margin: auto; padding: 20px;">
             <h1>Curriculum Overview</h1>
             <div>

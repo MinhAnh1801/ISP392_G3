@@ -18,13 +18,13 @@ public class Attendance {
     private String status;
     private String reason;
 
-    private Classs classId;
+    private Class classId;
     private String fullName;
     
     public Attendance() {
     }
 
-    public Attendance(int id, User studentId, Subjects subject, Date attendance_date, String status, String reason, Classs classId, String fullName) {
+    public Attendance(int id, User studentId, Subjects subject, Date attendance_date, String status, String reason, Class classId, String fullName) {
         this.id = id;
         this.studentId = studentId;
         this.subject = subject;
@@ -44,7 +44,7 @@ public class Attendance {
         this.reason = reason;
     }
 
-    public Attendance(int id, User studentId, Subjects subject, Date attendance_date, String status, String reason, Classs classId) {
+    public Attendance(int id, User studentId, Subjects subject, Date attendance_date, String status, String reason, Class classId) {
         this.id = id;
         this.studentId = studentId;
         this.subject = subject;
@@ -62,11 +62,11 @@ public class Attendance {
         this.fullName = fullName;
     }
 
-    public Classs getClassId() {
+    public Class getClassId() {
         return classId;
     }
 
-    public void setClassId(Classs classId) {
+    public void setClassId(Class classId) {
         this.classId = classId;
     }
     

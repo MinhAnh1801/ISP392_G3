@@ -10,6 +10,10 @@
         <title>Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Avenir:wght@400&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" />
         <style type="text/css">
             body{
                 margin-top:20px;
@@ -92,14 +96,42 @@
             .mb-1-6, .my-1-6 {
                 margin-bottom: 1.6rem;
             }
-
+            .login-child {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                background-color: #d76325;
+                width: 100%;
+                height: 72px;
+            }
+            .back {
+                font-weight: 600;
+                font-family: Inter;
+                font-size: 18px;
+            }
+            .login-item {
+                position: absolute;
+                top: 10px;
+                left: 47px;
+                border-radius: 17px;
+                width: 128px;
+                height: 52px;
+            }
         </style>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     </head>
     <body>
-
+        <div class="login-child">
+        </div>
+        <a href="/ISP392/home" class="login-item bg-white flex hover:bg-slate-200 duration-200">
+            <svg class="ml-[14px] mt-[14px]" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12H20" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+            <path d="M11.0325 4.33936L4.45961 10.9122C4.31606 11.0546 4.20206 11.224 4.12432 11.4108C4.04646 11.5975 4.00641 11.7977 4.00641 12C4.00641 12.2023 4.04646 12.4025 4.12432 12.5892C4.20206 12.776 4.31606 12.9454 4.45961 13.0877L11.0325 19.6606" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="back m-auto">Return</div>
+        </a>
 
 
         <div class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
@@ -159,7 +191,7 @@
         </script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
-        <div class="container">
+        <div class="container mt-20">
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
                     <div class="card border-0 shadow">
@@ -168,16 +200,19 @@
                         </div>
                         <style>
                             .photo-container {
-                                text-align: center; /* Căn giữa theo chiều ngang */
-                            }
+        display: flex; /* Kích hoạt flexbox */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        height: 300px; /* Đặt chiều cao cố định cho container (nếu cần) */
+    }
 
-                            .profile-photo {
-                                width: 200px; /* Chiều rộng của ảnh */
-                                height: 200px; /* Chiều cao của ảnh */
-                                border-radius: 50%; /* Để tạo hình tròn */
-                                object-fit: cover; /* Để đảm bảo ảnh được cắt theo hình tròn mà không bị méo */
-                                border: 2px solid #ccc; /* Thêm viền nếu cần */
-                            }
+    .profile-photo {
+        width: 200px; /* Chiều rộng của ảnh */
+        height: 200px; /* Chiều cao của ảnh */
+        border-radius: 50%; /* Tạo hình tròn */
+        object-fit: cover; /* Cắt ảnh sao cho vừa khung mà không bị méo */
+        border: 2px solid #ccc; /* Thêm viền cho ảnh */
+    }
 
 
                         </style>

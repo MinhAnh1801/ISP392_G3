@@ -7,6 +7,10 @@
         <title>Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Avenir:wght@400&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" />
         <style type="text/css">
             body {
                 margin-top: 20px;
@@ -74,6 +78,27 @@
             .mb-1-6, .my-1-6 {
                 margin-bottom: 1.6rem;
             }
+            .login-child {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                background-color: #d76325;
+                width: 100%;
+                height: 72px;
+            }
+            .back {
+                font-weight: 600;
+                font-family: Inter;
+                font-size: 18px;
+            }
+            .login-item {
+                position: absolute;
+                top: 10px;
+                left: 47px;
+                border-radius: 17px;
+                width: 128px;
+                height: 52px;
+            }
         </style>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -81,9 +106,17 @@
 
     </head>
     <body>
+        <div class="login-child">
+        </div>
+        <a href="/ISP392/home" class="login-item bg-white flex hover:bg-slate-200 duration-200">
+            <svg class="ml-[14px] mt-[14px]" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12H20" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+            <path d="M11.0325 4.33936L4.45961 10.9122C4.31606 11.0546 4.20206 11.224 4.12432 11.4108C4.04646 11.5975 4.00641 11.7977 4.00641 12C4.00641 12.2023 4.04646 12.4025 4.12432 12.5892C4.20206 12.776 4.31606 12.9454 4.45961 13.0877L11.0325 19.6606" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="back m-auto">Return</div>
+        </a>
 
-
-        <div class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
+        <div class="position-fixed top-0 end-0 p-3 mt-20" style="z-index: 11;">
             <div id="toastMessage" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
                 <div class="d-flex">
                     <div class="toast-body">
@@ -141,142 +174,43 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
-        <div class="container">
+        <div class="container mt-20">
 
 
 
             <div class="row justify-content-center">
-                <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+                <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn mt-12">
                     <div class="card border-0 shadow">
-                        <div class="photo-container">
-                            <img src="${lecturerProfile.photoUrl}" alt="${lecturerProfile.fullName}"  class="profile-photo">
-                        </div>
-                        <style>
-                            .photo-container {
-                                text-align: center; /* Căn giữa theo chiều ngang */
-                            }
-
-                            .profile-photo {
-                                width: 200px; /* Chiều rộng của ảnh */
-                                height: 200px; /* Chiều cao của ảnh */
-                                border-radius: 50%; /* Để tạo hình tròn */
-                                object-fit: cover; /* Để đảm bảo ảnh được cắt theo hình tròn mà không bị méo */
-                                border: 2px solid #ccc; /* Thêm viền nếu cần */
-                            }
-
-
-                        </style>
+                        <img src="${lecturerProfile.photoUrl}" alt="${lecturerProfile.fullName}">
                         <div class="card-body p-1-9 p-xl-5">
                             <div class="mb-4">
                                 <h3 class="h4 mb-0">${lecturerProfile.fullName}</h3>
                                 <span class="text-primary">Lecturer</span>
                             </div>
-
-
-
-
-
                             <ul class="list-unstyled mb-4">
                                 <li class="mb-3"><a href="mailto:${lecturerProfile.email}"><i class="far fa-envelope display-25 me-3 text-secondary"></i>${lecturerProfile.email}</a></li>
                                 <li class="mb-3"><a href="tel:${lecturerProfile.phoneNumber}"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i>${lecturerProfile.phoneNumber}</a></li>
                                 <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>${lecturerProfile.department}</a></li>
                             </ul>
-                            <ul class="social-icon-style2 ps-0">
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="#!" class="rounded-3"><i class="fab fa-linkedin-in"></i></a></li>
-                            </ul>
-                           
-                            <br>
-                            <br>
-                            <br>
-                            
-                            <div class="button-group">
-                                <!-- Change Password Button -->
-                                <ul>
-                                    <li>
-                                        <a href="changepassword" class="custom-button" id="change-password-btn">
-                                            Đổi mật khẩu
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="custom-button" id="update-profile-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                            Cập nhật hồ sơ
-                                        </button>
-                                    </li>
-                                </ul>
+                            <div class="social-icon-style2 ps-0 bg-orange-300 p-2 rounded-md">
+                                <a href="changepassword" class="ml-1">
+                                    <button>Change password</button>
+                                </a>
                             </div>
-                            
-                            <style>
-                                /* Reset basic styles */
-                                .button-group ul {
-                                    list-style-type: none;
-                                    padding: 0;
-                                    margin: 0;
-                                    display: flex; /* Sử dụng flexbox để căn chỉnh các nút */
-                                    gap: 15px; /* Khoảng cách giữa các nút */
+                            <ul class="social-icon-style2 ps-0">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">Cập nhật hồ sơ</button>
+                            </ul>
+
+                            <script>
+                                function openUpdateProfileModal() {
+                                    // Mở modal hoặc chuyển hướng đến trang cập nhật hồ sơ
+                                    // Ví dụ: Nếu bạn sử dụng Bootstrap cho modal
+                                    $('#updateProfileModal').modal('show');
                                 }
 
-                                .button-group li {
-                                    margin-bottom: 0; /* Bỏ khoảng cách dọc giữa các item */
-                                }
 
-                                /* Base button styles */
-                                .custom-button {
-                                    padding: 12px 20px;
-                                    font-size: 16px;
-                                    font-weight: 600;
-                                    color: #fff;
-                                    background-color: #007bff; /* Màu nền mặc định */
-                                    border: none;
-                                    border-radius: 8px;
-                                    cursor: pointer;
-                                    display: inline-block;
-                                    text-align: center;
-                                    transition: background-color 0.3s ease, transform 0.2s ease;
-                                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                                    text-decoration: none; /* Xóa gạch chân cho liên kết */
-                                }
 
-                                /* Hover effect for buttons */
-                                .custom-button:hover {
-                                    transform: scale(1.05);
-                                }
-
-                                /* Specific styles for buttons */
-                                #change-password-btn {
-                                    background-color: #28a745; /* Màu nền cho nút đổi mật khẩu */
-                                }
-
-                                #change-password-btn:hover {
-                                    background-color: #218838; /* Màu nền khi hover cho nút đổi mật khẩu */
-                                }
-
-                                #update-profile-btn {
-                                    background-color: #6c757d; /* Màu nền cho nút cập nhật hồ sơ */
-                                }
-
-                                #update-profile-btn:hover {
-                                    background-color: #5a6268; /* Màu nền khi hover cho nút cập nhật hồ sơ */
-                                }
-
-                                /* Align text inside buttons to the center */
-                                .custom-button {
-                                    display: flex;
-                                    justify-content: center;
-                                    align-items: center;
-                                    text-align: center;
-                                }
-
-                                /* Full width buttons on mobile */
-                                @media (max-width: 576px) {
-                                    .custom-button {
-                                        width: 100%;
-                                    }
-                                }
-                            </style>
-
+                            </script>
                             <!-- Modal -->
                             <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -286,6 +220,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <form id="lecturerProfileForm" action="profile" method="post">
+
                                             <div class="modal-body">
                                                 <input type="hidden" id="lecturerId" value="${lecturerProfile.lecturerId}" />
                                                 <div class="mb-3">
@@ -320,32 +255,22 @@
                                                     <label for="mentoringSkill" class="form-label">Mentoring Skill</label>
                                                     <input name="mentoringSkill" type="number" class="form-control" id="mentoringSkill" value="${lecturerProfile.mentoringSkill}" required />
                                                 </div>
+                                                <!-- Add other fields if needed -->
                                             </div>
+
+
                                             <input type="text" value="lecturer" name="action" hidden="">
+
+
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary" id="saveChanges">Save</button>
                                             </div>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
-
-                            <script>
-                                // Chức năng mở modal (nếu cần thiết, nhưng bạn đã sử dụng data-bs-toggle)
-                                function openUpdateProfileModal() {
-                                    $('#editProfileModal').modal('show');
-                                }
-                            </script>
-
-                            <!-- jQuery -->
-                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                            <!-- Bootstrap JS -->
-                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-
-
-
-
 
                         </div>
                     </div>

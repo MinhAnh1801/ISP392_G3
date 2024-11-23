@@ -56,7 +56,7 @@ public class AttendanceDAO extends DBContext {
                 + "FROM [dbo].[StudentClass] sc "
                 + "JOIN [dbo].[Student_Profile] sp ON sc.student_id = sp.student_id "
                 + "LEFT JOIN [dbo].[Attendance] a ON sp.student_id = a.student_id AND a.subject_id = ? "
-                + "WHERE sc.class_id = ? AND a.attendance_date = ?";
+                + "WHERE sc.class_id = ? AND a.attendance_date = ? and sc.subject_id = ?";
 
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
 

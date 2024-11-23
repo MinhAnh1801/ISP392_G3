@@ -19,36 +19,35 @@ import Model.Materials;
 import Model.Student_Profile;
 import Model.Subjects;
 import Model.User;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class MaterialDAO extends DBContext {
 
     private final Connection connection = getConnection();
 
-    public List<Materials> getALLMaterials() {
+    public List<Materials> getALLMaterials(int sid) {
         List<Materials> materialsList = new ArrayList<>();
-        String sql = "SELECT TOP (1000) [id]\n"
-                + "      ,[subject_id]\n"
-                + "      ,[material_name]\n"
-                + "      ,[material_file]\n"
-                + "      ,[uploaded_at]\n"
-                + "      ,[uploaded_by]\n"
-                + "      ,[description]\n"
-                + "  FROM [dbo].[Materials] ORDER BY \n"
-                + "      [id] DESC;";
+        String sql = "Select m.*,s.code from Materials m join Subjects s on m.subject_id = s.id\n"
+                + "where m.subject_id = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
-
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, sid);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Materials material = new Materials();
                 material.setId(resultSet.getInt("id"));
-                material.setMaterial_name(resultSet.getString("material_name"));
-                material.setMaterial_file(resultSet.getString("material_file"));
-
+                material.setMaterialName(resultSet.getString("material_name"));
+                material.setMaterialFile(resultSet.getString("material_file"));
+                material.setSubjectCode(resultSet.getString("code"));
                 UserDAO udao = new UserDAO();
-                Lecturer_Profile lecturer = udao.getLecturerProfileById(resultSet.getInt("uploaded_by"));
+                String lecturer = udao.getLecturerProfileById(resultSet.getInt("uploaded_by")).getFullName();
                 material.setUploaded_by(lecturer);
-
-                material.setUploaded_at(resultSet.getDate("uploaded_at"));
+                Timestamp uploadTime = resultSet.getTimestamp("uploaded_at");
+                // Định dạng thời gian thành yyyy-MM-dd HH:mm
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String formattedUploadTime = sdf.format(uploadTime);
+                material.setUploadedAt(formattedUploadTime);
 
                 material.setDescription(resultSet.getString("description"));
                 materialsList.add(material);
@@ -59,26 +58,9 @@ public class MaterialDAO extends DBContext {
         return materialsList;
     }
 
-    public boolean saveMaterial(Materials material) {
-        String sql = "INSERT INTO [dbo].[Materials]([material_name], [description], [subject_id], [uploaded_by], [material_file], [uploaded_at]) VALUES (?, ?, ?, ?, ?, GETDATE())";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            // Thiết lập các giá trị cho câu lệnh SQL
-            ps.setString(1, material.getMaterial_name());
-            ps.setString(2, material.getDescription());
-            ps.setInt(3, material.getSubjectId().getId());
-            ps.setInt(4, material.getUploaded_by().getLecturerId());
-            ps.setString(5, material.getMaterial_file());
-
-            // Thực thi câu lệnh SQL và kiểm tra kết quả
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0; // Trả về true nếu insert thành công
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false; // Trả về false nếu có lỗi xảy ra
-        }
+    public static void main(String[] args) {
+        MaterialDAO dao = new MaterialDAO();
+        System.out.println(dao.getALLMaterials(1));
     }
 
 }

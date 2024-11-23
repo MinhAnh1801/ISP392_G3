@@ -114,6 +114,9 @@ public void insertGrade(int studentId, int subjectId, double grade, String comme
         System.out.println("Error while inserting grade: " + e.getMessage());
     }
 }
-
+    public static void main(String[] args) {
+        GradeDAO dao = new GradeDAO();
+        System.out.println(dao.getGradeById(29));
+    }
 
 }

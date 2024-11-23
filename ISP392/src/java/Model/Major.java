@@ -15,6 +15,9 @@ public class Major {
     public Major() {
     }
 
+    public Major(int id) {
+        this.id = id;
+    }
     
 
     public Major(int id, String name) {
@@ -36,6 +39,11 @@ public class Major {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Major{" + "id=" + id + ", name=" + name + '}';
     }
     
 }

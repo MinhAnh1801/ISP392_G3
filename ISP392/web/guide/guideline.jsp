@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Guide Line</title>
-
+        <script src="https://cdn.tailwindcss.com"></script>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -56,10 +56,31 @@
             .table tbody tr:hover {
                 background-color: #ffe0b2; /* Màu nền sáng khi di chuột qua hàng */
             }
+             .navbar-brand {
+                color: white;
+                font-size: 24px;
+            }
+               .navbar {
+                background-color: #FF8C00;
+            }
         </style>
     </head>
     <body>
-
+     
+        </style>
+         <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="home">University Academic Portal</a>
+            </div>
+        </nav>
+        <a href="home" class="mb-10 bg-blue-100 w-[100px] flex hover:bg-slate-200 duration-200 rounded-lg">
+            <svg class="ml-[14px] mt-[14px] mb-[10px]" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12H20" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+            <path d="M11.0325 4.33936L4.45961 10.9122C4.31606 11.0546 4.20206 11.224 4.12432 11.4108C4.04646 11.5975 4.00641 11.7977 4.00641 12C4.00641 12.2023 4.04646 12.4025 4.12432 12.5892C4.20206 12.776 4.31606 12.9454 4.45961 13.0877L11.0325 19.6606" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="back m-auto">Return</div>
+        </a>
         <c:if test="${sessionScope.role == 0}">
             <div>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGuidelineModal">
@@ -90,9 +111,8 @@
                                 <label for="guidelineCategory" class="form-label">Thể loại</label>
                                 <select name="category" class="form-control" id="guidelineCategory">
                                     <option value="" disabled selected>Chọn danh mục</option>
-                                    <option value="category1">Danh mục 1</option>
-                                    <option value="category2">Danh mục 2</option>
-                                    <option value="category3">Danh mục 3</option>
+                                    <option value="User Guide">User Guide</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
 
@@ -124,6 +144,12 @@
 
 
 
+<style>
+    .alert-container {
+        max-width: 500px; /* Giới hạn chiều rộng */
+        margin: 0 auto;  /* Căn giữa container */
+    }
+</style>
 
         <!--Hiển thị thông báo lỗi hoặc mess -->
         <div class="container mt-5 alert-container">
@@ -173,7 +199,7 @@
 
         <!-- in ra table -->
         <div class="container mt-5">
-            <h2 class="text-center">Danh sách hướng dẫn </h2>
+            <h1 class="text-center">Danh sách hướng dẫn </h1>
 
             <table id="guideTable" class="table table-bordered mt-4">
                 <thead class="table-primary">
@@ -261,8 +287,14 @@
 
 
 
-                               
 
+                                <c:if test="${sessionScope.role == 0}">
+
+
+                                    <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
+                                        Tạo thêm bước 
+                                    </button>
+                                </c:if>
                                 <!-- The Modal -->
                                 <div class="modal fade" id="CreatelGuidelineDetailStep${listGuideline.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -326,7 +358,7 @@
                                         <h3>${listGuideDetail.step_title}</h3>
                                         <p>${listGuideDetail.description}</p>
 
-                                        <c:set var="hasData" value="true" />
+                                        <c:set var="hasData" value="true" /> <!-- Đặt cờ hasData là true nếu có dữ liệu -->
 
                                         <c:if test="${sessionScope.role == 0}">
                                             <div class="d-flex align-items-center">
@@ -362,24 +394,8 @@
                                 <c:if test="${!hasData}">
                                     <h3>Không có dữ liệu hướng dẫn</h3>
                                     <p>Vui lòng kiểm tra lại sau.</p>
-                                    <c:if test="${sessionScope.role == 0}">
-                                        Click vào đểt tạo thêm bước
-                                        <button type="button" class="btn btn-primary" id="openModal1${listGuideline.id}">
-                                            Tạo thêm bước 
-                                        </button>
-                                    </c:if>
                                 </c:if>
                             </div>
-                                <br>
-                                <br>
-                                <br>
-                                 <c:if test="${hasData == true}">
-                                    <c:if test="${sessionScope.role == 0}">
-                                        <button type="button" class="btn btn-primary btn-tren" id="openModal1${listGuideline.id}">
-                                            Tạo thêm bước 
-                                        </button>
-                                    </c:if>
-                                </c:if>
 
 
 

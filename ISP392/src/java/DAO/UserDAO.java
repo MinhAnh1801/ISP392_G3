@@ -24,6 +24,47 @@ import Model.User;
  */
 public class UserDAO extends DBContext {
 
+    public int getStudentIdByMSV(String studentMSV) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int studentId = -1;
+
+        try {
+            Connection connection = getConnection();
+
+            // SQL query to retrieve the student_id based on the MSV
+            String query = "SELECT student_id FROM Student_Profile WHERE student_code = ?";
+
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, studentMSV);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studentId = rs.getInt("student_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return studentId;
+    }
+
     public User getUserById(int userId) {
         String sql = "SELECT [id], [username], [email], [password], [role], [status] FROM [dbo].[Users] WHERE [id] = ?";
         User user = new User();
@@ -157,7 +198,7 @@ public class UserDAO extends DBContext {
                 + "      ,[trang_thai_den]\n"
                 + "      ,[chuyen_nganh]\n"
                 + "      ,[photo]\n"
-                + "  FROM [dbo].[Student_Profile] WHERE [student_id] = ?";
+                + "  FROM [Student_Profile] WHERE [student_id] = ?";
         Student_Profile studentProfile = new Student_Profile();
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -172,7 +213,6 @@ public class UserDAO extends DBContext {
                 MajorDAO mDao = new MajorDAO();
                 Major major = mDao.getMajorById(rs.getInt("major_id"));
                 studentProfile.setMajor_id(major);
-
                 studentProfile.setFull_name(rs.getString("full_name"));
                 studentProfile.setDate_of_birth(rs.getDate("date_of_birth"));
                 studentProfile.setPhone_number(rs.getString("phone_number"));
@@ -339,6 +379,27 @@ public class UserDAO extends DBContext {
         return false;  // Trả về false nếu cập nhật thất bại
     }
 
+    public User getUserByUsername(String username) {
+        String sql = "SELECT [id], [username], [email], [password], [role], [status] FROM [dbo].[Users] WHERE [username] = ?";
+        User user = null;
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                user.setStatus(rs.getString("status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public boolean updateStudentProfile(Integer id, String phoneNumber, String address, String parentName, String parentPhone, String parentAddress, String parentOccupation, String parentWorkplace) {
         Connection conn = null; // Khởi tạo kết nối
         PreparedStatement pstmt = null; // Khởi tạo PreparedStatement
@@ -388,51 +449,16 @@ public class UserDAO extends DBContext {
         }
     }
 
-    public int getStudentIdByMSV(String studentMSV) {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        int studentId = -1;
-
-        try {
-            Connection connection = getConnection();
-
-            // SQL query to retrieve the student_id based on the MSV
-            String query = "SELECT student_id FROM Student_Profile WHERE student_code = ?";
-
-            pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, studentMSV);
-
-            rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                studentId = rs.getInt("student_id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return studentId;
-    }
-    
     public static void main(String[] args) {
-        UserDAO udao = new UserDAO();
-        System.out.println(udao.getStudentIdByMSV("SV2024"));
-            
+        UserDAO userDAO = new UserDAO();
+
+        System.out.println(userDAO.getStudentProfile(29));
+
+//    if (isUpdated) {
+//        System.out.println("Cập nhật thông tin sinh viên thành công.");
+//    } else {
+//        System.out.println("Cập nhật thông tin sinh viên thất bại.");
+//    }
     }
 
 }

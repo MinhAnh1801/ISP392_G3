@@ -19,6 +19,7 @@ import Model.Major;
 import Model.PercentOption;
 import Model.Student_Profile;
 import Model.Subjects;
+import Model.Subjects1;
 import Model.User;
 import javax.security.auth.Subject;
 
@@ -46,7 +47,7 @@ public class MajorDAO extends DBContext {
         return major;
     }
 
-    public List<Subjects> getListSubjectByUserId(Integer id) {
+    public List<Subjects1> getListSubjectByUserId(Integer id) {
         // lấy major từ user
         UserDAO udao = new UserDAO();
         Student_Profile user = udao.getStudentProfile(id);
@@ -55,20 +56,19 @@ public class MajorDAO extends DBContext {
         System.out.println(majorId);
 
         MajorDAO mdao = new MajorDAO();
-        List<Subjects> subjects = mdao.getSubjectByMajorId(majorId);
+        List<Subjects1> subjects = mdao.getSubjectByMajorId(majorId);
 
         return subjects;
     }
 
-    public List<Subjects> getSubjectByMajorId(int majorId) {
-        List<Subjects> subjects = new ArrayList<>();
+    public List<Subjects1> getSubjectByMajorId(int majorId) {
+        List<Subjects1> subjects = new ArrayList<>();
         // Ensure the SQL query includes condition_subject_1 and condition_subject_2
         String sql = "  SELECT TOP (1000)\n"
                 + "    s.id,\n"
                 + "    s.code,\n"
                 + "    s.name,\n"
                 + "    s.description,\n"
-                + "    s.lecturer_id,\n"
                 + "    c.major_id,\n"
                 + "    c.subject_id,\n"
                 + "	c.[semester],\n"
@@ -89,21 +89,20 @@ public class MajorDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Subjects subject = new Subjects();
+                Subjects1 subject = new Subjects1();
                 subject.setId(rs.getInt("id"));
                 subject.setCode(rs.getString("code"));
                 subject.setName(rs.getString("name"));
                 subject.setCredits(rs.getInt("credits"));
                 subject.setDescription(rs.getString("description"));
                 subject.setSemester(rs.getInt("semester"));
-                subject.setLecturerId(rs.getInt("lecturer_id"));
 
                 MajorDAO mdao = new MajorDAO();
 
                 // Retrieve condition_subject_1
                 int conditionSubject1Id = rs.getInt("condition_subject_1");
                 if (!rs.wasNull()) { // Check if the value is not null
-                    Subjects cs1 = mdao.getSubject(conditionSubject1Id);
+                    Subjects1 cs1 = mdao.getSubject(conditionSubject1Id);
                     subject.setConditionSubject1(cs1);
 
                 }
@@ -111,7 +110,7 @@ public class MajorDAO extends DBContext {
                 // Retrieve condition_subject_2
                 int conditionSubject2Id = rs.getInt("condition_subject_2");
                 if (!rs.wasNull()) { // Check if the value is not null
-                    Subjects cs2 = mdao.getSubject(conditionSubject2Id);
+                    Subjects1 cs2 = mdao.getSubject(conditionSubject2Id);
                     subject.setConditionSubject1(cs2);
                 }
 
@@ -124,23 +123,19 @@ public class MajorDAO extends DBContext {
         return subjects;
     }
 
-    private Subjects getSubject(int id) {
-        Subjects subject = null;
-        String sql = "SELECT id, code, name, description, lecturer_id "
-                + "FROM Subjects "
-                + "WHERE id = ?";
+    private Subjects1 getSubject(int id) {
+        Subjects1 subject = null;
+        String sql = "SELECT id as s_id, code, name, description FROM Subjects WHERE id = ?";
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
-                subject = new Subjects();
-                subject.setId(rs.getInt("id"));
+                subject = new Subjects1();
+                subject.setId(rs.getInt("s_id"));
                 subject.setCode(rs.getString("code"));
                 subject.setName(rs.getString("name"));
                 subject.setDescription(rs.getString("description"));
-                subject.setLecturerId(rs.getInt("lecturer_id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -162,19 +157,19 @@ public class MajorDAO extends DBContext {
                 Major major = mdao.getMajorById(rs.getInt("major_id"));
                 curriculum.setMajor_id(major);
 
-                Subjects subject = mdao.getSubject(rs.getInt("subject_id"));
+                Subjects1 subject = mdao.getSubject(rs.getInt("subject_id"));
                 curriculum.setSubject_id(subject);
 
                 // Lấy thông tin điều kiện môn học
                 int conditionSubject1Id = rs.getInt("condition_subject_1");
                 if (!rs.wasNull()) {
-                    Subjects condition1 = mdao.getSubject(conditionSubject1Id);
+                    Subjects1 condition1 = mdao.getSubject(conditionSubject1Id);
                     curriculum.setCondition_subject_1(condition1);
                 }
 
                 int conditionSubject2Id = rs.getInt("condition_subject_2");
                 if (!rs.wasNull()) {
-                    Subjects condition2 = mdao.getSubject(conditionSubject2Id);
+                    Subjects1 condition2 = mdao.getSubject(conditionSubject2Id);
                     curriculum.setCondition_subject_2(condition2);
                 }
 
@@ -282,7 +277,7 @@ public class MajorDAO extends DBContext {
                         rs.getString("code"),
                         rs.getString("name"),
                         rs.getString("description")
-//                        rs.getInt("lecturer_id")
+                //                        rs.getInt("lecturer_id")
                 );
                 subjectList.add(subject);
             }
@@ -292,15 +287,11 @@ public class MajorDAO extends DBContext {
 
         return subjectList;
     }
-    
+
     public static void main(String[] args) {
         MajorDAO mdao = new MajorDAO();
-        
-        List<Subjects> subjectList = mdao.getAllSubjects();
-        for (Subjects subjects : subjectList) {
-            System.out.println(subjects.getName());
-            
-        }
+
+        System.out.println(mdao.getClassBySubjectId(2, 8));
     }
 
     public boolean deleteCurriculum(int majorId, int subjectId) {
@@ -393,8 +384,9 @@ public class MajorDAO extends DBContext {
 
     public List<Subjects> getSubjectByTeacher(int userId) {
         List<Subjects> subjectsList = new ArrayList<>();
-        String query = "SELECT s.* FROM Subjects s "
-                + "JOIN Lecturer_Timetable lt ON s.id = lt.subject_id "
+        String query = "SELECT sb.* FROM Subjects sb\n"
+                + "JOIN Schedule s on s.subject_id = sb.id\n"
+                + "JOIN Lecturer_Timetable lt on lt.schedule_id = s.id\n"
                 + "WHERE lt.lecturer_id = ?"; // Join Subjects with Lecturer_Timetable
 
         try (Connection connection = getConnection(); // Ensure connection is managed
@@ -417,15 +409,17 @@ public class MajorDAO extends DBContext {
         return subjectsList;
     }
 
-    public List<Classs> getClassBySubjectId(int subjectId) {
+    public List<Classs> getClassBySubjectId(int uid,int subjectId) {
         List<Classs> classList = new ArrayList<>();
-        String sql = "SELECT DISTINCT c.class_id, c.class_name "
-                + "FROM Lecturer_Timetable lt "
-                + "JOIN Class c ON lt.class_id = c.class_id "
-                + "WHERE lt.subject_id = ?";
+        String sql = "SELECT DISTINCT cl.class_id,cl.class_name\n"
+                + "FROM Lecturer_Timetable lt\n"
+                + "JOIN Schedule s ON lt.schedule_id = s.id\n"
+                + "JOIN Class cl ON s.class_id = cl.class_id\n"
+                + "WHERE lt.lecturer_id = ? and s.subject_id=?;";
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, subjectId);
+            ps.setInt(1, uid);
+            ps.setInt(2, subjectId);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -445,8 +439,7 @@ public class MajorDAO extends DBContext {
         List<PercentOption> percentOptions = new ArrayList<>();
         String query = "SELECT percentId, percent_value FROM PercentOptions";
 
-        try (Connection connection = getConnection(); 
-                 PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 PercentOption option = new PercentOption();
@@ -461,6 +454,4 @@ public class MajorDAO extends DBContext {
 
         return percentOptions;
     }
-
-    
 }

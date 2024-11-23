@@ -59,42 +59,53 @@ public class ProfileController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // lấy thông tin user 
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    // Lấy thông tin session
+    HttpSession session = request.getSession();
+    Integer userId = (Integer) session.getAttribute("user");
+    Integer role = (Integer) session.getAttribute("role");
 
-        HttpSession session = request.getSession();
-        Integer id = (Integer) session.getAttribute("user");
-        Integer role = (Integer) session.getAttribute("role");
-
-        if (id == null) { // Kiểm tra null trước
-            response.sendRedirect("login");
-        } else {
-
-            int user_id = id;
-            // khởi tạo 
-            UserDAO uDao = new UserDAO();
-          
-            
-
-            if (role==1) {
-
-                Student_Profile studentProfile = uDao.getStudentProfile(user_id);
-                request.setAttribute("studentProfile", studentProfile);
-
-                request.getRequestDispatcher("/profile/viewStudentProfile.jsp").forward(request, response);
-
-            } else if (role ==2) {
-
-                Lecturer_Profile lecturer = uDao.getLecturerProfileById(user_id);
-                request.setAttribute("lecturerProfile", lecturer);
-
-                request.getRequestDispatcher("/profile/viewLecturerProfile.jsp").forward(request, response);
-
-            }
-        }
+    // Kiểm tra session hợp lệ
+    if (userId == null || role == null) {
+        response.sendRedirect("login");
+        return;
     }
+
+    // Khởi tạo DAO
+    UserDAO userDAO = new UserDAO();
+
+    try {
+        // Xử lý dựa trên vai trò
+        if (role == 1) { // Role Student
+            Student_Profile studentProfile = userDAO.getStudentProfile(userId);
+            if (studentProfile == null) { // Trường hợp không tìm thấy profile
+                response.sendRedirect("login");
+                return;
+            }
+            request.setAttribute("studentProfile", studentProfile);
+            request.getRequestDispatcher("/profile/viewStudentProfile.jsp").forward(request, response);
+
+        } else if (role == 2) { // Role Lecturer
+            Lecturer_Profile lecturerProfile = userDAO.getLecturerProfileById(userId);
+            if (lecturerProfile == null) { // Trường hợp không tìm thấy profile
+                response.sendRedirect("login");
+                return;
+            }
+            request.setAttribute("lecturerProfile", lecturerProfile);
+            request.getRequestDispatcher("/profile/viewLecturerProfile.jsp").forward(request, response);
+
+        } else {
+            // Trường hợp vai trò không hợp lệ
+            response.sendRedirect("login");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        response.sendRedirect("login"); // Chuyển hướng về login nếu có lỗi
+    }
+}
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -136,25 +147,23 @@ public class ProfileController extends HttpServlet {
                 request.setAttribute("error", "Update False");
             }
         } else if (action.equalsIgnoreCase("student")) {
-    String phoneNumber = request.getParameter("phoneNumber");
-    String address = request.getParameter("address");
-    String parentName = request.getParameter("parentName");
-    String parentPhone = request.getParameter("parentPhone");
-    String parentEmail = request.getParameter("parentEmail");
-    String parentOccupation = request.getParameter("parentOccupation");
-    String parentWorkplace = request.getParameter("parentWorkplace");
+            String phoneNumber = request.getParameter("phoneNumber");
+            String address = request.getParameter("address");
+            String parentName = request.getParameter("parentName");
+            String parentPhone = request.getParameter("parentPhone");
+            String parentAddress = request.getParameter("parentAddress");
+            String parentOccupation = request.getParameter("parentOccupation");
+            String parentWorkplace = request.getParameter("parentWorkplace");
 
-    UserDAO udao = new UserDAO();
-    boolean updateProfile = udao.updateStudentProfile(id, phoneNumber, address, parentName, parentPhone, parentEmail, parentOccupation, parentWorkplace);
+            UserDAO udao = new UserDAO();
+            boolean updateProfile = udao.updateStudentProfile(id, phoneNumber, address, parentName, parentPhone, parentAddress, parentOccupation, parentWorkplace);
 
-    if (updateProfile) {
-        request.setAttribute("mess", "Cập nhật thành công");
-    } else {
-        request.setAttribute("error", "Cập nhật thất bại");
-    }
-}
-
-        
+            if (updateProfile) {
+                request.setAttribute("mess", "Cập nhật thành công");
+            } else {
+                request.setAttribute("error", "Cập nhật thất bại");
+            }
+        }
 
         doGet(request, response);
 

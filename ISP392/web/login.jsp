@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Login</title>
         <link rel="stylesheet" href="CSS/style.css" />
         <link rel="stylesheet" href="./index.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" />
@@ -23,7 +23,7 @@
         <div class="login">
             <div class="login-child">
             </div>
-            <a href="landing.jsp" class="login-item bg-white flex hover:bg-slate-200 duration-200">
+            <a href="landing" class="login-item bg-white flex hover:bg-slate-200 duration-200">
                 <svg class="ml-[14px] mt-[14px]" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 12H20" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
                 <path d="M11.0325 4.33936L4.45961 10.9122C4.31606 11.0546 4.20206 11.224 4.12432 11.4108C4.04646 11.5975 4.00641 11.7977 4.00641 12C4.00641 12.2023 4.04646 12.4025 4.12432 12.5892C4.20206 12.776 4.31606 12.9454 4.45961 13.0877L11.0325 19.6606" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -58,7 +58,7 @@
                             <input class="pl-2 text-field2" type="password" name="password">
                         </div>
                     </div>
-                    <a href="" class="property-1have-an-account-log">
+                    <a href="forgotpassword.jsp" class="property-1have-an-account-log">
                         <div class="forgot-password hover:underline">Forgot password?</div>
                     </a>                   
                     <button type="submit" class="border-2 bg-[#4294d8] w-[138px] h-[40px] absolute mt-[248px] ml-[149px] rounded-xl text-white text-center leading-[36px] hover:bg-white hover:text-[#4294d8] duration-200 cursor-pointer">

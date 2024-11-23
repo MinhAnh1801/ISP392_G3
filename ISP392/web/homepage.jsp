@@ -6,11 +6,11 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Home</title>
         <link rel="stylesheet" href="CSS/style.css" />
         <link rel="stylesheet" href="./index.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" />
@@ -20,6 +20,23 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            // Function to check for URL parameters
+            function getParameterByName(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            // Check if the status parameter is "success" and show alert
+            window.onload = function () {
+                const status = getParameterByName('status');
+                if (status === 'success') {
+                    alert('Data has been successfully added to the database!');
+                    // Redirect to remove the status from URL after showing the alert
+                    window.location.href = 'homepage.jsp';
+                }
+            };
+        </script>
     </head>
     <body>
         <div class="homepage-student">
@@ -40,7 +57,7 @@
             </div>
             <div class="homepage-student-child1">
             </div>
-            <c:if test="${sessionScope.role != 0}">
+            <c:if test="${sessionScope.role == 1 && sessionScope.role == 2}">
                 <div class="notificationsthng-bo">Notifications/Thông báo</div>
             </c:if>
             <c:if test="${sessionScope.role == 0}">
@@ -50,46 +67,54 @@
                 <div class="profile-brief">
                     <div class="profile-brief-child">
                     </div>
-                    <div class="name"></div>
+                    <c:if test="${sessionScope.role ==1}">
+                        <div class="name">${stprofile.full_name}</div>
+                    </c:if>
+                    <c:if test="${sessionScope.role ==2}">
+                        <div class="name">${profile.fullName}</div>
+                    </c:if>
                     <c:if test="${sessionScope.role == 1}">
-                        <div class="roll-number">SV${sessionScope.user}</div>
+                        <div class="roll-number">${stprofile.student_code}</div>
                     </c:if>
                     <c:if test="${sessionScope.role == 2}">
-                        <div class="roll-number">GV${sessionScope.user}</div>
+                        <div class="roll-number">${profile.department}</div>
+                    </c:if>              
+                    <c:if test="${sessionScope.role ==1}"> 
+                        <img class="photo-4-1682302453807184190466-icon" alt="" src="image?name=${stprofile.photo}">
                     </c:if>
-                    <img class="photo-4-1682302453807184190466-icon" alt="" src="photo-4-1682302453807184190466 1.png">
-                </div>
-                <a href="profile" class="profile-detail">
-                    <div class="profile-detail-child">
+                    <c:if test="${sessionScope.role ==2}"> 
+                        <img class="photo-4-1682302453807184190466-icon" alt="" src="image?name=${profile.photoUrl}">
+                    </c:if>
                     </div>
-                    <svg class="hs-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19.6177 21.25C19.6177 17.6479 15.6021 14.7206 12 14.7206C8.39791 14.7206 4.38232 17.6479 4.38232 21.25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M11.9999 11.4559C14.4039 11.4559 16.3528 9.50701 16.3528 7.10294C16.3528 4.69888 14.4039 2.75 11.9999 2.75C9.59585 2.75 7.64697 4.69888 7.64697 7.10294C7.64697 9.50701 9.59585 11.4559 11.9999 11.4559Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <a href="profile" class="profile-detail">
+                        <div class="profile-detail-child">
+                        </div>
+                        <svg class="hs-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.6177 21.25C19.6177 17.6479 15.6021 14.7206 12 14.7206C8.39791 14.7206 4.38232 17.6479 4.38232 21.25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11.9999 11.4559C14.4039 11.4559 16.3528 9.50701 16.3528 7.10294C16.3528 4.69888 14.4039 2.75 11.9999 2.75C9.59585 2.75 7.64697 4.69888 7.64697 7.10294C7.64697 9.50701 9.59585 11.4559 11.9999 11.4559Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
 
-                    <div class="xem-h-s">Xem hồ sơ</div>
-                </a>
+                        <div class="xem-h-s">Xem hồ sơ</div>
+                    </a>
             </c:if>
             <c:if test="${sessionScope.role == 0}">
                 <div class="absolute top-[100px] left-[20px] text-sm italic">logged in as admin</div>
             </c:if>
             <c:if test="${sessionScope.role != 0}">
-                <div class="group-parent">
-                    <div class="rectangle-parent">
-                        <div class="group-child">
-                        </div>
-                        <div class="noti-time">20/09/24 10:59</div>
-                        <div class="thng-bo-ti-sinh-vin-v-lc-wrapper">
-                            <a href="" class="thng-bo-ti hover:underline">Thông báo tới sinh viên về lịch học ngày 21/09, vì thời tiết mưa lớn khiến nhiều nơi ngập lụt </a>
-                        </div>
-                    </div>                  
-                </div> 
+                <ul class="group-parent">            
+                    <c:forEach var="notification" items="${notifications}">
+                        <li class="flex"> 
+                            <div class="w-[120px] h-[23px] text-[12px] text-center font-[inter] bg-[#d9d9d9] rounded-[10px] pt-1 mb-2 mr-3">${notification.upload_time}</div>
+                            <div class="w-[400px]full h-[23px] text-[12px] text-left font-[inter] mb-2 pt-1"><a class="hover:underline text-[#0c59ff]" href="url">${notification.title}</a></div>
+                        </li>          
+                    </c:forEach> 
+                </ul> 
             </c:if>
             <c:if test="${sessionScope.role == 0}">
                 <div class="view-notifications-upload-container">
                     <ul class="view-notifications-upload-noti list-disc text-left">
                         <li class="view-notifications hover:underline">
-                            <a href="">View notifications</a></li>
+                            <a href="notice">View notifications</a></li>
                         <li class="hover:underline">
                             <a href="">Upload notifications</a></li>
                     </ul>
@@ -97,11 +122,47 @@
                 <div class="view-news-upload-container">
                     <ul class="view-notifications-upload-noti list-disc text-left">
                         <li class="view-notifications hover:underline">
-                            <a href="">View news</a> 
+                            <a href="newsAdmin">View news</a> 
                         </li>
                         <li class="hover:underline"> 
-                            <a href="">Upload news</a> 
+                            <button id="openModalBtn" class="cursor-pointer hover:underline">Upload news</button> 
                         </li>
+                        <div class="hidden absolute w-[800px] top-[-100px] left-[100px] bg-white shadow-md rounded-lg z-10" id="modal">
+                            <div class="h-[74px] w-full bg-slate-100 rounded-t-lg flex justify-items-center">
+                                <p class="w-full text-center text-[26px] font-semibold m-auto leading-none">Upload new news</p>
+                                <button id="close" class="absolute w-[32px] h-[32px] left-[740px] top-[24px]"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#ff5900" stroke-width="1.5"></circle> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ff5900" stroke-width="1.5" stroke-linecap="round"></path> </g></svg></button>
+                            </div>     
+                            <form action="insertNews" method="post" enctype="multipart/form-data">
+                                <div class=" flex h-[74px] w-full m-auto flex ">
+                                    <p class="m-auto w-[50px]">Title<span class="text-red-500"> *</span></p>
+                                    <input type="text" id="title" name="title" required class="w-[700px] h-[60px] outline-none border-b-2 mr-2 mt-2">
+                                </div>
+                                <button class="ml-[21px] mt-5 mb-2" id="content_btn"> <p>Click to add Content</p></button>
+                                <div class="hidden flex h-[74px] w-full m-auto flex " id="content_input">
+                                    <p class="m-auto w-[50px]">Content</p>
+                                    <textarea id="content" name="content" rows="6" class="w-[700px] h-[60px] outline-none border-b-2 mr-2 mt-2"></textarea>
+                                </div>
+                                <div class="ml-[21px] mt-5 mb-2">
+                                    <p class="">Upload file<span class="text-red-500"> *</span></p>
+                                </div>
+                                <div class="mt-4 flex items-center space-x-6 ml-[32px] pb-6 border-b-2">
+                                    <label class="block">
+                                        <input type="file" id="img" name="img" accept="image/*" required class="block w-full text-sm text-slate-500
+                                               file:mr-4 file:py-2 file:px-4
+                                               file:rounded-full file:border-0
+                                               file:text-sm file:font-semibold
+                                               file:bg-violet-50 file:text-violet-700
+                                               hover:file:bg-violet-100
+                                               "/>
+                                    </label>
+                                </div>
+                                <div class="flex justify-center">
+                                    <button type="submit" class="mt-3 ml-auto text-white bg-green-700 hover:bg-green-800 focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                        Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </ul>
                 </div>
             </c:if>        
@@ -118,12 +179,13 @@
             <c:if test="${sessionScope.role == 0}">
                 <div class="registraion1">
                     <div class="subject-settings">Subject settings</div>
-                    <div class="view-list-of-container">
+                    <div class="view-list-of-container w-[200px]">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
-                                <a href="">View list of subjects</a></li>
-                            <li class="hover:underline"><a href="">Add new subject</a></li>
-                            <li class="hover:underline"><a href="managerCurriculum">Curriculum</a></li>
+                                <a href="subject">View list of subjects</a></li>
+                            <li class="hover:underline"><a href="subject?mod=1">Add new subject</a></li>
+                            <li class="hover:underline"><a href="viewSchedules">Manage subject schedule</a></li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -132,7 +194,7 @@
                     <div class="import-list-of-container">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="hover:underline">
-                                <a href="">Import list of student</a></li>
+                                <a href="importstudent.jsp">Import list of student</a></li>
                         </ul>
                     </div>
                 </div>
@@ -140,7 +202,7 @@
                     <div class="subject-settings">Lecturer management</div>
                     <div class="assign-lecturer">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="hover:underline"> <a href="">Assign lecturer</a></li>
+                            <li class="hover:underline"> <a href="lecturers">Assign lecturer</a></li>
                         </ul>
                     </div>
                 </div>
@@ -149,7 +211,7 @@
                     <div class="view-list-of-container">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
-                                <a href="">View list of classes</a></li>
+                                <a href="class">View list of classes</a></li>
                             <li class="hover:underline"><a href="">Add new class</a></li>
                         </ul>
                     </div>
@@ -159,8 +221,7 @@
                     <div class="view-list-of-container2">
                         <ul class="view-notifications-upload-noti list-disc text-left">
                             <li class="view-notifications hover:underline">
-                                <a href="">View list of classrooms</a></li>
-                            <li class="hover:underline"><a href="">Add new classroom</a></li>
+                                <a href="Admin/dashboardClassrooms">View list of classrooms</a></li>
                         </ul>
                     </div>
                 </div>
@@ -168,7 +229,7 @@
                     <div class="subject-settings">Dorm settings</div>
                     <div class="view-list-of-container3">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="view-notifications hover:underline"><a href="">View list of rooms</a></li>
+                            <li class="view-notifications hover:underline"><a href="ViewListDormRoom.jsp">View list of rooms</a></li>
                             <li class="hover:underline"><a href="">Add new room</a></li>
                         </ul>
                     </div>
@@ -177,9 +238,8 @@
                     <div class="subject-settings">Application settings</div>
                     <div class="view-list-of-container3">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="view-notifications hover:underline"><a href="">View list of types of application</a></li>
-                            <li class="view-notifications hover:underline"><a href="">Add new type of application</a></li>
-                            <li class="hover:underline"><a href="">View list of applications</a></li>
+                            <li class="view-notifications hover:underline"><a href="ViewListApplicationType.jsp">View list of types of application</a></li>
+                            <li class="hover:underline"><a href="ApplicationController?action=viewAllApplications">View list of applications</a></li>
                         </ul>
                     </div>
                 </div>
@@ -187,7 +247,8 @@
                     <div class="subject-settings">Guide settings</div>
                     <div class="view-list-of-container3">
                         <ul class="view-notifications-upload-noti list-disc text-left">
-                            <li class="hover:underline"><a href="guideline">Manager guide</a></li>
+                            <li class="view-notifications hover:underline"><a href="guideline">View list of guides</a></li>
+                            <li class="hover:underline"><a href="">Add new guide</a></li>
                         </ul>
                     </div>
                 </div>
@@ -199,10 +260,10 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses">
-                                <a href="" class="hover:underline">Register courses / Đăng ký môn học</a>
+                                <a href="availableSubjects" class="hover:underline">Register courses / Đăng ký môn học</a>
                             </li>
                             <li>
-                                <a href="" class="hover:underline">Register dorm room / Đăng ký phòng ký túc xá</a>
+                                <a href="availableDormRooms" class="hover:underline">Register dorm room / Đăng ký phòng ký túc xá</a>
                             </li>
                         </ul>
                     </div>
@@ -215,7 +276,7 @@
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
                             <li class="register-courses">
-                                <a href="" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
+                                <a href="viewtimetable" class="hover:underline">Weekly time table / Thời khóa biểu hàng tuần</a>
                             </li>
                             <li>
                                 <a href="checkAttendance" class="hover:underline">Check attendance / Điểm danh</a>
@@ -230,11 +291,14 @@
                     <div class="registrationng-k">Information access/Tra cứu thông tin</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
-                            <li class="register-courses hover:underline"><a href="">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
-                            <li class="register-courses hover:underline"><a href="">Assignment / Bài tập</a></li>
-                            <li class="register-courses hover:underline"><a href="">View exam schedule / Xem lịch thi</a></li>
+
+                            <li class="register-courses hover:underline"><a href="viewTimetable">Weekly timetable / Thời khóa biểu hàng tuần</a></li>
+                            <li class="register-courses hover:underline"><a href="assignments">Assignment / Bài tập</a></li>
+
+                            <li class="register-courses hover:underline"><a href="exam">View exam schedule / Xem lịch thi</a></li>
                             <li><a class="hover:underline" href="guideline">Student guide / Hướng dẫn sinh viên</a></li>
-                            <li><a class="hover:underline" href="viewAllMaterial">Student Material / Tài liệu hưỡng dẫn </a></li>
+                            <li><a class="hover:underline" href="tuitionpercourse">Tuition fee per course / Biểu học phí</a></li>
+                            <li><a class="hover:underline" href="viewmydorm">View my dorm room / Xem phòng ký túc xá</a></li>
                         </ul>
                     </div>
                 </div>
@@ -245,8 +309,10 @@
                     <div class="registrationng-k">Assignment/Bài tập</div>
                     <div class="weekly-timetable-container">
                         <ul class="register-courses-ng-k-mn list-disc ">
-                            <li class="register-courses hover:underline"><a href="">Upload assignment / Giao bài tập</a></li>
-                            <li class="register-courses hover:underline"><a href="uploadGrade">Grade assignments / Chấm điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="dashboardAssignments">View uploaded assignments / Xem bài tập đã giao</a></li>
+                            <li class="register-courses hover:underline"><a href="uploadAssignment">Upload assignment / Giao bài tập</a></li>
+                            <li class="register-courses hover:underline"><a href="classgrade">Grade assignments / Chấm điểm</a></li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -257,8 +323,8 @@
                     <div class="registrationng-k">Application/Đơn từ</div>
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Send application / Gửi đơn</a></li>
-                            <li><a class="hover:underline" href="">View application / Xem đơn đã gửi</a></li>
+                            <li class="register-courses hover:underline"><a href="ApplicationController?action=showForm">Send application / Gửi đơn</a></li>
+                            <li><a class="hover:underline" href="ApplicationController?action=viewApplications">View application / Xem đơn đã gửi</a></li>
                         </ul>
                     </div>
                 </div>
@@ -269,8 +335,8 @@
                     <div class="registrationng-k">Subject materials/Tài liệu môn học</div>
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="createMaterial">Upload materials / Tải lên tài liệu</a></li>
-                            <li><a class="hover:underline" href="viewAllMaterial">View materials / Xem tài liệu</a></li>
+                            <li class="register-courses hover:underline"><a href="lecturer/materials">Upload materials / Tải lên tài liệu</a></li>
+                            <li><a class="hover:underline" href="lecturer/materials">View materials / Xem tài liệu</a></li>
                         </ul>
                     </div>
                 </div>
@@ -281,8 +347,8 @@
                     <div class="registrationng-k">Report/Báo cáo</div>
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="viewAttendanceReport">Attendance report / Báo cáo điểm danh</a></li>
-                            <li class="register-courses hover:underline"><a href="viewMarkReport">Mark report / Báo cáo điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="">Attendance report / Báo cáo điểm danh</a></li>
+                            <li class="register-courses hover:underline"><a href="markreport">Mark report / Báo cáo điểm</a></li>
                             <li><a href="viewCurriculum" class="hover:underline">Curriculum / Khung chương trình</a></li>
                         </ul>
                     </div>
@@ -294,8 +360,7 @@
                     <div class="registrationng-k">Report/Báo cáo</div>
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="gradeAssignment">Grade assignment / Chấm điểm</a></li>
-                            <li class="register-courses hover:underline"><a href="">Upload grades / Cập nhật điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="uploadGrade">Upload grades / Cập nhật điểm</a></li>
                             <li class="register-courses hover:underline"><a href="">Check grades / Xem điểm sinh viên</a></li>
                         </ul>
                     </div>
@@ -306,8 +371,11 @@
                     <div class="registrationng-k">Finance/Tài chính</div>
                     <div class="pay-paid-items-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Pay paid items / Thanh toán các khoản nộp</a></li>
-                            <li><a href="" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
+                            <li class="register-courses hover:underline"><a href="dashboardPayments">Pay paid items / Thanh toán các khoản nộp</a></li>
+                            <li><a href="transactionHistory" class="hover:underline">Transaction history / Lịch sử giao dịch</a></li>
+                            <li class="register-courses hover:underline">
+                                <a href="addWallet">Add Money / Nạp tiền</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -329,5 +397,32 @@
                 </div>
             </c:if>
         </div>
+        <script>
+            // Get modal element
+            var modal = document.getElementById("modal");
+
+            // Get button that opens the modal
+            var btn = document.getElementById("openModalBtn");
+
+            // Get the <span> element that closes the modal
+            var close = document.getElementById("close");
+
+            var content = document.getElementById("content_btn");
+            var content_input = document.getElementById("content_input");
+            // When the user clicks the button, open the modal
+
+            btn.onclick = function () {
+                modal.classList.remove("hidden");
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            close.onclick = function () {
+                modal.classList.add("hidden");
+            }
+            content.onclick = function () {
+                content_input.classList.remove("hidden");
+                content.classList.add("hidden");
+            }
+        </script>
     </body>
 </html>

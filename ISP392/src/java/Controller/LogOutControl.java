@@ -34,7 +34,7 @@ public class LogOutControl extends HttpServlet {
         session.removeAttribute("user");
         session.removeAttribute("role");
         session.removeAttribute("loginfail");
-        response.sendRedirect("landing.jsp");
+        response.sendRedirect("landing");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

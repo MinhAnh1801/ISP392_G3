@@ -32,7 +32,7 @@ public class Student_Profile {
     private String medical_conditions;
      private String ten_phu_huynh;
     private String so_dien_thoai_phu_huynh;
-    private String dia_chi_phu_huynh;
+    private String dia_chi_phu_huynh; 
     private String email_phu_huynh;
     private String nghe_nghiep_phu_huynh;
     private String noi_lam_viec_phu_huynh;
@@ -62,9 +62,32 @@ public class Student_Profile {
     private String ngay_cong_nhan_tot_nghiep;
     private String trang_thai_den;
     private String chuyen_nganh;
+    int studentId;
+    int wallet;
     public Student_Profile() {
     }
 
+    public int getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(int wallet) {
+        this.wallet = wallet;
+    }
+
+    public Student_Profile(int studentId,int wallet) {
+        this.wallet = wallet;
+        this.studentId = studentId;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+    
     public Student_Profile(User student_id, Major major_id, String year_of_study, String full_name, Date date_of_birth, String phone_number, String email, String gender, String student_code, String address, String emergency_contact, String photo, String national_id, String class_id, int enrollment_year, int graduation_year, double gpa, boolean scholarship_status, String medical_conditions, String ten_phu_huynh, String so_dien_thoai_phu_huynh, String dia_chi_phu_huynh, String email_phu_huynh, String nghe_nghiep_phu_huynh, String noi_lam_viec_phu_huynh, String so_bang_dang_ky, String so_bang_dang_ky_cu, String ma_thanh_vien, String ngay_ghi_danh, String hinh_thuc_hoc, String trang_thai, String hoc_ky_hien_tai, String nganh_hoc, String chuong_trinh_hoc, String de_tai_tot_nghiep, String so_du_tai_khoan, String nganh_cu, String quyet_dinh_chuyen_nganh, String quyet_dinh_cong_nhan_sinh_vien_chinh_quy, String ngay_cong_nhan_sinh_vien_chinh_quy, String quyet_dinh_cong_nhan_sinh_vien_du_bi, String thoi_han_hoc_tai_truong, String lop_chinh, String loai_tai_chinh, String quyet_dinh_thoi_hoc, String quyet_dinh_chuyen_co_so, String quyet_dinh_ky_luat, String quyet_dinh_cong_nhan_tot_nghiep, String ngay_cong_nhan_tot_nghiep, String trang_thai_den, String chuyen_nganh) {
         this.student_id = student_id;
         this.major_id = major_id;

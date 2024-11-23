@@ -4,31 +4,73 @@
  */
 package Model;
 
-import java.util.Date;
-
 /**
  *
  * @author khucx
  */
 public class Materials {
-    private int id; 
-    private Subjects subjectId;
-    private String material_name;
-    private String material_file;
-    private Date uploaded_at;
-    private Lecturer_Profile uploaded_by;
+
+    private int id;
+    private String subjectCode;
+    private String materialName;
+    private String materialFile;
+    private String uploadedAt;
     private String description;
+    Lecturer_Profile upload_by;
+    String uploaded_by;
+
+    @Override
+    public String toString() {
+        return "Materials{" + "id=" + id + ", subjectCode=" + subjectCode + ", materialName=" + materialName + ", materialFile=" + materialFile + ", uploadedAt=" + uploadedAt + ", description=" + description + ", upload_by=" + upload_by + ", uploaded_by=" + uploaded_by + '}';
+    }
+
+    
+    public Materials(int id, String subjectCode, String materialName, String materialFile, String uploadedAt, String description, String uploaded_by) {
+        this.id = id;
+        this.subjectCode = subjectCode;
+        this.materialName = materialName;
+        this.materialFile = materialFile;
+        this.uploadedAt = uploadedAt;
+        this.description = description;
+        this.uploaded_by = uploaded_by;
+    }
+    
+    public String getUploaded_by() {
+        return uploaded_by;
+    }
+
+    public void setUploaded_by(String uploaded_by) {
+        this.uploaded_by = uploaded_by;
+    }
+   
+
+    public Lecturer_Profile getUpload_by() {
+        return upload_by;
+    }
+
+    public void setUpload_by(Lecturer_Profile upload_by) {
+        this.upload_by = upload_by;
+    }
 
     public Materials() {
     }
 
-    public Materials(int id, Subjects subjectId, String material_name, String material_file, Date uploaded_at, Lecturer_Profile uploaded_by, String description) {
+    public Materials(int id, String subjectCode, String materialName, String materialFile, String uploadedAt, String description, Lecturer_Profile upload_by) {
         this.id = id;
-        this.subjectId = subjectId;
-        this.material_name = material_name;
-        this.material_file = material_file;
-        this.uploaded_at = uploaded_at;
-        this.uploaded_by = uploaded_by;
+        this.subjectCode = subjectCode;
+        this.materialName = materialName;
+        this.materialFile = materialFile;
+        this.uploadedAt = uploadedAt;
+        this.description = description;
+        this.upload_by = upload_by;
+    }
+    
+    public Materials(int id, String subjectCode, String materialName, String materialFile, String uploadedAt, String description) {
+        this.id = id;
+        this.subjectCode = subjectCode;
+        this.materialName = materialName;
+        this.materialFile = materialFile;
+        this.uploadedAt = uploadedAt;
         this.description = description;
     }
 
@@ -40,44 +82,36 @@ public class Materials {
         this.id = id;
     }
 
-    public Subjects getSubjectId() {
-        return subjectId;
+    public String getSubjectCode() {
+        return subjectCode;
     }
 
-    public void setSubjectId(Subjects subjectId) {
-        this.subjectId = subjectId;
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
     }
 
-    public String getMaterial_name() {
-        return material_name;
+    public String getMaterialName() {
+        return materialName;
     }
 
-    public void setMaterial_name(String material_name) {
-        this.material_name = material_name;
+    public void setMaterialName(String materialName) {
+        this.materialName = materialName;
     }
 
-    public String getMaterial_file() {
-        return material_file;
+    public String getMaterialFile() {
+        return materialFile;
     }
 
-    public void setMaterial_file(String material_file) {
-        this.material_file = material_file;
+    public void setMaterialFile(String materialFile) {
+        this.materialFile = materialFile;
     }
 
-    public Date getUploaded_at() {
-        return uploaded_at;
+    public String getUploadedAt() {
+        return uploadedAt;
     }
 
-    public void setUploaded_at(Date uploaded_at) {
-        this.uploaded_at = uploaded_at;
-    }
-
-    public Lecturer_Profile getUploaded_by() {
-        return uploaded_by;
-    }
-
-    public void setUploaded_by(Lecturer_Profile uploaded_by) {
-        this.uploaded_by = uploaded_by;
+    public void setUploadedAt(String uploadedAt) {
+        this.uploadedAt = uploadedAt;
     }
 
     public String getDescription() {
@@ -87,12 +121,4 @@ public class Materials {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @Override
-    public String toString() {
-        return "Materials{" + "id=" + id + ", subjectId=" + subjectId + ", material_name=" + material_name + ", material_file=" + material_file + ", uploaded_at=" + uploaded_at + ", uploaded_by=" + uploaded_by + ", description=" + description + '}';
-    }
-    
-    
-    
 }
