@@ -62,9 +62,9 @@ public class ViewAllMaterial extends HttpServlet {
             throws ServletException, IOException {
         
         MaterialDAO mdao  = new MaterialDAO();
-        int subject_id = Integer.parseInt(request.getParameter("subject_id"));
-        List<Materials> listMaterials = mdao.getALLMaterials(subject_id);
-        log(listMaterials.toString());
+        
+        List<Materials> listMaterials = mdao.getALLMaterials();
+        
         request.setAttribute("listMaterials", listMaterials);
           
         request.getRequestDispatcher("material/viewAllMaterial.jsp").forward(request, response);

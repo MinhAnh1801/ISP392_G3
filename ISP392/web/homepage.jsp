@@ -336,8 +336,8 @@
                     <div class="registrationng-k">Subject materials/Tài liệu môn học</div>
                     <div class="register-courses-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="lecturer/materials">Upload materials / Tải lên tài liệu</a></li>
-                            <li><a class="hover:underline" href="lecturer/materials">View materials / Xem tài liệu</a></li>
+                            <li class="register-courses hover:underline"><a href="createMaterial">Upload materials / Tải lên tài liệu</a></li>
+                            <li><a class="hover:underline" href="viewAllMaterial">View materials / Xem tài liệu</a></li>
                         </ul>
                     </div>
                 </div>

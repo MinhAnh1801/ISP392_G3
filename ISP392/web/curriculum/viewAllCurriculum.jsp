@@ -73,7 +73,12 @@
             }
 
         </style>
-    <style>
+  
+    </head>
+    <body>
+        
+        
+          <style>
                 .navbar-brand {
                 color: white;
                 font-size: 24px;
@@ -86,11 +91,6 @@
             font-family: Arial, sans-serif; /* Font chữ */
         }
         </style>
-    </head>
-    <body>
-        
-        
-        
         
        
          <!-- Navbar -->

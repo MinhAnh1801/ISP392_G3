@@ -41,6 +41,31 @@
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     </head>
     <body>
+
+
+        <style>
+            .navbar-brand {
+                color: white;
+                font-size: 24px;
+            }
+            .navbar {
+                background-color: #FF8C00;
+            }
+            .body {
+                background-color: #ffffff; /* Màu nền trắng */
+                font-family: Arial, sans-serif; /* Font chữ */
+            }
+        </style>
+
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="home">University Academic Portal</a>
+            </div>
+        </nav>
+
+
         <div class="container mt-5">
             <h2 class="text-center">List of Materials</h2>
 
@@ -61,6 +86,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Subject code</th>
                         <th>Name</th>
                         <th>File URL</th>
                         <th>Uploaded By</th>
@@ -75,24 +101,25 @@
                             <c:forEach var="material" items="${listMaterials}" varStatus="status">
                                 <tr>
                                     <td>${status.index + 1}</td>
-                                    <td>${material.materialName}</td>
-                                    <td><a href="${material.materialFile}" target="_blank">Download</a></td>
+                                    <td>${material.getSubjectCode()}</td>
+                                    <td>${material.getMaterialName()}</td>
+                                    <td><a href="${material.material_file}" target="_blank">Download</a></td>
                                     <td>
-                                        <c:if test="${not empty material.uploaded_by}">
-                                            ${material.uploaded_by}
+                                        <c:if test="${not empty material.getUpload_by().getFullName()}">
+                                            ${material.getUpload_by().getFullName()}
                                         </c:if>
                                         <c:if test="${empty material.uploaded_by}">
                                             Unknown
                                         </c:if>
                                     </td>
-                                    <td>${material.uploadedAt}</td>
+                                    <td>${material.uploaded_at}</td>
                                     <td>${material.description}</td>
                                     <td>
-                                        <c:if test="${not empty material.materialFile}">
-                                            <a href="downloadfile?file=${fn:replace(fn:escapeXml(material.materialFile), ' ', '%20')}" class="btn btn-primary btn-sm">Download</a>
+                                        <c:if test="${not empty material.material_file}">
+                                            <a href="download?filePath=${fn:replace(fn:escapeXml(material.material_file), ' ', '%20')}" class="btn btn-primary btn-sm">Download</a>
                                         </c:if>
 
-                                        <c:if test="${empty material.materialFile}">
+                                        <c:if test="${empty material.material_file}">
                                             <button class="btn btn-secondary btn-sm" disabled>No File</button>
                                         </c:if>
                                     </td>
