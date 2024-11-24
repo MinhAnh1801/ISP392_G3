@@ -449,16 +449,10 @@ public class UserDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        UserDAO userDAO = new UserDAO();
+  
 
-        System.out.println(userDAO.getStudentProfile(29));
-
-//    if (isUpdated) {
-//        System.out.println("Cập nhật thông tin sinh viên thành công.");
-//    } else {
-//        System.out.println("Cập nhật thông tin sinh viên thất bại.");
-//    }
+    public List<Lecturer_Profile> getListLecturerBySubject(int subject_id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

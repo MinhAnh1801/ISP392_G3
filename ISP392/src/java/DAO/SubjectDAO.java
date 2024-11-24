@@ -118,6 +118,29 @@ public class SubjectDAO {
         return subject;
     }
 
+    public List<Subjects1> getAllSubject() {
+        List<Subjects1> subjects = new ArrayList<>();
+        String query = "SELECT [id], [code], [name], [credits], [description], [semester], [tuition], [major_id] FROM [dbo].[Subjects]";
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Subjects1 subject = new Subjects1();
+                subject.setId(rs.getInt("id"));
+                subject.setCode(rs.getString("code"));
+                subject.setName(rs.getString("name"));
+                subject.setCredits(rs.getInt("credits"));
+                subject.setDescription(rs.getString("description"));
+                subject.setSemester(rs.getInt("semester"));
+                subjects.add(subject);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return subjects;
+    }
+
     public static void main(String[] args) {
         SubjectDAO dao = new SubjectDAO();
         Subjects1 getsubjectById = dao.getsubjectById(1);

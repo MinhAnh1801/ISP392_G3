@@ -322,7 +322,7 @@
 
 
                                                 <div class="form-group">
-                                                    <label for="credits">Học kỳ</label>
+                                                    <label for="credits">Tín Chỉ</label>
                                                     <select class="form-control" id="credits" name="credits">
                                                         <option value="${curriculum.credits}">Credits : ${curriculum.credits}</option>
                                                         <option value="1">Credits: 1</option>

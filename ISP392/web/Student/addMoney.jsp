@@ -1,4 +1,10 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -131,17 +137,16 @@
                 </div>
             </c:if>
 
-            <!--             Balance card 
-                        <div class="balance-card">
-                            Current Account Balance: 
-                            <fmt:formatNumber value="${studentProfile.wallet}" minFractionDigits="0" /> VND
-                        </div>-->
+          
+            <div class="balance-card">
+                Current Account Balance: 
+                <fmt:formatNumber value="${studentProfile.so_du_tai_khoan}" minFractionDigits="0" /> VND
+            </div>
 
             <!-- Deposit form -->
             <div class="deposit-form">
                 <!-- Form to submit to VNPayServlet for processing -->
                 <form action="addWallet" method="post">
-                    <label for="amount">Amount:</label>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -175,7 +180,7 @@
 
             <!-- Footer -->
             <div class="footer">
-                © 2024 University Academic Portal. All rights reserved.
+                Â© 2024 University Academic Portal. All rights reserved.
             </div>
         </div>
 

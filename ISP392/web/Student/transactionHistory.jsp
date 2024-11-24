@@ -40,8 +40,20 @@
             }
 
             /* Table styling */
+            .table {
+                width: 100%;
+                margin-bottom: 1rem;
+                background-color: #fff;
+                text-align: center;
+            }
+
+            .table-hover tbody tr:hover {
+                background-color: #f2f2f2;
+            }
+
             .table-bordered th, .table-bordered td {
                 border: 1px solid #FF8C00;
+                padding: 15px;
             }
 
             th {
@@ -51,8 +63,23 @@
             }
 
             td {
-                padding: 15px;
                 font-size: 16px;
+            }
+
+            /* Pagination styling */
+            .pagination .page-item.active .page-link {
+                background-color: #FF8C00;
+                border-color: #FF8C00;
+                color: white !important; 
+            }
+
+            .pagination .page-link {
+                color: #FF8C00;
+            }
+
+            .pagination .page-link:hover {
+                color: #FF8C00;
+                background-color: #f2f2f2;
             }
 
             /* Footer styling */
@@ -68,7 +95,7 @@
 
             /* Container adjustments */
             .container {
-                max-width: 800px;
+                max-width: 1000px;
                 margin: 0 auto;
             }
         </style>
@@ -98,6 +125,7 @@
                             <option value="Other" ${transactionType == 'Other' ? 'selected' : ''}>Other</option>
                             <option value="Tuition" ${transactionType == 'Tuition' ? 'selected' : ''}>Tuition</option>
                             <option value="Dorm" ${transactionType == 'Dorm' ? 'selected' : ''}>Dorm</option>
+                            <option value="Deposit" ${transactionType == 'Deposit' ? 'selected' : ''}>Deposit</option>
                         </select>
                     </div>
                     <div class="col-md-6 d-flex align-items-end">
@@ -108,29 +136,31 @@
 
             <!-- Transaction History Table -->
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>Transaction ID</th>
                             <th>Amount (VND)</th>
                             <th>Transaction Type</th>
                             <th>Date</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="transaction" items="${transactionList}">
                             <tr>
                                 <td>${transaction.getId()}</td>
-                                <td><fmt:formatNumber value="${transaction.getAmount()}"  /></td>
+                                <td><fmt:formatNumber value="${transaction.getAmount()}" /></td>
                                 <td>${transaction.getTransaction_type()}</td>
                                 <td>${transaction.getTransaction_date()}</td>
+                                <td>${transaction.getDescription()}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
 
-            <!-- Phân trang đẹp hơn -->
+            <!-- Pagination -->
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     <c:if test="${currentPage > 1}">

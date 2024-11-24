@@ -2,25 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Controller.Feedback;
 
-import DAO.DAO;
-import Model.User;
+import DAL.LecturerProfileDAO;
+import DAO.SubjectDAO;
+import DAO.UserDAO;
+import Model.Lecturer_Profile;
+import Model.Subjects;
+import Model.Subjects1;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import java.util.List;
 
 /**
  *
- * @author khucx
+ * @author trung
  */
-public class LoginController extends HttpServlet {
+@WebServlet(name = "CreateFeedback", urlPatterns = {"/createFeedback"})
+public class CreateFeedback extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,23 +39,17 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String user = request.getParameter("username");
-        String pass = request.getParameter("password");
-        DAO dao = new DAO();
-        List<User> list = dao.getAllUser();
-        User login = dao.checkLogin(user, pass);
-        if (login == null) {
-            request.getSession().setAttribute("loginfail", "Username or password incorrect");
-            response.sendRedirect("login");
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", login.getId()); // user
-            if (login.getRole().equals("student")) {   // role =1 là student
-                session.setAttribute("role", 1);
-            }else if (login.getRole().equals("lecturer")) {  // role =2
-                session.setAttribute("role", 2);
-            }else session.setAttribute("role", 0);   // role =0 là admin 
-            response.sendRedirect("home");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CreateFeedback</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CreateFeedback at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -64,12 +63,33 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request,
-            HttpServletResponse response
-    )
-            throws ServletException,
-            IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        Integer id = (Integer) session.getAttribute("role");
+        if (id == null || id != 0) {
+            response.sendRedirect("login");
+            return;
+
+        }
+
+        SubjectDAO sdao = new SubjectDAO();
+        List<Subjects1> listSubject = sdao.getAllSubject();
+        request.setAttribute("listSubject", listSubject);
+        
+        
+        if(request.getParameter("subject_id")!= null){
+
+            int subject_id = Integer.parseInt(request.getParameter("subject_id"));
+            
+            UserDAO udao = new UserDAO();
+            List<Lecturer_Profile> listLecturerBySubject = udao.getListLecturerBySubject(subject_id);
+        }
+        
+        
+        request.getRequestDispatcher("FeedBack/CreateFeedback.jsp").forward(request, response);
+
     }
 
     /**
@@ -81,11 +101,8 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response
-    )
-            throws ServletException,
-            IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

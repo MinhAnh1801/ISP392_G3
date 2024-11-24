@@ -350,9 +350,10 @@
                     <div class="registrationng-k">Report/Báo cáo</div>
                     <div class="attendance-report-container">
                         <ul class="register-courses-ng-k-mn list-disc">
-                            <li class="register-courses hover:underline"><a href="">Attendance report / Báo cáo điểm danh</a></li>
-                            <li class="register-courses hover:underline"><a href="markreport">Mark report / Báo cáo điểm</a></li>
+                            <li class="register-courses hover:underline"><a href="viewAttendanceReport">Attendance report / Báo cáo điểm danh</a></li>
+                            <li class="register-courses hover:underline"><a href="viewMarkReport">Mark report / Báo cáo điểm</a></li>
                             <li><a href="viewCurriculum" class="hover:underline">Curriculum / Khung chương trình</a></li>
+                            <li><a href="feedbackStudent" class="hover:underline">Feedback / Ý kiến về việc giảng dạy</a></li>
                         </ul>
                     </div>
                 </div>

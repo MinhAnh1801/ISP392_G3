@@ -13,7 +13,10 @@
         <!-- Font Preconnect -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- DataTables CSS -->
+        <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
         <!-- Custom styles -->
         <style>
@@ -28,39 +31,52 @@
             .navbar-brand {
                 color: white;
                 font-size: 24px;
+                font-weight: 600;
             }
 
             .main-content {
                 margin: 50px auto;
-                width: 70%;
-                text-align: center;
+                width: 85%;
             }
 
             h2 {
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 color: #333;
+                font-weight: 700;
+                text-align: center;
             }
 
-            .table-responsive {
-                margin-top: 20px;
+            table {
+                font-size: 14px;
+                color: #555;
             }
 
-            th {
+            table.dataTable thead th {
                 background-color: #007bff;
                 color: white;
             }
 
+            table.dataTable tbody tr:hover {
+                background-color: #f1f1f1;
+            }
+
             .btn-view {
-                background-color: #28a745;
+                background-color: #007bff;
                 color: white;
                 border: none;
-                padding: 5px 10px;
+                padding: 6px 12px;
                 border-radius: 3px;
+                font-size: 12px;
                 cursor: pointer;
             }
 
             .btn-view:hover {
-                background-color: #218838;
+                background-color: #0056b3;
+            }
+
+            .alert-success {
+                font-size: 14px;
+                margin-bottom: 20px;
             }
         </style>
     </head>
@@ -69,7 +85,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">University Academic Portal</a>
+                <a class="navbar-brand" href="home">University Academic Portal</a>
             </div>
         </nav>
 
@@ -77,18 +93,16 @@
         <div class="main-content">
             <h2>List Assignments</h2>
 
-
             <c:if test="${not empty sessionScope.message}">
                 <div class="alert alert-success" role="alert" id="messageAlert">
                     ${sessionScope.message}
                 </div>
-                <!-- Xóa thông báo khỏi session sau khi hiển thị -->
                 <c:set var="sessionScope.message" value="" scope="session"/>
             </c:if>
 
             <!-- Assignments Table -->
             <div class="table-responsive">
-                <table id="facilitiesTable" class="table table-bordered">
+                <table id="assignmentsTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Assignment Name</th>
@@ -135,16 +149,40 @@
             </div>
         </div>
 
+        <!-- Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+        <!-- jQuery and DataTables JS -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
         <script>
-            // Ẩn phần tử thông báo sau 5 giây
+            // Hide alert after 5 seconds
             setTimeout(function () {
                 var messageAlert = document.getElementById("messageAlert");
                 if (messageAlert) {
                     messageAlert.style.display = "none";
                 }
             }, 5000);
+
+            // Initialize DataTables
+            $(document).ready(function () {
+                $('#assignmentsTable').DataTable({
+                    "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                    "language": {
+                        "search": "Search:",
+                        "lengthMenu": "Display _MENU_ records per page",
+                        "info": "Showing _START_ to _END_ of _TOTAL_ assignments",
+                        "paginate": {
+                            "first": "First",
+                            "last": "Last",
+                            "next": "Next",
+                            "previous": "Previous"
+                        }
+                    },
+                    "order": [[3, "asc"]] // Sort by Due Date by default
+                });
+            });
         </script>
-        <!-- Bootstrap JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

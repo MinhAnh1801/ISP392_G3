@@ -128,6 +128,15 @@
 
         <div class="container mt-5">
             <h1>Admin Feedback Management</h1>
+            
+           <div class="text-center mt-3">
+    <a href="createFeedback">
+        <button class="btn btn-primary">
+            Create new
+        </button>
+    </a>
+</div>
+
 
             <!-- Check if feedbackForms is not null -->
             <c:if test="${not empty listFeedbackForms}">

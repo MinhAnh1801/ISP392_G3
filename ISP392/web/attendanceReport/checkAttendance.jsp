@@ -53,7 +53,7 @@
             color: #ff5722;
         }
     </style>
-    <script>
+<!--    <script>
         function setCurrentDate() {
             var today = new Date();
             var dd = String(today.getDate()).padStart(2, '0');
@@ -63,7 +63,7 @@
             document.getElementById("attendanceDate").value = today;
         }
         window.onload = setCurrentDate;
-    </script>
+    </script>-->
 </head>
 <body>
     <div class="form-container">
@@ -150,12 +150,12 @@
 
             if (attendanceDate !== today) {
                 // Nếu ngày không trùng hiện tại -> ẩn radio buttons, chỉ hiển thị Status
-                if (statusSection) statusSection.style.display = 'none';
-                if (statusDisplay) statusDisplay.style.display = 'inline';
-            } else {
-                // Nếu ngày trùng hiện tại -> hiển thị radio buttons, ẩn Status
                 if (statusSection) statusSection.style.display = 'inline';
                 if (statusDisplay) statusDisplay.style.display = 'none';
+            } else {
+                // Nếu ngày trùng hiện tại -> hiển thị radio buttons, ẩn Status
+                if (statusSection) statusSection.style.display = 'none';
+                if (statusDisplay) statusDisplay.style.display = 'inline';
             }
         });
     });

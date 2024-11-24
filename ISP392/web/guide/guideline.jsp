@@ -84,7 +84,7 @@
         <c:if test="${sessionScope.role == 0}">
             <div>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGuidelineModal">
-                    Tạo mới hướng dẫn
+                    Tạo hướng dẫn mới
                 </button>
             </div>
         </c:if>
@@ -258,7 +258,7 @@
             $(document).ready(function () {
                 $('#guideTable').DataTable({
                     "pageLength": 10, // Set maximum rows per page
-                    "lengthMenu": [5, 10, 20], // Options for page length
+                    "lengthMenu": [5, 10, 15, 20], // Options for page length
                     "order": [[1, "asc"]], // Default sorting by the second column (Title)
                     "searching": true, // Enable search functionality
                     "paging": true, // Enable pagination

@@ -35,7 +35,7 @@
             background-color: #ffe0b2;
         }
         .navbar {
-            background-color: #ff5722;
+            background-color: #D76325;
         }
         .navbar-brand {
             color: #ffffff;

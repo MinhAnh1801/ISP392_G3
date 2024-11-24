@@ -7,6 +7,7 @@ import Model.Student_Profile;
 import Model.Transactions;
 import Model.User;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@WebServlet(name = "vnpayresponse", urlPatterns = {"/vnpayresponse"})
 public class VNPResponeController extends HttpServlet {
 
     @Override
@@ -68,7 +70,7 @@ public class VNPResponeController extends HttpServlet {
             try {
                 // Cộng số tiền nạp vào ví của người dùng trong Student_Profile
                 BigDecimal newAmount = new BigDecimal(amount).divide(new BigDecimal(100)); // Chuyển đổi số tiền về đơn vị VND
-                long updatedWallet = studentProfile.getWallet() + newAmount.longValue();
+                long updatedWallet = Long.parseLong(studentProfile.getSo_du_tai_khoan()) + newAmount.longValue();
 
                 // Cập nhật số dư ví trong Student_Profile
                 studentProfile.setWallet((int) updatedWallet);

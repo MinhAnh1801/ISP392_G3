@@ -87,7 +87,7 @@ public class GuidelineController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
+        String action = request.getParameter("action"); // lấy xuống 
 
         if (action.equalsIgnoreCase("editGuideline")) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -156,10 +156,10 @@ public class GuidelineController extends HttpServlet {
         } else if (action.equalsIgnoreCase("createGuideline")) {
 
             // lấy thông tin admin 
-//            HttpSession session = request.getSession();
-//            User user = (User) session.getAttribute("user");
+            HttpSession session = request.getSession();
+            int userId = (int) session.getAttribute("user");
 // fix cứng tại chưa có login 
-            int userId = 1;
+           // int userId = 1;
             String title = request.getParameter("title");
             String category = request.getParameter("category");
 
