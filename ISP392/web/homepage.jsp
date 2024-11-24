@@ -214,6 +214,8 @@
                             <li class="view-notifications hover:underline">
                                 <a href="class">View list of classes</a></li>
                             <li class="hover:underline"><a href="">Add new class</a></li>
+                            <li class=""><a href="adminFeedBack">Feedback Form</a></li>
+                            <li class="hover:underline"><a href="">Add new class</a></li>
                         </ul>
                     </div>
                 </div>
