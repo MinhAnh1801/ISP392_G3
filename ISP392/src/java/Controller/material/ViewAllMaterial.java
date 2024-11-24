@@ -60,13 +60,13 @@ public class ViewAllMaterial extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        MaterialDAO mdao  = new MaterialDAO();
-        int subject_id = Integer.parseInt(request.getParameter("subject_id"));
-        List<Materials> listMaterials = mdao.getALLMaterials(subject_id);
-        log(listMaterials.toString());
+
+        MaterialDAO mdao = new MaterialDAO();
+
+        List<Materials> listMaterials = mdao.getALLMaterials();
+
         request.setAttribute("listMaterials", listMaterials);
-          
+
         request.getRequestDispatcher("material/viewAllMaterial.jsp").forward(request, response);
     }
 
@@ -81,7 +81,33 @@ public class ViewAllMaterial extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String action = request.getParameter("action");
+        MaterialDAO mdao = new MaterialDAO();
+
+        if (action == null) {
+            response.sendRedirect("login");
+            return;
+        } else {
+            if (action.equalsIgnoreCase("delete")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+
+                boolean check = mdao.deleteMaterialById(id);
+                if (check) {
+                    // Xóa thành công
+                    request.setAttribute("mess", "Material deleted successfully.");
+                } else {
+                    // Xóa thất bại
+                    request.setAttribute("error", "Failed to delete material. Please try again.");
+                }
+                doGet(request, response);
+                
+                
+
+            }
+
+        }
+
     }
 
     /**

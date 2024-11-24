@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.DAO;
+import DAO.MaterialDAO;
 import Model.Materials;
 import Model.Subjects;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @author khucx
  */
-@WebServlet(name = "MaterialsController", urlPatterns = {"/lecturer/materials"})
+@WebServlet(name = "MaterialsController", urlPatterns = {"/materials"})
 public class MaterialsController extends HttpServlet {
 
     /**
@@ -61,6 +62,12 @@ public class MaterialsController extends HttpServlet {
         List<Subjects> subjectList = dao.getAllSubjectCodes();
         request.setAttribute("subjectList", subjectList);
         request.setAttribute("materials", materials);
+
+        MaterialDAO mdao = new MaterialDAO();
+
+        List<Materials> listMaterials = mdao.getALLMaterials();
+
+        request.setAttribute("listMaterials", listMaterials);
         request.getRequestDispatcher("materialsLect.jsp").forward(request, response);
 
     }
