@@ -16,6 +16,7 @@ import java.util.List;
 import Model.GuideDetails;
 import Model.Guidelines;
 import Model.Major;
+import Model.Materials;
 import Model.PercentOption;
 import Model.Student_Profile;
 import Model.Subjects;
@@ -454,4 +455,6 @@ public class MajorDAO extends DBContext {
 
         return percentOptions;
     }
+
+  
 }

@@ -40,12 +40,20 @@ public class CreateMaterial extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Integer id = (Integer) session.getAttribute("user");
+        MajorDAO mdao = new MajorDAO();
+        MaterialDAO materialDAO = new MaterialDAO();
         if (id == null) {
             response.sendRedirect("login");
             return;
         }
+        if (request.getParameter("action") != null) {
+            int idMaterial = Integer.parseInt(request.getParameter("id"));
 
-        MajorDAO mdao = new MajorDAO();
+            Materials material = materialDAO.getMaterialById(idMaterial);
+            request.setAttribute("material", material);
+
+        }
+
         List<Subjects> listSubject = mdao.getAllSubjects();
 
         request.setAttribute("listSubject", listSubject);

@@ -119,6 +119,27 @@
                                             <a href="download?filePath=${fn:replace(fn:escapeXml(material.material_file), ' ', '%20')}" class="btn btn-primary btn-sm">Download</a>
                                         </c:if>
 
+                                        <c:if test="${sessionScope.role == 2}">
+                                            <form action="createMaterial" method="get" style="display:inline;" >
+                                                <input type="hidden" name="action" value="edit">
+                                                <input type="hidden" name="id" value="${material.getId()}">
+                                                <button>Edit</button>
+                                            </form>
+                                            <form action="viewAllMaterial" method="post" style="display:inline;" onsubmit="return confirmDelete();">
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="id" value="${material.getId()}">
+                                                <button type="submit">Delete</button>
+                                            </form>
+
+                                            <script>
+                                                function confirmDelete() {
+                                                    return confirm("Are you sure you want to delete this material?");
+                                                }
+                                            </script>
+
+
+                                        </c:if>    
+
                                         <c:if test="${empty material.material_file}">
                                             <button class="btn btn-secondary btn-sm" disabled>No File</button>
                                         </c:if>
