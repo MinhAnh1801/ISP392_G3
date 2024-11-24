@@ -185,7 +185,8 @@
                                 <a href="subject">View list of subjects</a></li>
                             <li class="hover:underline"><a href="subject?mod=1">Add new subject</a></li>
                             <li class="hover:underline"><a href="viewSchedules">Manage subject schedule</a></li>
-                            
+                                                        <li class="hover:underline"><a href="managerCurriculum">Curriculum</a></li>
+
                         </ul>
                     </div>
                 </div>

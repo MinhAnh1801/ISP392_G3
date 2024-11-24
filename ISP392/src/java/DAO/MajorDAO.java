@@ -64,25 +64,25 @@ public class MajorDAO extends DBContext {
     public List<Subjects1> getSubjectByMajorId(int majorId) {
         List<Subjects1> subjects = new ArrayList<>();
         // Ensure the SQL query includes condition_subject_1 and condition_subject_2
-        String sql = "  SELECT TOP (1000)\n"
-                + "    s.id,\n"
-                + "    s.code,\n"
-                + "    s.name,\n"
-                + "    s.description,\n"
-                + "    c.major_id,\n"
-                + "    c.subject_id,\n"
-                + "	c.[semester],\n"
-                + "	c.[credits],\n"
-                + "    c.condition_subject_1,\n"
-                + "    c.condition_subject_2\n"
-                + "FROM\n"
-                + "    [dbo].[Subjects] s\n"
-                + "JOIN\n"
-                + "    [dbo].[Curriculum] c ON s.id = c.subject_id\n"
-                + "WHERE\n"
-                + "    c.major_id = ?\n"
-                + "ORDER BY\n"
-                + "    c.semester ASC;";
+        String sql = "   SELECT TOP (1000)\n" +
+"    s.id,\n" +
+"    s.code,\n" +
+"    s.name,\n" +
+"    s.description,\n" +
+"    c.major_id,\n" +
+"    c.subject_id,\n" +
+"    c.[semester],\n" +
+"    c.[credits],\n" +
+"    c.condition_subject_1,\n" +
+"    c.condition_subject_2\n" +
+"FROM\n" +
+"    [dbo].[Subjects] s\n" +
+"JOIN\n" +
+"    [dbo].[Curriculum] c ON s.id = c.subject_id\n" +
+"WHERE\n" +
+"    c.major_id = ?\n" +
+"ORDER BY\n" +
+"    c.semester ASC;";
 
         try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, majorId);

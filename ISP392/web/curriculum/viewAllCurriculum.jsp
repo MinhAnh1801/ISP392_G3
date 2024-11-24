@@ -112,16 +112,56 @@
                 <br>
                 <br>
             </div>
+         
+<style>
+    .alert-container {
+        max-width: 500px; /* Giới hạn chiều rộng */
+        margin: 0 auto;  /* Căn giữa container */
+    }
+</style>
+
+        <!--Hiển thị thông báo lỗi hoặc mess -->
+        <div class="container mt-5 alert-container">
+            <!-- Success Message -->
             <c:if test="${not empty mess}">
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
                     ${mess}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </c:if>
+
+            <!-- Error Message -->
             <c:if test="${not empty error}">
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
                     ${error}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </c:if>
+        </div>
+
+        <script>
+            function autoDismissAlert(alertId, timeout) {
+                setTimeout(function () {
+                    var alert = document.getElementById(alertId);
+                    if (alert) {
+                        var bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
+                    }
+                }, timeout);
+            }
+
+            // Dismiss success alert after 5 seconds (5000 ms)
+            var successAlert = document.getElementById('successAlert');
+            if (successAlert) {
+                autoDismissAlert('successAlert', 5000);
+            }
+
+            // Dismiss error alert after 5 seconds (5000 ms)
+            var errorAlert = document.getElementById('errorAlert');
+            if (errorAlert) {
+                autoDismissAlert('errorAlert', 5000);
+            }
+        </script>
 
 
 
