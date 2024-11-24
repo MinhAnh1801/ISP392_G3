@@ -118,9 +118,10 @@ public class ManagerCurriculum extends HttpServlet {
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
         int conditionSubject1 = Integer.parseInt(request.getParameter("conditionSubject1"));
         int conditionSubject2 = Integer.parseInt(request.getParameter("conditionSubject2"));
+        int semester = Integer.parseInt(request.getParameter("semester"));
         int credits = Integer.parseInt(request.getParameter("credits"));
 
-        boolean checkUpdate = mdao.updateByMajorIdSubjectId(majorId, subjectId, conditionSubject1, conditionSubject2, credits);
+        boolean checkUpdate = mdao.updateByMajorIdSubjectId(majorId, subjectId, conditionSubject1, conditionSubject2, credits,semester);
 
         if (checkUpdate) {
             request.setAttribute("mess", "Update success");

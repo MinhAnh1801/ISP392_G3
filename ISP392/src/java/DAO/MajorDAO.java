@@ -187,40 +187,45 @@ public class MajorDAO extends DBContext {
         return curriculumList;
     }
 
-    public boolean updateByMajorIdSubjectId(int majorId, int subjectId, int conditionSubject1, int conditionSubject2, int credits) {
-        String checkSql = "SELECT COUNT(*) FROM [dbo].[Curriculum] WHERE [major_id] = ? AND [subject_id] = ?";
-        String updateSql = "UPDATE [dbo].[Curriculum] "
-                + "SET [condition_subject_1] = ?, "
-                + "[condition_subject_2] = ?, "
-                + "[credits] = ? "
-                + "WHERE [major_id] = ? AND [subject_id] = ?";
+   public boolean updateByMajorIdSubjectId(int majorId, int subjectId, int conditionSubject1, int conditionSubject2, int credits, int semester) {
+    String checkSql = "SELECT COUNT(*) FROM [dbo].[Curriculum] WHERE [major_id] = ? AND [subject_id] = ?";
+    String updateSql = "UPDATE [dbo].[Curriculum] "
+            + "SET [condition_subject_1] = ?, "
+            + "[condition_subject_2] = ?, "
+            + "[credits] = ?, "
+            + "[semester] = ? " // Sửa lỗi cú pháp: Thêm dấu phẩy giữa các trường
+            + "WHERE [major_id] = ? AND [subject_id] = ?";
 
-        try (Connection connection = getConnection(); PreparedStatement checkStmt = connection.prepareStatement(checkSql); PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+    try (Connection connection = getConnection();
+         PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+         PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
 
-            // Kiểm tra xem bản ghi có tồn tại hay không
-            checkStmt.setInt(1, majorId);
-            checkStmt.setInt(2, subjectId);
-            ResultSet rs = checkStmt.executeQuery();
+        // Kiểm tra xem bản ghi có tồn tại hay không
+        checkStmt.setInt(1, majorId);
+        checkStmt.setInt(2, subjectId);
+        ResultSet rs = checkStmt.executeQuery();
 
-            if (rs.next() && rs.getInt(1) > 0) { // Nếu có ít nhất một bản ghi
-                // Thực hiện cập nhật
-                updateStmt.setInt(1, conditionSubject1);
-                updateStmt.setInt(2, conditionSubject2);
-                updateStmt.setInt(3, credits);
-                updateStmt.setInt(4, majorId);
-                updateStmt.setInt(5, subjectId);
+        if (rs.next() && rs.getInt(1) > 0) { // Nếu có ít nhất một bản ghi
+            // Thực hiện cập nhật
+            updateStmt.setInt(1, conditionSubject1);
+            updateStmt.setInt(2, conditionSubject2);
+            updateStmt.setInt(3, credits);
+            updateStmt.setInt(4, semester); // Thêm giá trị của semester
+            updateStmt.setInt(5, majorId);
+            updateStmt.setInt(6, subjectId);
 
-                int rowsAffected = updateStmt.executeUpdate();
-                return rowsAffected > 0; // Trả về true nếu có bản ghi được cập nhật
-            } else {
-                System.out.println("Bản ghi không tồn tại.");
-                return false; // Trả về false nếu không tìm thấy bản ghi
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false; // Trả về false nếu có lỗi xảy ra
+            int rowsAffected = updateStmt.executeUpdate();
+            return rowsAffected > 0; // Trả về true nếu có bản ghi được cập nhật
+        } else {
+            System.out.println("Bản ghi không tồn tại.");
+            return false; // Trả về false nếu không tìm thấy bản ghi
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; // Trả về false nếu có lỗi xảy ra
     }
+}
+
 
     public List<Major> getAllMajor() {
         String sql = "SELECT [id], [major_name] FROM [dbo].[Major]";

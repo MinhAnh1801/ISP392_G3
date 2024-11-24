@@ -449,10 +449,57 @@ public class UserDAO extends DBContext {
         }
     }
 
-  
-
     public List<Lecturer_Profile> getListLecturerBySubject(int subject_id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Lecturer_Profile> lecturers = new ArrayList<>();
+        String sql = "SELECT DISTINCT "
+                + "lp.lecturer_id, lp.full_name, lp.email, lp.phone_number, lp.department, lp.joining_date, lp.bio, "
+                + "lp.expertise, lp.office, lp.photo_url, lp.research_interest, lp.publications, lp.awards, lp.created_at, "
+                + "lp.updated_at, lp.researchSkill, lp.teachingSkill, lp.mentoringSkill, lp.major_id "
+                + "FROM [dbo].[Lecturer_Profile] lp "
+                + "JOIN [dbo].[Lecturer_Timetable] lt ON lp.lecturer_id = lt.lecturer_id "
+                + "JOIN [dbo].[Schedule] s ON lt.schedule_id = s.id "
+                + "WHERE s.subject_id = ?;";
+
+        // Sử dụng try-with-resources để quản lý tài nguyên tự động
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Gán giá trị subject_id vào tham số của PreparedStatement
+            preparedStatement.setInt(1, subject_id);
+
+            // Thực thi truy vấn và lấy kết quả
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Duyệt qua tất cả các bản ghi trong kết quả truy vấn
+                while (resultSet.next()) {
+                    Lecturer_Profile lecturerProfile = new Lecturer_Profile();
+                    lecturerProfile.setLecturerId(resultSet.getInt("lecturer_id"));
+                    lecturerProfile.setFullName(resultSet.getString("full_name"));
+                    lecturerProfile.setEmail(resultSet.getString("email"));
+                    lecturerProfile.setPhoneNumber(resultSet.getString("phone_number"));
+                    lecturerProfile.setDepartment(resultSet.getString("department"));
+                    lecturerProfile.setJoiningDate(resultSet.getDate("joining_date"));
+                    lecturerProfile.setBio(resultSet.getString("bio"));
+                    lecturerProfile.setExpertise(resultSet.getString("expertise"));
+                    lecturerProfile.setOffice(resultSet.getString("office"));
+                    lecturerProfile.setPhotoUrl(resultSet.getString("photo_url"));
+                    lecturerProfile.setResearchInterest(resultSet.getString("research_interest"));
+                    lecturerProfile.setPublications(resultSet.getString("publications"));
+                    lecturerProfile.setAwards(resultSet.getString("awards"));
+                    lecturerProfile.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    lecturerProfile.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    lecturerProfile.setResearchSkill(resultSet.getInt("researchSkill"));
+                    lecturerProfile.setTeachingSkill(resultSet.getInt("teachingSkill"));
+                    lecturerProfile.setMentoringSkill(resultSet.getInt("mentoringSkill"));
+
+                    // Thêm đối tượng vào danh sách
+                    lecturers.add(lecturerProfile);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // In lỗi nếu có
+        }
+
+        return lecturers;
     }
 
 }

@@ -106,4 +106,32 @@ public class FeedBackDAO extends DBContext {
         }
     }
 
+    public boolean createFeedback(int subjectId, int lecturerId, String startDate, String endDate) {
+        boolean isSuccess = false;
+
+        // SQL query to insert feedback into the FeedbackForms table
+        String sql = "INSERT INTO [dbo].[FeedbackForms] (start_date, end_date, lecturer_id, subject_id, created_at) "
+                + "VALUES (?, ?, ?, ?, getDate())";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Set parameters for the query
+            preparedStatement.setString(1, startDate);  // Set start date
+            preparedStatement.setString(2, endDate);    // Set end date
+            preparedStatement.setInt(3, lecturerId);    // Set lecturer ID
+            preparedStatement.setInt(4, subjectId);     // Set subject ID
+
+            // Execute the update and check if the record was inserted successfully
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                isSuccess = true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
+    }
+
 }

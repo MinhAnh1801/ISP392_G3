@@ -127,18 +127,22 @@
         <!-- kết thúc Hiển thị thông báo lỗi hoặc mess -->
 
         <div class="container mt-5">
-            <form action="CreateFeedback" method="POST">
-                
-                
-                
-                  <div class="form-group">
+            <form action="createFeedback" method="POST">
+
+
+
+                <div class="form-group">
                     <label for="subject_id">Subject:</label>
-                    <select id="subject_id" name="subject_id" class="form-control" required onchange="redirectToCreateFeedback()">
-                        <option value="">Select Subject</option>
-                        <c:forEach var="subject" items="${listSubject}">
-                            <option value="${subject.id}">${subject.code} - ${subject.name}</option>
-                        </c:forEach>
-                    </select>
+                   <select id="subject_id" name="subject_id" class="form-control" required onchange="redirectToCreateFeedback()">
+    <option value="">Select Subject</option>
+    <c:forEach var="subject" items="${listSubject}">
+        <!-- Kiểm tra nếu subject.id bằng subject_id thì set selected -->
+        <option value="${subject.id}" ${subject.id == subject_id ? 'selected' : ''}>
+            ${subject.code} - ${subject.name}
+        </option>
+    </c:forEach>
+</select>
+
                 </div>
 
                 <script>
@@ -156,8 +160,8 @@
                     <label for="lecturer_id">Lecturer:</label>
                     <select id="lecturer_id" name="lecturer_id" class="form-control" required>
                         <option value="">Select Lecturer</option>
-                        <c:forEach var="lecturer" items="${lecturers}">
-                            <option value="${lecturer.id}">${lecturer.name}</option>
+                        <c:forEach var="lecturer" items="${listLecturerBySubject}">
+                            <option value="${lecturer.lecturerId}">${lecturer.fullName}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -174,7 +178,7 @@
                     <input type="date" id="end_date" name="end_date" class="form-control" required>
                 </div>
 
-              
+
 
 
                 <!-- Submit Button -->

@@ -5,6 +5,7 @@
 package Controller.Feedback;
 
 import DAL.LecturerProfileDAO;
+import DAO.FeedBackDAO;
 import DAO.SubjectDAO;
 import DAO.UserDAO;
 import Model.Lecturer_Profile;
@@ -77,17 +78,17 @@ public class CreateFeedback extends HttpServlet {
         SubjectDAO sdao = new SubjectDAO();
         List<Subjects1> listSubject = sdao.getAllSubject();
         request.setAttribute("listSubject", listSubject);
-        
-        
-        if(request.getParameter("subject_id")!= null){
+
+        if (request.getParameter("subject_id") != null) {
 
             int subject_id = Integer.parseInt(request.getParameter("subject_id"));
-            
+
             UserDAO udao = new UserDAO();
             List<Lecturer_Profile> listLecturerBySubject = udao.getListLecturerBySubject(subject_id);
+            request.setAttribute("listLecturerBySubject", listLecturerBySubject);
+            request.setAttribute("subject_id", subject_id);
         }
-        
-        
+
         request.getRequestDispatcher("FeedBack/CreateFeedback.jsp").forward(request, response);
 
     }
@@ -103,7 +104,22 @@ public class CreateFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Lấy thông tin từ form
+        int subjectId = Integer.parseInt(request.getParameter("subject_id"));
+        int lecturerId = Integer.parseInt(request.getParameter("lecturer_id"));
+        String startDate = request.getParameter("start_date");
+        String endDate = request.getParameter("end_date");
+
+        FeedBackDAO fdao = new FeedBackDAO();
+
+        boolean check = fdao.createFeedback(subjectId, lecturerId, startDate, endDate);
+        if (check) {
+            request.setAttribute("mess", "Create Success");
+        } else {
+            request.setAttribute("error", "Create false");
+        }
+
+        doGet(request, response);
     }
 
     /**
