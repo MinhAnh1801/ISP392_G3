@@ -103,25 +103,72 @@
                         <th>Reason</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <c:forEach items="${listAttendance}" var="attendance">
-                        <tr>
-                            <td>${attendance.fullName}</td>
-                            <td>
-                                <form action="checkAttendance" method="post">
-                                    <input name="action" value="updateAttendance" type="hidden">
-                                    <input name="studentId" value="${attendance.studentId.id}" type="hidden">
-                                    <input name="attendanceId" value="${attendance.id}" type="hidden">
+             <tbody>
+    <c:forEach items="${listAttendance}" var="attendance">
+        <tr>
+            <td>${attendance.fullName}</td>
+            <td>
+                <form action="checkAttendance" method="post">
+                    <input name="action" value="updateAttendance" type="hidden">
+                    <input name="studentId" value="${attendance.studentId.id}" type="hidden">
+                    <input name="attendanceId" value="${attendance.id}" type="hidden">
 
-                                    <input name="attendanceStatus_${attendance.studentId.id}" onchange="this.form.submit()" value="Present" type="radio" <c:if test="${attendance.status == 'Present'}">checked</c:if>> Present
-                                    <input name="attendanceStatus_${attendance.studentId.id}" onchange="this.form.submit()" value="Absent" type="radio" <c:if test="${attendance.status == 'Absent'}">checked</c:if>> Absent
-                                </form>
-                            </td>
-                            <td>${attendance.attendance_date}</td>
-                            <td>${attendance.reason}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
+                    <!-- Radio buttons -->
+                    <div class="attendance-status">
+                        <input name="attendanceStatus_${attendance.studentId.id}" 
+                               value="Present" 
+                               type="radio" 
+                               <c:if test="${attendance.status == 'Present'}">checked</c:if>
+                               onchange="this.form.submit()">
+                        Present
+                        
+                        <input name="attendanceStatus_${attendance.studentId.id}" 
+                               value="Absent" 
+                               type="radio" 
+                               <c:if test="${attendance.status == 'Absent'}">checked</c:if>
+                               onchange="this.form.submit()">
+                        Absent
+                    </div>
+
+                    <!-- Disabled display if not editable -->
+                    <span class="status-display">${attendance.status}</span>
+                </form>
+            </td>
+            <td>${attendance.attendance_date}</td>
+            <td>${attendance.reason}</td>
+        </tr>
+    </c:forEach>
+</tbody>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split('T')[0]; // Lấy ngày hiện tại dạng yyyy-mm-dd
+        document.querySelectorAll('tr').forEach(row => {
+            const attendanceDate = row.querySelector('td:nth-child(3)')?.textContent.trim(); // Lấy giá trị attendance_date
+            const statusSection = row.querySelector('.attendance-status');
+            const statusDisplay = row.querySelector('.status-display');
+
+            if (attendanceDate !== today) {
+                // Nếu ngày không trùng hiện tại -> ẩn radio buttons, chỉ hiển thị Status
+                if (statusSection) statusSection.style.display = 'none';
+                if (statusDisplay) statusDisplay.style.display = 'inline';
+            } else {
+                // Nếu ngày trùng hiện tại -> hiển thị radio buttons, ẩn Status
+                if (statusSection) statusSection.style.display = 'inline';
+                if (statusDisplay) statusDisplay.style.display = 'none';
+            }
+        });
+    });
+</script>
+<style>
+    .attendance-status {
+    display: none; /* Mặc định ẩn */
+}
+.status-display {
+    display: none; /* Mặc định ẩn */
+}
+
+</style>
             </table>
         </c:if>
         <c:if test="${empty listAttendance}">

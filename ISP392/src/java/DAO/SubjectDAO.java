@@ -3,6 +3,7 @@ package DAO;
 import Context.DBContext;
 import Model.Schedule;
 import Model.Subjects;
+import Model.Subjects1;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -74,13 +75,54 @@ public class SubjectDAO {
         }
         return subjects;
     }
+// Phương thức lấy thông tin môn học theo ID
+
+    public Subjects1 getsubjectById(int aInt) {
+        Subjects1 subject = null;
+
+        String query = "SELECT TOP (1000) [id]\n"
+                + "      ,[code]\n"
+                + "      ,[name]\n"
+                + "      ,[credits]\n"
+                + "      ,[description]\n"
+                + "      ,[semester]\n"
+                + "      ,[tuition]\n"
+                + "      ,[major_id]\n"
+                + "  FROM [dbo].[Subjects] WHERE id = ?";
+
+        try {
+            Connection conn = new DBContext().getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, aInt); // Gán giá trị id vào câu truy vấn
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                // Tạo đối tượng Subjects1 từ kết quả truy vấn
+                subject = new Subjects1();
+                subject.setId(resultSet.getInt("id"));
+                subject.setCode(resultSet.getString("code"));
+                subject.setName(resultSet.getString("name"));
+                subject.setCredits(resultSet.getInt("credits"));
+                subject.setDescription(resultSet.getString("description"));
+                subject.setSemester(resultSet.getInt("semester"));
+            }
+
+            // Đóng kết nối sau khi truy vấn xong
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return subject;
+    }
 
     public static void main(String[] args) {
         SubjectDAO dao = new SubjectDAO();
-        try {
-             System.out.println(dao.getSubjectsByLecturer(2));
-        } catch (Exception e) {
-        }
-       
+        Subjects1 getsubjectById = dao.getsubjectById(1);
+        System.out.println(getsubjectById.getCode());
+
     }
+
 }

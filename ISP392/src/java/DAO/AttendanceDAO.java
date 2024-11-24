@@ -52,17 +52,30 @@ public class AttendanceDAO extends DBContext {
     public List<Attendance> getAttendanceForClassAndDate(int classId, int subjectId, String attendanceDate) {
         List<Attendance> attendanceList = new ArrayList<>();
 
-        String query = "SELECT a.[id], sp.student_id, sp.full_name, a.attendance_date, a.status, a.reason "
-                + "FROM [dbo].[StudentClass] sc "
-                + "JOIN [dbo].[Student_Profile] sp ON sc.student_id = sp.student_id "
-                + "LEFT JOIN [dbo].[Attendance] a ON sp.student_id = a.student_id AND a.subject_id = ? "
-                + "WHERE sc.class_id = ? AND a.attendance_date = ? and sc.subject_id = ?";
+        String query = "SELECT DISTINCT \n"
+                + "    a.[id],\n"
+                + "    sp.student_id,\n"
+                + "    sp.full_name,\n"
+                + "    a.attendance_date,\n"
+                + "    a.status,\n"
+                + "    a.reason\n"
+                + "FROM \n"
+                + "    [dbo].[StudentClass] sc\n"
+                + "JOIN \n"
+                + "    [dbo].[Student_Profile] sp \n"
+                + "    ON sc.student_id = sp.student_id\n"
+                + "LEFT JOIN \n"
+                + "    [dbo].[Attendance] a \n"
+                + "    ON sp.student_id = a.student_id AND a.subject_id = ?\n"
+                + "WHERE \n"
+                + "    sc.class_id = ?\n"
+                + "    AND a.attendance_date = ? ";
 
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, subjectId); 
-            stmt.setInt(2, classId);   
-            stmt.setString(3, attendanceDate); 
+            stmt.setInt(1, subjectId);
+            stmt.setInt(2, classId);
+            stmt.setString(3, attendanceDate);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -87,31 +100,23 @@ public class AttendanceDAO extends DBContext {
         return attendanceList;
     }
 
-public boolean updateAttendance(int attendanceId) {
-    String query = "UPDATE [dbo].[Attendance] "
-                 + "SET [status] = CASE "
-                 + "WHEN [status] IS NULL THEN 'Absent' "
-                 + "WHEN [status] = 'Present' THEN 'Absent' "
-                 + "WHEN [status] = 'Absent' THEN 'Present' "
-                 + "ELSE [status] END "
-                 + "WHERE [id] = ?";
+    public boolean updateAttendance(int attendanceId) {
+        String query = "UPDATE [dbo].[Attendance] "
+                + "SET [status] = CASE "
+                + "WHEN [status] IS NULL THEN 'Absent' "
+                + "WHEN [status] = 'Present' THEN 'Absent' "
+                + "WHEN [status] = 'Absent' THEN 'Present' "
+                + "ELSE [status] END "
+                + "WHERE [id] = ?";
 
-    try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
-        stmt.setInt(1, attendanceId);
-        int rowsUpdated = stmt.executeUpdate();
-        return rowsUpdated > 0;
-    } catch (SQLException e) {
-        e.printStackTrace(); // Ghi log lỗi chi tiết để kiểm tra
-        return false;
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, attendanceId);
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace(); // Ghi log lỗi chi tiết để kiểm tra
+            return false;
+        }
     }
-}
-
-
-    
-    
-    
 
 }
-
-
-

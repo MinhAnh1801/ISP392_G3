@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/src/java/DAO/MajorDAO.java</file>
-            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/web/material/createMaterial.jsp</file>
-            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/src/java/DAO/MaterialDAO.java</file>
-            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/src/java/Controller/material/ViewAllMaterial.java</file>
-            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/web/material/viewAllMaterial.jsp</file>
-            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/src/java/Controller/material/CreateMaterial.java</file>
+            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/src/java/Controller/Feedback/AdminFeedBack.java</file>
+            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/web/FeedBack/AdminFeedBack.jsp</file>
+            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/src/java/Context/DBContext.java</file>
+            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/src/java/Model/FeedbackForms.java</file>
+            <file>file:/D:/koro/anh%20swp/New%20folder/ISP392_G3/ISP392/src/java/DAO/FeedBackDAO.java</file>
         </group>
     </open-files>
 </project-private>
