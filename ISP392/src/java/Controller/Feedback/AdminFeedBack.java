@@ -14,7 +14,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -88,7 +93,52 @@ public class AdminFeedBack extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+
+        if ("edit".equalsIgnoreCase(action)) {
+            int feedbackId = Integer.parseInt(request.getParameter("feedbackId"));
+            String endDateString = request.getParameter("endDate");
+            String startDateString = request.getParameter("startDate");
+
+            // Chuyển đổi endDate từ String thành Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date endDate = null;
+            Date startDate = null;
+
+            try {
+                endDate = sdf.parse(endDateString);
+                startDate = sdf.parse(startDateString);
+
+                if (startDate == null || endDate == null || !endDate.after(startDate)) {
+                    request.setAttribute("error", "End date must be greater than Start date.");
+                    doGet(request, response);
+                    return;
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+                // Xử lý lỗi nếu ngày không hợp lệ
+            }
+
+            // Tiến hành cập nhật trong database (ví dụ, gọi phương thức updateFeedbackEndDate())
+            if (endDate != null) {
+                FeedBackDAO feedbackDAO = new FeedBackDAO();
+                boolean check = feedbackDAO.updateFeedbackEndDate(feedbackId, endDate);
+
+                if (check) {
+                    request.setAttribute("mess", "Update success");
+
+                } else {
+                    request.setAttribute("error", "Update false");
+
+                }
+            } else {
+
+                request.setAttribute("error", "Error: Invalid date format");
+            }
+        }
+        doGet(request, response);
+
     }
 
     /**
